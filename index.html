@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InstaScope – Analizza i tuoi Follower</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     ADSTERRA – Banner 728×90 (Header, visibile sempre)
+     Sostituisci il contenuto del div con il tuo codice Adsterra
+     ═══════════════════════════════════════════════════════════ -->
+<!-- ADSTERRA BANNER HEADER – INCOLLA IL TUO CODICE QUI -->
+<div id="adsterra-header-slot" style="display:none"></div>
+
+<style>
+/* ─── Reset & Base ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:       #08080f;
+  --surface:  #111119;
+  --card:     #16161f;
+  --border:   rgba(255,255,255,.07);
+  --grad1:    #e1306c;
+  --grad2:    #833ab4;
+  --grad3:    #fd1d1d;
+  --accent:   #e1306c;
+  --text:     #f0f0f5;
+  --muted:    #7a7a95;
+  --green:    #22d37e;
+  --orange:   #ff8c42;
+  --radius:   14px;
+  --shadow:   0 8px 40px rgba(0,0,0,.6);
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── Gradient Noise Background ────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: -2;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 10%, rgba(131,58,180,.18) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 80% 90%, rgba(225,48,108,.14) 0%, transparent 60%),
+    var(--bg);
+}
+
+/* ─── Typography ────────────────────────────────────────────── */
+h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
+
+/* ─── Gradient text utility ─────────────────────────────────── */
+.grad { background: linear-gradient(135deg, var(--grad1), var(--grad2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+/* ─── Header ────────────────────────────────────────────────── */
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(8,8,15,.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  height: 62px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.25rem; letter-spacing: -.5px; }
+.logo span { font-weight: 300; opacity: .5; }
+.header-ad {
+  flex: 1; display: flex; justify-content: center; align-items: center;
+  max-width: 400px; margin: 0 auto;
+}
+
+/* ─── Main layout ───────────────────────────────────────────── */
+main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
+
+/* ─── Hero / Upload ─────────────────────────────────────────── */
+#hero {
+  text-align: center;
+  padding: 60px 20px 40px;
+}
+#hero h1 { font-size: clamp(2rem, 6vw, 3.8rem); font-weight: 800; line-height: 1.1; margin-bottom: 16px; }
+#hero p { color: var(--muted); font-size: 1.05rem; max-width: 520px; margin: 0 auto 40px; line-height: 1.6; }
+
+/* ─── Drop Zone ─────────────────────────────────────────────── */
+.drop-zone {
+  border: 2px dashed rgba(225,48,108,.4);
+  border-radius: 20px;
+  padding: 50px 30px;
+  cursor: pointer;
+  transition: all .3s;
+  background: rgba(225,48,108,.04);
+  position: relative;
+  max-width: 560px;
+  margin: 0 auto;
+}
+.drop-zone:hover, .drop-zone.drag-over {
+  border-color: var(--accent);
+  background: rgba(225,48,108,.10);
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px rgba(225,48,108,.15);
+}
+.drop-zone input[type="file"] {
+  position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+}
+.drop-icon {
+  width: 64px; height: 64px;
+  background: linear-gradient(135deg, var(--grad1), var(--grad2));
+  border-radius: 18px;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 18px;
+  font-size: 1.8rem;
+}
+.drop-zone h3 { font-family: 'Syne', sans-serif; font-size: 1.2rem; margin-bottom: 8px; }
+.drop-zone p { color: var(--muted); font-size: .9rem; }
+
+/* ─── How-to steps ──────────────────────────────────────────── */
+.howto {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px; margin: 40px auto; max-width: 700px;
+}
+.howto-step {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px 16px; text-align: center;
+}
+.howto-step .num {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--grad1), var(--grad2));
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 12px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: .85rem;
+}
+.howto-step h4 { font-size: .9rem; margin-bottom: 6px; }
+.howto-step p { font-size: .8rem; color: var(--muted); line-height: 1.5; }
+
+/* ─── Dashboard (hidden until loaded) ──────────────────────── */
+#dashboard { display: none; }
+#dashboard.visible { display: block; animation: fadeUp .5s ease; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ─── Stats bar ─────────────────────────────────────────────── */
+.stats-bar {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 12px; margin-bottom: 28px;
+}
+.stat-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 18px 16px;
+  text-align: center; transition: transform .2s;
+}
+.stat-card:hover { transform: translateY(-3px); }
+.stat-card .val { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; }
+.stat-card .lbl { font-size: .78rem; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: .05em; }
+
+/* ─── Tabs ──────────────────────────────────────────────────── */
+.tabs-wrap { margin-bottom: 4px; }
+.tabs {
+  display: flex; gap: 4px; flex-wrap: wrap;
+  background: var(--surface); border-radius: 12px; padding: 5px;
+  border: 1px solid var(--border);
+}
+.tab-btn {
+  flex: 1; min-width: 120px; padding: 9px 14px;
+  background: none; border: none; color: var(--muted);
+  font-family: 'DM Sans', sans-serif; font-size: .85rem; font-weight: 500;
+  border-radius: 8px; cursor: pointer; transition: all .2s;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  white-space: nowrap;
+}
+.tab-btn.active {
+  background: linear-gradient(135deg, var(--grad1), var(--grad2));
+  color: #fff; font-weight: 600;
+}
+.tab-btn .badge {
+  background: rgba(255,255,255,.2); border-radius: 20px;
+  padding: 1px 7px; font-size: .75rem;
+}
+.tab-btn:not(.active) .badge { background: rgba(255,255,255,.08); }
+
+/* ─── Tab panels ────────────────────────────────────────────── */
+.tab-panel { display: none; animation: fadeUp .3s ease; }
+.tab-panel.active { display: block; }
+
+/* ─── Search bar ─────────────────────────────────────────────── */
+.search-row {
+  display: flex; gap: 10px; margin: 16px 0;
+  align-items: center;
+}
+.search-row input {
+  flex: 1; background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 10px 16px;
+  color: var(--text); font-family: 'DM Sans', sans-serif; font-size: .9rem;
+  outline: none; transition: border-color .2s;
+}
+.search-row input:focus { border-color: rgba(225,48,108,.5); }
+.sort-btn {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 10px 14px;
+  color: var(--muted); cursor: pointer; font-size: .85rem; white-space: nowrap;
+  transition: all .2s;
+}
+.sort-btn:hover { border-color: var(--accent); color: var(--text); }
+
+/* ─── User list ─────────────────────────────────────────────── */
+.user-list { display: flex; flex-direction: column; gap: 8px; }
+.user-item {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 13px 16px;
+  display: flex; align-items: center; gap: 12px;
+  transition: all .2s;
+}
+.user-item:hover { border-color: rgba(225,48,108,.3); transform: translateX(3px); }
+.avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--grad1), var(--grad2));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif; font-weight: 700; font-size: .9rem;
+  flex-shrink: 0; color: #fff;
+}
+.user-info { flex: 1; }
+.user-info .uname { font-weight: 500; font-size: .9rem; }
+.user-info .udate { font-size: .75rem; color: var(--muted); margin-top: 2px; }
+.user-link {
+  background: rgba(225,48,108,.12); border: 1px solid rgba(225,48,108,.25);
+  color: var(--accent); border-radius: 8px; padding: 6px 12px;
+  text-decoration: none; font-size: .8rem; font-weight: 500;
+  transition: all .2s; white-space: nowrap;
+}
+.user-link:hover { background: rgba(225,48,108,.25); }
+
+/* ─── Locked content / Ad Gate ──────────────────────────────── */
+.locked-overlay {
+  position: relative; border-radius: var(--radius); overflow: hidden;
+}
+.lock-gate {
+  background: linear-gradient(135deg, rgba(131,58,180,.15), rgba(225,48,108,.15));
+  border: 1px solid rgba(225,48,108,.3);
+  border-radius: var(--radius); padding: 40px 24px;
+  text-align: center; margin-bottom: 12px;
+}
+.lock-gate .lock-icon { font-size: 2.5rem; margin-bottom: 12px; }
+.lock-gate h3 { font-family: 'Syne', sans-serif; font-size: 1.2rem; margin-bottom: 8px; }
+.lock-gate p { color: var(--muted); font-size: .9rem; margin-bottom: 24px; max-width: 400px; margin-left: auto; margin-right: auto; }
+.btn-watch {
+  background: linear-gradient(135deg, var(--grad1), var(--grad2));
+  color: #fff; border: none; border-radius: 10px;
+  padding: 12px 28px; font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: .95rem; cursor: pointer; transition: all .25s;
+  display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+}
+.btn-watch:hover { opacity: .85; transform: scale(1.03); box-shadow: 0 0 30px rgba(225,48,108,.4); }
+.btn-watch:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+/* Countdown ring */
+.countdown-wrap { display: none; flex-direction: column; align-items: center; gap: 12px; margin-top: 16px; }
+.countdown-wrap.show { display: flex; }
+.ring {
+  width: 60px; height: 60px; position: relative;
+}
+.ring svg { transform: rotate(-90deg); }
+.ring circle { fill: none; stroke-width: 4; }
+.ring .track { stroke: rgba(255,255,255,.1); }
+.ring .fill { stroke: url(#ringGrad); stroke-dasharray: 157; stroke-dashoffset: 157; transition: stroke-dashoffset 1s linear; stroke-linecap: round; }
+.ring .num { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; }
+.countdown-wrap p { color: var(--muted); font-size: .85rem; }
+
+/* ─── Adsterra Banner slots ─────────────────────────────────── */
+.ad-slot {
+  text-align: center; padding: 10px 0; min-height: 60px;
+  display: flex; align-items: center; justify-content: center;
+}
+.ad-slot-label {
+  font-size: .65rem; color: rgba(255,255,255,.15);
+  text-transform: uppercase; letter-spacing: .1em; margin-bottom: 4px;
+}
+.ad-banner-wrap {
+  background: rgba(255,255,255,.02); border: 1px dashed rgba(255,255,255,.06);
+  border-radius: 8px; padding: 8px; margin: 16px 0;
+}
+
+/* ─── Storico section ───────────────────────────────────────── */
+#storico-panel .upload-duo {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;
+}
+.mini-drop {
+  border: 2px dashed rgba(255,255,255,.15);
+  border-radius: var(--radius); padding: 24px 16px;
+  text-align: center; cursor: pointer; position: relative;
+  transition: all .3s; background: var(--card);
+}
+.mini-drop:hover, .mini-drop.loaded {
+  border-color: var(--accent); background: rgba(225,48,108,.06);
+}
+.mini-drop input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.mini-drop .icon { font-size: 1.8rem; margin-bottom: 8px; }
+.mini-drop h4 { font-family: 'Syne', sans-serif; font-size: .9rem; margin-bottom: 4px; }
+.mini-drop p { font-size: .78rem; color: var(--muted); }
+.mini-drop .loaded-name { font-size: .78rem; color: var(--green); margin-top: 6px; font-weight: 500; }
+
+.diff-section { margin-bottom: 24px; }
+.diff-section h3 {
+  font-family: 'Syne', sans-serif; font-size: 1rem; margin-bottom: 12px;
+  padding: 10px 16px; border-radius: 10px; display: flex; align-items: center; gap: 8px;
+}
+.diff-section.new-followers h3 { background: rgba(34,211,126,.1); border: 1px solid rgba(34,211,126,.2); color: var(--green); }
+.diff-section.lost-followers h3 { background: rgba(225,48,108,.1); border: 1px solid rgba(225,48,108,.2); color: var(--accent); }
+.diff-section.new-following h3 { background: rgba(255,140,66,.1); border: 1px solid rgba(255,140,66,.2); color: var(--orange); }
+.diff-section.lost-following h3 { background: rgba(131,58,180,.1); border: 1px solid rgba(131,58,180,.2); color: #a855f7; }
+.diff-item {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 10px 14px;
+  display: flex; align-items: center; gap: 10px; margin-bottom: 6px;
+}
+.diff-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+/* ─── Empty state ───────────────────────────────────────────── */
+.empty {
+  text-align: center; padding: 60px 20px;
+  color: var(--muted); font-size: .9rem;
+}
+.empty .e-icon { font-size: 3rem; margin-bottom: 12px; }
+
+/* ─── Loading ───────────────────────────────────────────────── */
+#loading-overlay {
+  display: none; position: fixed; inset: 0; z-index: 999;
+  background: rgba(8,8,15,.92); backdrop-filter: blur(12px);
+  flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+}
+#loading-overlay.show { display: flex; }
+.spinner {
+  width: 48px; height: 48px; border-radius: 50%;
+  border: 3px solid rgba(225,48,108,.2);
+  border-top-color: var(--accent);
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+#loading-overlay p { color: var(--muted); font-size: .9rem; }
+
+/* ─── Toast ─────────────────────────────────────────────────── */
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px 20px; font-size: .88rem;
+  transition: transform .3s; z-index: 1000; white-space: nowrap;
+  box-shadow: var(--shadow);
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ─── Reset btn ─────────────────────────────────────────────── */
+.btn-reset {
+  background: rgba(255,255,255,.06); border: 1px solid var(--border);
+  color: var(--muted); border-radius: 10px; padding: 9px 16px;
+  font-family: 'DM Sans', sans-serif; font-size: .85rem; cursor: pointer;
+  transition: all .2s;
+}
+.btn-reset:hover { border-color: var(--accent); color: var(--text); }
+
+/* ─── Bottom ad bar ─────────────────────────────────────────── */
+.bottom-ad-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 90;
+  background: rgba(8,8,15,.9); backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border);
+  padding: 8px; text-align: center; min-height: 58px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 700px) {
+  .stats-bar { grid-template-columns: repeat(2, 1fr); }
+  .tabs { gap: 3px; }
+  .tab-btn { font-size: .75rem; padding: 8px 8px; min-width: 80px; }
+  #storico-panel .upload-duo { grid-template-columns: 1fr; }
+  .header-ad { display: none; }
+}
+@media (max-width: 480px) {
+  main { padding: 16px 12px 80px; }
+  .stat-card .val { font-size: 1.6rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── SVG Defs ─────────────────────────────────────────────── -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#e1306c"/>
+      <stop offset="100%" style="stop-color:#833ab4"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- ─── Loading overlay ──────────────────────────────────────── -->
+<div id="loading-overlay">
+  <div class="spinner"></div>
+  <p>Analisi del file in corso…</p>
+</div>
+
+<!-- ─── Toast ────────────────────────────────────────────────── -->
+<div class="toast" id="toast"></div>
+
+<!-- ─── Header ──────────────────────────────────────────────────  -->
+<header>
+  <div class="logo">Insta<span>Scope</span></div>
+  <div class="header-ad">
+    <!-- ═══ ADSTERRA – Banner 468×60 Header ═══
+         Incolla qui il tuo codice banner Adsterra.
+         Esempio: <script async src="//...adsterra.com/..."></script> -->
+    <div class="ad-slot" style="width:100%;max-width:468px;">
+      <div class="ad-slot-label">Pubblicità</div>
+      <!-- ADSTERRA BANNER 468x60 – INCOLLA QUI -->
+    </div>
+  </div>
+  <button class="btn-reset" id="resetBtn" style="display:none" onclick="resetApp()">↩ Reset</button>
+</header>
+
+<!-- ─── Main ─────────────────────────────────────────────────── -->
+<main>
+
+  <!-- ── Hero / Upload ──────────────────────────────────────── -->
+  <section id="hero">
+    <h1>Scopri chi ti <span class="grad">segue davvero</span></h1>
+    <p>Carica il file ZIP esportato da Instagram e analizza follower, following e molto altro — tutto in privato, nel tuo browser.</p>
+
+    <div class="drop-zone" id="dropZone">
+      <input type="file" accept=".zip" id="fileInput" onchange="handleFile(this.files[0])">
+      <div class="drop-icon">📦</div>
+      <h3>Trascina il tuo ZIP qui</h3>
+      <p>oppure clicca per selezionare il file</p>
+    </div>
+
+    <div class="howto">
+      <div class="howto-step">
+        <div class="num">1</div>
+        <h4>Esporta da Instagram</h4>
+        <p>Impostazioni → Privacy → Scarica i tuoi dati → Seleziona "Follower e Following" → formato JSON</p>
+      </div>
+      <div class="howto-step">
+        <div class="num">2</div>
+        <h4>Carica il file ZIP</h4>
+        <p>Riceverai una email con il link per scaricare il tuo file .zip. Caricalo qui sopra.</p>
+      </div>
+      <div class="howto-step">
+        <div class="num">3</div>
+        <h4>Analizza i risultati</h4>
+        <p>Vedi follower, following, chi non ti ricambia e molto altro in pochi secondi.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Dashboard ──────────────────────────────────────────── -->
+  <section id="dashboard">
+
+    <!-- Stats bar -->
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="val grad" id="statFollowers">0</div>
+        <div class="lbl">Follower</div>
+      </div>
+      <div class="stat-card">
+        <div class="val grad" id="statFollowing">0</div>
+        <div class="lbl">Following</div>
+      </div>
+      <div class="stat-card">
+        <div class="val" style="color:var(--accent)" id="statNotBack">0</div>
+        <div class="lbl">Non ti seguono</div>
+      </div>
+      <div class="stat-card">
+        <div class="val" style="color:var(--orange)" id="statNotFollow">0</div>
+        <div class="lbl">Non segui back</div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs-wrap">
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('followers')">👥 Follower <span class="badge" id="bFollowers">0</span></button>
+        <button class="tab-btn" onclick="switchTab('following')">➡️ Following <span class="badge" id="bFollowing">0</span></button>
+        <button class="tab-btn" onclick="switchTab('notback')">❌ Non ti seguono <span class="badge" id="bNotBack">0</span></button>
+        <button class="tab-btn" onclick="switchTab('notfollow')">🔔 Non segui back <span class="badge" id="bNotFollow">0</span></button>
+        <button class="tab-btn" onclick="switchTab('storico')">📊 Storico</button>
+      </div>
+    </div>
+
+    <!-- ── TAB: Followers ───────────────────────────────────── -->
+    <div class="tab-panel active" id="tab-followers">
+      <div class="search-row">
+        <input type="text" placeholder="🔍 Cerca follower…" oninput="filterList('followers-list', this.value)">
+        <button class="sort-btn" onclick="sortList('followers-list')">⇅ Ordine</button>
+      </div>
+      <!-- ══ ADSTERRA Banner 728×90 – tra i contenuti ══ -->
+      <div class="ad-banner-wrap">
+        <div class="ad-slot-label">Pubblicità</div>
+        <div class="ad-slot">
+          <!-- ADSTERRA BANNER 728x90 – INCOLLA QUI -->
+        </div>
+      </div>
+      <div class="user-list" id="followers-list"></div>
+    </div>
+
+    <!-- ── TAB: Following ───────────────────────────────────── -->
+    <div class="tab-panel" id="tab-following">
+      <div class="search-row">
+        <input type="text" placeholder="🔍 Cerca following…" oninput="filterList('following-list', this.value)">
+        <button class="sort-btn" onclick="sortList('following-list')">⇅ Ordine</button>
+      </div>
+      <!-- ══ ADSTERRA Banner ══ -->
+      <div class="ad-banner-wrap">
+        <div class="ad-slot-label">Pubblicità</div>
+        <div class="ad-slot">
+          <!-- ADSTERRA BANNER – INCOLLA QUI -->
+        </div>
+      </div>
+      <div class="user-list" id="following-list"></div>
+    </div>
+
+    <!-- ── TAB: Non ti seguono (LOCKED) ────────────────────── -->
+    <div class="tab-panel" id="tab-notback">
+      <div id="gate-notback" class="lock-gate">
+        <div class="lock-icon">🔒</div>
+        <h3>Contenuto Premium</h3>
+        <p>Scopri chi tra le persone che segui <strong>non ti segue indietro</strong>. Guarda un breve annuncio per sbloccare.</p>
+        <button class="btn-watch" onclick="startAdGate('notback')">▶ Guarda annuncio &amp; Sblocca</button>
+        <div class="countdown-wrap" id="cd-notback">
+          <div class="ring">
+            <svg viewBox="0 0 56 56" width="60" height="60">
+              <circle class="track" cx="28" cy="28" r="25"/>
+              <circle class="fill" id="cd-notback-fill" cx="28" cy="28" r="25"/>
+            </svg>
+            <div class="num" id="cd-notback-num">30</div>
+          </div>
+          <p>Attendi il termine dell'annuncio…</p>
+        </div>
+      </div>
+      <div id="content-notback" style="display:none">
+        <div class="search-row">
+          <input type="text" placeholder="🔍 Cerca…" oninput="filterList('notback-list', this.value)">
+          <button class="sort-btn" onclick="sortList('notback-list')">⇅ Ordine</button>
+        </div>
+        <div class="user-list" id="notback-list"></div>
+      </div>
+    </div>
+
+    <!-- ── TAB: Non segui back (LOCKED) ────────────────────── -->
+    <div class="tab-panel" id="tab-notfollow">
+      <div id="gate-notfollow" class="lock-gate">
+        <div class="lock-icon">🔒</div>
+        <h3>Contenuto Premium</h3>
+        <p>Scopri chi ti segue ma che <strong>tu non segui ancora</strong>. Guarda un breve annuncio per sbloccare.</p>
+        <button class="btn-watch" onclick="startAdGate('notfollow')">▶ Guarda annuncio &amp; Sblocca</button>
+        <div class="countdown-wrap" id="cd-notfollow">
+          <div class="ring">
+            <svg viewBox="0 0 56 56" width="60" height="60">
+              <circle class="track" cx="28" cy="28" r="25"/>
+              <circle class="fill" id="cd-notfollow-fill" cx="28" cy="28" r="25"/>
+            </svg>
+            <div class="num" id="cd-notfollow-num">30</div>
+          </div>
+          <p>Attendi il termine dell'annuncio…</p>
+        </div>
+      </div>
+      <div id="content-notfollow" style="display:none">
+        <div class="search-row">
+          <input type="text" placeholder="🔍 Cerca…" oninput="filterList('notfollow-list', this.value)">
+          <button class="sort-btn" onclick="sortList('notfollow-list')">⇅ Ordine</button>
+        </div>
+        <div class="user-list" id="notfollow-list"></div>
+      </div>
+    </div>
+
+    <!-- ── TAB: Storico ─────────────────────────────────────── -->
+    <div class="tab-panel" id="tab-storico">
+      <div id="storico-panel">
+        <p style="color:var(--muted);font-size:.9rem;margin:16px 0 20px">
+          Carica due file ZIP esportati in momenti diversi per confrontarli e vedere i cambiamenti.
+        </p>
+        <div class="upload-duo">
+          <div class="mini-drop" id="oldDrop">
+            <input type="file" accept=".zip" onchange="loadStorico('old', this.files[0])">
+            <div class="icon">🗂️</div>
+            <h4>File Vecchio</h4>
+            <p>Export precedente</p>
+            <div class="loaded-name" id="old-name" style="display:none"></div>
+          </div>
+          <div class="mini-drop" id="newDrop">
+            <input type="file" accept=".zip" onchange="loadStorico('new', this.files[0])">
+            <div class="icon">📁</div>
+            <h4>File Corrente</h4>
+            <p>Export recente</p>
+            <div class="loaded-name" id="new-name" style="display:none"></div>
+          </div>
+        </div>
+        <button class="btn-watch" id="compareBtn" onclick="runComparison()" style="display:none;margin-bottom:24px">🔍 Confronta</button>
+        <div id="storico-results"></div>
+      </div>
+    </div>
+
+  </section><!-- /dashboard -->
+
+</main>
+
+<!-- ─── Bottom sticky ad bar ─────────────────────────────────── -->
+<div class="bottom-ad-bar">
+  <!-- ══ ADSTERRA – Banner 320×50 (Mobile) / 728×90 (Desktop) ══
+       Incolla qui il tuo codice Adsterra per il banner in basso.
+       Suggerito: Smart Banner o Sticky Banner di Adsterra. -->
+  <div class="ad-slot" style="width:100%">
+    <div class="ad-slot-label">Pubblicità</div>
+    <!-- ADSTERRA STICKY BANNER – INCOLLA QUI -->
+  </div>
+</div>
+
+<!-- ─── Ad Modal (popup Adsterra Direct Link) ────────────────── -->
+<div id="adModal" style="display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);align-items:center;justify-content:center;">
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px;max-width:420px;width:90%;text-align:center;">
+    <div style="font-size:2rem;margin-bottom:12px">📺</div>
+    <h3 style="font-family:'Syne',sans-serif;margin-bottom:8px">Annuncio aperto</h3>
+    <p style="color:var(--muted);font-size:.88rem;margin-bottom:20px">L'annuncio si è aperto in una nuova scheda. Guardalo e poi torna qui — il contenuto si sblocca automaticamente.</p>
+    <p style="color:var(--muted);font-size:.8rem;margin-bottom:20px">Sblocco in: <strong id="modal-countdown">30</strong>s</p>
+    <button class="btn-watch" id="modal-unlock-btn" onclick="closeAdModal()" style="opacity:.4;pointer-events:none">🔓 Sblocca ora</button>
+  </div>
+</div>
+
+<!-- ─── Scripts ───────────────────────────────────────────────── -->
+
+<!-- ══ ADSTERRA – Popunder (opzionale, si attiva al primo click) ══
+     Incolla qui il codice popunder di Adsterra se lo usi.
+     ESEMPIO: <script async src="//pl00000000.profitablegateway.com/00000000/invoke.js"></script>
+     -->
+<!-- ADSTERRA POPUNDER – INCOLLA QUI (OPZIONALE) -->
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+//  CONFIGURAZIONE ADSTERRA – Direct Link per sblocco contenuti
+//  Incolla qui il tuo URL Direct Link di Adsterra
+// ═══════════════════════════════════════════════════════════════
+const ADSTERRA_DIRECT_LINK = "https://www.profitableratecpm.com/YOUR_ZONE_ID"; 
+// ↑ Sostituisci con il tuo URL Direct Link Adsterra
+// Trovi il link in: Adsterra Dashboard → Siti → Add Site → Direct Link
+
+// ═══════════════════════════════════════════════════════════════
+//  State
+// ═══════════════════════════════════════════════════════════════
+let data = { followers: [], following: [] };
+let storData = { old: null, new: null };
+let unlockedSections = { notback: false, notfollow: false };
+let sortAsc = {};
+let currentAdTarget = null;
+let adModalTimer = null;
+
+// ═══════════════════════════════════════════════════════════════
+//  ZIP Parsing
+// ═══════════════════════════════════════════════════════════════
+async function handleFile(file) {
+  if (!file) return;
+  showLoading(true);
+  try {
+    const zip = await JSZip.loadAsync(file);
+    data = await parseInstagramZip(zip);
+    renderDashboard();
+    showToast('✅ File caricato con successo!');
+  } catch (e) {
+    showToast('❌ Errore: ' + e.message);
+    console.error(e);
+  }
+  showLoading(false);
+}
+
+async function parseInstagramZip(zip) {
+  const followers = [];
+  const following = [];
+
+  // List all non-directory files
+  const allFiles = Object.keys(zip.files).filter(f => !zip.files[f].dir);
+
+  // Debug: log all files for troubleshooting
+  console.log('[InstaScope] Files in ZIP:', allFiles);
+
+  // ── Helper: extract filename (last segment after /) ──
+  const fname = path => path.split('/').pop().toLowerCase();
+
+  // ── Followers ──
+  // Filename is: followers_1.json, followers_2.json, followers.json
+  // (NOT "following.json" — check exact filename)
+  const followerFiles = allFiles.filter(f => {
+    const n = fname(f);
+    return /^followers[\d_]*\.json$/.test(n);
+  });
+  console.log('[InstaScope] Follower files found:', followerFiles);
+
+  for (const f of followerFiles) {
+    try {
+      const raw = await zip.files[f].async('string');
+      const parsed = JSON.parse(raw);
+      // Format A: plain array [{string_list_data:[...]}]
+      // Format B: {relationships_followers:[...]}
+      const arr = Array.isArray(parsed)
+        ? parsed
+        : (parsed.relationships_followers || []);
+      for (const item of arr) {
+        const d = extractUser(item);
+        if (d) followers.push(d);
+      }
+    } catch(e) { console.warn('[InstaScope] Error parsing', f, e); }
+  }
+
+  // ── Following ──
+  // Match: following.json, following_1.json, following_2.json …
+  // Exclude anything starting with "followers"
+  const followingFiles = allFiles.filter(f => {
+    const n = fname(f);
+    return n.includes('following') && !n.startsWith('followers') && n.endsWith('.json');
+  });
+  console.log('[InstaScope] Following files found:', followingFiles);
+
+  for (const f of followingFiles) {
+    try {
+      const raw = await zip.files[f].async('string');
+      const parsed = JSON.parse(raw);
+      let arr = [];
+      if (Array.isArray(parsed)) {
+        arr = parsed;
+      } else if (parsed.relationships_following) {
+        arr = parsed.relationships_following;
+      } else {
+        // Deep search for any array containing string_list_data objects
+        const findArr = (obj, depth = 0) => {
+          if (depth > 6 || !obj || typeof obj !== 'object') return [];
+          if (Array.isArray(obj)) {
+            if (obj.length && obj[0]?.string_list_data) return obj;
+            return obj.flatMap(v => findArr(v, depth + 1));
+          }
+          return Object.values(obj).flatMap(v => findArr(v, depth + 1));
+        };
+        arr = findArr(parsed);
+      }
+      for (const item of arr) {
+        const d = extractUser(item);
+        if (d) following.push(d);
+      }
+      // Debug: show raw structure of first item to diagnose format issues
+      if (arr.length) console.log('[InstaScope] First following item sample:', JSON.stringify(arr[0]).slice(0,300));
+      console.log('[InstaScope] Following from', f, ':', following.length);
+    } catch(e) { console.warn('[InstaScope] Error parsing', f, e); }
+  }
+
+  // ── Fallback: if STILL zero, deep scan ALL json files ──
+  if (!following.length || !followers.length) {
+    console.log('[InstaScope] Running fallback deep scan…');
+    const jsonFiles = allFiles.filter(f => fname(f).endsWith('.json'));
+    for (const f of jsonFiles) {
+      if (followingFiles.includes(f) || followerFiles.includes(f)) continue; // already parsed
+      try {
+        const raw = await zip.files[f].async('string');
+        const parsed = JSON.parse(raw);
+        const deepSearch = (obj, depth = 0) => {
+          if (depth > 8 || !obj || typeof obj !== 'object') return [];
+          if (Array.isArray(obj)) return obj.flatMap(v => deepSearch(v, depth + 1));
+          if (obj.string_list_data) return [obj];
+          return Object.values(obj).flatMap(v => deepSearch(v, depth + 1));
+        };
+        const items = deepSearch(parsed);
+        const n = fname(f);
+        const isFollowing = n.includes('following') && !n.startsWith('followers');
+        const isFollower  = n.startsWith('followers') || n.includes('follower');
+        items.forEach(item => {
+          const d = extractUser(item);
+          if (!d) return;
+          if (isFollowing && !following.find(u => u.username === d.username)) following.push(d);
+          else if (isFollower && !followers.find(u => u.username === d.username)) followers.push(d);
+        });
+      } catch {}
+    }
+    console.log('[InstaScope] After fallback — followers:', followers.length, 'following:', following.length);
+  }
+
+  if (!followers.length && !following.length) {
+    const fileList = allFiles.slice(0,10).join(', ');
+    throw new Error(
+      `Struttura non riconosciuta. File trovati nel ZIP: ${fileList || 'nessuno'}. ` +
+      `Assicurati di esportare da Instagram con formato JSON (non HTML).`
+    );
+  }
+
+  // Deduplicate
+  const dedup = arr => {
+    const seen = new Set();
+    return arr.filter(u => { if (seen.has(u.username)) return false; seen.add(u.username); return true; });
+  };
+
+  return { followers: dedup(followers), following: dedup(following) };
+}
+
+// ── Extract user — handles ALL known Instagram export formats ──
+function extractUser(item) {
+  if (!item || typeof item !== 'object') return null;
+
+  // Collect candidates in priority order, then pick the best
+  let username = null;
+  let href = '';
+  let ts = 0;
+
+  // FORMAT A (following.json new style):
+  //   title = "username", string_list_data[0] has href but NO value
+  //   e.g. href = "https://www.instagram.com/_u/username"
+  // FORMAT B (followers_1.json):
+  //   title = "", string_list_data[0].value = "username"
+
+  // 1) Try string_list_data[0].value first (most reliable when present)
+  if (Array.isArray(item.string_list_data) && item.string_list_data.length > 0) {
+    const d = item.string_list_data[0];
+    ts = d?.timestamp || 0;
+    href = d?.href || '';
+    if (d?.value && d.value.trim()) {
+      username = d.value.trim();
+    }
+  }
+
+  // 2) If no username yet, try title (following.json new format)
+  if (!username && item.title && item.title.trim()) {
+    username = item.title.trim();
+  }
+
+  // 3) If no username yet, extract from href (handles /_u/ URLs too)
+  if (!username && href) {
+    username = usernameFromHref(href);
+  }
+
+  if (!username || /^\d{6,}$/.test(username)) return null;
+
+  // Build clean profile URL
+  const profileHref = 'https://www.instagram.com/' + username;
+  return { username, href: profileHref, ts };
+}
+
+// Extract username from any Instagram URL including /_u/ variant
+function usernameFromHref(url) {
+  if (!url || typeof url !== 'string') return null;
+  // Handles: instagram.com/_u/username AND instagram.com/username
+  const m = url.match(/instagram\.com\/_u\/([^\/?#]+)/i)
+           || url.match(/instagram\.com\/([^\/?#]+)/i);
+  if (!m) return null;
+  const u = m[1].trim();
+  if (!u || u === '_u') return null;
+  return u;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  Render Dashboard
+// ═══════════════════════════════════════════════════════════════
+function renderDashboard() {
+  const { followers, following } = data;
+  const follSet = new Set(followers.map(u => u.username.toLowerCase()));
+  const follgSet = new Set(following.map(u => u.username.toLowerCase()));
+
+  const notBack   = following.filter(u => !follSet.has(u.username.toLowerCase()));
+  const notFollow = followers.filter(u => !follgSet.has(u.username.toLowerCase()));
+
+  // Stats
+  document.getElementById('statFollowers').textContent = followers.length;
+  document.getElementById('statFollowing').textContent = following.length;
+  document.getElementById('statNotBack').textContent   = notBack.length;
+  document.getElementById('statNotFollow').textContent = notFollow.length;
+
+  // Badges
+  document.getElementById('bFollowers').textContent = followers.length;
+  document.getElementById('bFollowing').textContent = following.length;
+  document.getElementById('bNotBack').textContent   = notBack.length;
+  document.getElementById('bNotFollow').textContent = notFollow.length;
+
+  // Lists
+  renderList('followers-list', followers, 'var(--grad1)', 'var(--grad2)');
+  renderList('following-list', following, '#833ab4', '#e1306c');
+  renderList('notback-list',   notBack,   '#e1306c', '#fd1d1d');
+  renderList('notfollow-list', notFollow, '#ff8c42', '#e1306c');
+
+  // Show dashboard
+  document.getElementById('hero').style.display = 'none';
+  document.getElementById('dashboard').classList.add('visible');
+  document.getElementById('resetBtn').style.display = 'inline-flex';
+}
+
+function renderList(listId, users, c1, c2) {
+  const el = document.getElementById(listId);
+  if (!users.length) {
+    el.innerHTML = `<div class="empty"><div class="e-icon">🎉</div><p>Nessun utente in questa categoria</p></div>`;
+    return;
+  }
+  el.innerHTML = users.map(u => {
+    const letter = (u.username[0] || '?').toUpperCase();
+    const date = u.ts ? new Date(u.ts * 1000).toLocaleDateString('it-IT') : '';
+    const href = u.href || `https://instagram.com/${u.username}`;
+    return `<div class="user-item" data-name="${u.username.toLowerCase()}">
+      <div class="avatar" style="background:linear-gradient(135deg,${c1},${c2})">${letter}</div>
+      <div class="user-info">
+        <div class="uname">@${escHtml(u.username)}</div>
+        ${date ? `<div class="udate">Dal ${date}</div>` : ''}
+      </div>
+      <a href="${escHtml(href)}" target="_blank" rel="noopener" class="user-link">Apri ↗</a>
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  Search & Sort
+// ═══════════════════════════════════════════════════════════════
+function filterList(listId, query) {
+  const items = document.querySelectorAll(`#${listId} .user-item`);
+  const q = query.toLowerCase();
+  items.forEach(item => {
+    item.style.display = item.dataset.name?.includes(q) ? '' : 'none';
+  });
+}
+
+function sortList(listId) {
+  const container = document.getElementById(listId);
+  const items = [...container.querySelectorAll('.user-item')];
+  sortAsc[listId] = !sortAsc[listId];
+  items.sort((a, b) => {
+    const na = a.dataset.name || '', nb = b.dataset.name || '';
+    return sortAsc[listId] ? na.localeCompare(nb) : nb.localeCompare(na);
+  });
+  items.forEach(i => container.appendChild(i));
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  Tabs
+// ═══════════════════════════════════════════════════════════════
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  Ad Gate – Adsterra Direct Link
+// ═══════════════════════════════════════════════════════════════
+function startAdGate(section) {
+  if (unlockedSections[section]) { unlockSection(section); return; }
+  currentAdTarget = section;
+
+  // Open Adsterra Direct Link in new tab
+  window.open(ADSTERRA_DIRECT_LINK, '_blank', 'noopener');
+
+  // Show modal with countdown
+  const modal = document.getElementById('adModal');
+  modal.style.display = 'flex';
+  let secs = 30;
+  document.getElementById('modal-countdown').textContent = secs;
+  const unlockBtn = document.getElementById('modal-unlock-btn');
+  unlockBtn.style.opacity = '.4';
+  unlockBtn.style.pointerEvents = 'none';
+
+  // Also run the ring countdown inline
+  const cdWrap = document.getElementById('cd-' + section);
+  const fillEl = document.getElementById('cd-' + section + '-fill');
+  const numEl  = document.getElementById('cd-' + section + '-num');
+  const btn    = document.querySelector(`#gate-${section} .btn-watch`);
+  cdWrap.classList.add('show');
+  btn.disabled = true;
+  const perim = 2 * Math.PI * 25; // 157
+
+  adModalTimer = setInterval(() => {
+    secs--;
+    document.getElementById('modal-countdown').textContent = secs;
+    if (numEl) numEl.textContent = secs;
+    if (fillEl) fillEl.style.strokeDashoffset = perim - (perim * (30 - secs) / 30);
+    if (secs <= 0) {
+      clearInterval(adModalTimer);
+      unlockBtn.style.opacity = '1';
+      unlockBtn.style.pointerEvents = 'auto';
+      // Auto-unlock
+      unlockedSections[section] = true;
+      closeAdModal();
+      unlockSection(section);
+    }
+  }, 1000);
+}
+
+function closeAdModal() {
+  document.getElementById('adModal').style.display = 'none';
+  if (adModalTimer) clearInterval(adModalTimer);
+  if (currentAdTarget && unlockedSections[currentAdTarget]) {
+    unlockSection(currentAdTarget);
+  }
+}
+
+function unlockSection(section) {
+  document.getElementById('gate-' + section).style.display = 'none';
+  document.getElementById('content-' + section).style.display = 'block';
+  showToast('🔓 Contenuto sbloccato!');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  Storico – confronto tra due ZIP
+// ═══════════════════════════════════════════════════════════════
+async function loadStorico(type, file) {
+  if (!file) return;
+  showLoading(true);
+  try {
+    const zip = await JSZip.loadAsync(file);
+    storData[type] = await parseInstagramZip(zip);
+    const nameEl = document.getElementById(type + '-name');
+    nameEl.textContent = '✓ ' + file.name;
+    nameEl.style.display = 'block';
+    document.getElementById(type === 'old' ? 'oldDrop' : 'newDrop').classList.add('loaded');
+    if (storData.old && storData['new']) {
+      document.getElementById('compareBtn').style.display = 'inline-flex';
+    }
+    showToast('✅ ' + (type === 'old' ? 'File vecchio' : 'File corrente') + ' caricato');
+  } catch (e) { showToast('❌ ' + e.message); }
+  showLoading(false);
+}
+
+function runComparison() {
+  const oldF = new Set(storData.old.followers.map(u => u.username.toLowerCase()));
+  const newF = new Set(storData['new'].followers.map(u => u.username.toLowerCase()));
+  const oldFg = new Set(storData.old.following.map(u => u.username.toLowerCase()));
+  const newFg = new Set(storData['new'].following.map(u => u.username.toLowerCase()));
+
+  const newFollowers  = storData['new'].followers.filter(u => !oldF.has(u.username.toLowerCase()));
+  const lostFollowers = storData.old.followers.filter(u => !newF.has(u.username.toLowerCase()));
+  const newFollowing  = storData['new'].following.filter(u => !oldFg.has(u.username.toLowerCase()));
+  const lostFollowing = storData.old.following.filter(u => !newFg.has(u.username.toLowerCase()));
+
+  const container = document.getElementById('storico-results');
+  container.innerHTML = '';
+
+  // Banner ad between results
+  container.innerHTML += `<div class="ad-banner-wrap">
+    <div class="ad-slot-label">Pubblicità</div>
+    <div class="ad-slot"><!-- ADSTERRA BANNER STORICO – INCOLLA QUI --></div>
+  </div>`;
+
+  renderDiffSection(container, 'new-followers', '🟢 Nuovi follower', newFollowers, 'var(--green)');
+  renderDiffSection(container, 'lost-followers', '🔴 Follower persi', lostFollowers, 'var(--accent)');
+  renderDiffSection(container, 'new-following', '🟠 Nuovi following', newFollowing, 'var(--orange)');
+  renderDiffSection(container, 'lost-following', '🟣 Following rimossi', lostFollowing, '#a855f7');
+
+  if (!newFollowers.length && !lostFollowers.length && !newFollowing.length && !lostFollowing.length) {
+    container.innerHTML = `<div class="empty"><div class="e-icon">📊</div><p>Nessun cambiamento rilevato tra i due file</p></div>`;
+  }
+}
+
+function renderDiffSection(container, cls, title, users, dotColor) {
+  if (!users.length) return;
+  const sec = document.createElement('div');
+  sec.className = 'diff-section ' + cls;
+  sec.innerHTML = `<h3>${title} (${users.length})</h3>` +
+    users.map(u => `<div class="diff-item">
+      <div class="diff-dot" style="background:${dotColor}"></div>
+      <div style="flex:1;font-size:.88rem">@${escHtml(u.username)}</div>
+      <a href="${escHtml(u.href || 'https://instagram.com/'+u.username)}" target="_blank" rel="noopener" class="user-link" style="font-size:.75rem">↗</a>
+    </div>`).join('');
+  container.appendChild(sec);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  Utilities
+// ═══════════════════════════════════════════════════════════════
+function resetApp() {
+  data = { followers: [], following: [] };
+  storData = { old: null, 'new': null };
+  unlockedSections = { notback: false, notfollow: false };
+  document.getElementById('hero').style.display = 'block';
+  document.getElementById('dashboard').classList.remove('visible');
+  document.getElementById('resetBtn').style.display = 'none';
+  document.getElementById('fileInput').value = '';
+  // Reset gates
+  ['notback','notfollow'].forEach(s => {
+    document.getElementById('gate-' + s).style.display = 'block';
+    document.getElementById('content-' + s).style.display = 'none';
+    document.getElementById('cd-' + s).classList.remove('show');
+    document.querySelector(`#gate-${s} .btn-watch`).disabled = false;
+  });
+  document.getElementById('storico-results').innerHTML = '';
+  document.getElementById('compareBtn').style.display = 'none';
+  document.getElementById('old-name').style.display = 'none';
+  document.getElementById('new-name').style.display = 'none';
+  ['oldDrop','newDrop'].forEach(id => document.getElementById(id).classList.remove('loaded'));
+  switchTabDirect('followers');
+}
+
+function switchTabDirect(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  document.querySelector(`.tab-btn[onclick*="${name}"]`)?.classList.add('active');
+}
+
+function showLoading(show) {
+  document.getElementById('loading-overlay').classList.toggle('show', show);
+}
+
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ─── Drag & Drop ─────────────────────────────────────────────
+const dz = document.getElementById('dropZone');
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag-over'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
+dz.addEventListener('drop', e => {
+  e.preventDefault(); dz.classList.remove('drag-over');
+  const f = e.dataTransfer.files[0];
+  if (f?.name.endsWith('.zip')) handleFile(f);
+  else showToast('⚠️ Carica un file .zip');
+});
+</script>
+</body>
+</html>
