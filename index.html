@@ -384,69 +384,93 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
 #adOverlay {
   display: none;
   position: fixed; inset: 0; z-index: 9999;
-  background: linear-gradient(135deg, rgba(8,8,15,.97), rgba(20,10,30,.97));
-  backdrop-filter: blur(8px);
+  background: rgba(0,0,0,.94);
+  backdrop-filter: blur(10px);
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 24px;
-  padding: 24px;
+  gap: 16px;
+  padding: 20px 16px 24px;
 }
-#adOverlay.show { display: flex; animation: fadeUp .25s ease; }
+#adOverlay.show { display: flex; animation: fadeUp .2s ease; }
 
-/* X button top-right */
+/* X con ring nell'angolo */
 #adCloseWrap {
   position: absolute;
-  top: 18px; right: 18px;
+  top: 14px; right: 14px;
   width: 44px; height: 44px;
+  z-index: 10;
 }
 #adCloseRing {
   position: absolute; inset: 0;
   width: 44px; height: 44px;
-  display: none; /* small ring hidden — big ring used instead */
 }
 #adCloseBtn {
   position: absolute; inset: 0;
   width: 44px; height: 44px;
   border-radius: 50%;
-  background: rgba(255,255,255,.08);
-  border: 1.5px solid rgba(255,255,255,.15);
-  color: #fff;
-  font-size: 1.05rem;
+  background: rgba(20,20,30,.85);
+  border: none;
+  color: rgba(255,255,255,.5);
+  font-size: 1rem; font-weight: 700;
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  transition: all .2s;
+  transition: all .25s;
   opacity: 0;
   pointer-events: none;
 }
 #adCloseBtn.ready {
   opacity: 1;
   pointer-events: auto;
-  background: rgba(255,255,255,.15);
-  border-color: rgba(255,255,255,.35);
+  color: #fff;
 }
-#adCloseBtn.ready:hover { background: rgba(225,48,108,.4); border-color: var(--accent); }
+#adCloseBtn.ready:active { background: rgba(225,48,108,.5); }
 
 #adOverlayLabel {
-  font-size: .68rem;
+  font-size: .65rem;
   text-transform: uppercase;
-  letter-spacing: .14em;
-  color: rgba(255,255,255,.25);
+  letter-spacing: .15em;
+  color: rgba(255,255,255,.2);
+  margin-bottom: -4px;
 }
 
-/* Big countdown ring */
-#adCountdownWrap { position: relative; }
-#adBigRing { width: 140px; height: 140px; filter: drop-shadow(0 0 20px rgba(225,48,108,.3)); }
+/* iframe ad container */
+#adIframeWrap {
+  width: 100%;
+  max-width: 700px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #111;
+  box-shadow: 0 4px 40px rgba(0,0,0,.6);
+  flex-shrink: 0;
+}
+#adIframe {
+  width: 100%;
+  height: 420px;
+  border: none;
+  display: block;
+}
+@media (max-width: 600px) {
+  #adIframe { height: 320px; }
+}
+@media (max-width: 380px) {
+  #adIframe { height: 260px; }
+}
 
 #adOverlayInfo {
-  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
   text-align: center;
 }
 #adOverlayMsg {
-  font-size: .9rem; color: rgba(255,255,255,.55);
-  max-width: 260px; line-height: 1.4;
+  font-size: .82rem; color: rgba(255,255,255,.4);
+  max-width: 280px; line-height: 1.4;
 }
-#adOverlaySecs { display: none; } /* number shown inside SVG now */
+#adOverlaySecs {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem; font-weight: 700;
+  color: rgba(255,255,255,.6);
+  min-height: 24px;
+}
 
 /* ─── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 700px) {
@@ -764,44 +788,36 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
   </div>
 </div>
 
-<!-- ─── Ad Modal (popup Adsterra Direct Link) ────────────────── -->
-<!-- ─── Ad Overlay (fullscreen, mobile-friendly) ──────────────── -->
+<!-- ─── Ad Overlay fullscreen ──────────────────────────────────── -->
 <div id="adOverlay">
-  <!-- X button top-right with circular countdown -->
+
+  <!-- X con timer nell'angolo in alto a destra -->
   <div id="adCloseWrap">
     <svg id="adCloseRing" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="22" cy="22" r="19" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="3"/>
-      <circle id="adCloseArc" cx="22" cy="22" r="19" fill="none"
-              stroke="#fff" stroke-width="3"
+      <circle cx="22" cy="22" r="19" fill="rgba(0,0,0,.4)" stroke="rgba(255,255,255,.15)" stroke-width="2.5"/>
+      <circle id="adSmallArc" cx="22" cy="22" r="19" fill="none"
+              stroke="url(#cGrad)" stroke-width="2.5"
               stroke-dasharray="119.4" stroke-dashoffset="119.4"
               stroke-linecap="round" transform="rotate(-90 22 22)"/>
     </svg>
     <button id="adCloseBtn" onclick="closeAdOverlay()">✕</button>
   </div>
 
-  <!-- Icona e titolo -->
+  <!-- Label -->
   <div id="adOverlayLabel">Pubblicità</div>
 
-  <!-- Countdown ring grande — nessuno script interno, sicuro su iOS/Android -->
-  <div id="adCountdownWrap">
-    <svg id="adBigRing" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="cGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:#e1306c"/>
-          <stop offset="100%" style="stop-color:#833ab4"/>
-        </linearGradient>
-      </defs>
-      <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="6"/>
-      <circle id="adCloseArc" cx="60" cy="60" r="52" fill="none"
-              stroke="url(#cGrad)" stroke-width="6"
-              stroke-dasharray="326.7" stroke-dashoffset="326.7"
-              stroke-linecap="round" transform="rotate(-90 60 60)"/>
-      <text id="adBigNum" x="60" y="60" text-anchor="middle" dominant-baseline="central"
-            fill="#fff" font-family="Syne,sans-serif" font-size="32" font-weight="800">30</text>
-    </svg>
+  <!-- iframe sandboxato: mostra l'annuncio, non può reindirizzare la pagina -->
+  <div id="adIframeWrap">
+    <iframe id="adIframe"
+      src=""
+      sandbox="allow-scripts allow-same-origin allow-forms allow-popups-to-escape-sandbox"
+      scrolling="yes"
+      frameborder="0"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
   </div>
 
-  <!-- Info text -->
+  <!-- Countdown e messaggio -->
   <div id="adOverlayInfo">
     <span id="adOverlayMsg">Attendi per sbloccare il contenuto</span>
     <span id="adOverlaySecs"></span>
@@ -834,6 +850,12 @@ let adModalTimer = null;
 // ═══════════════════════════════════════════════════════════════
 async function handleFile(file) {
   if (!file) return;
+  // Mostra ad breve (5s) solo una volta per sessione
+  if (!sessionStorage.getItem('uploadAdShown')) {
+    sessionStorage.setItem('uploadAdShown', '1');
+    openAdOverlay(5, null, file);
+    return;
+  }
   await processFile(file);
 }
 
@@ -1137,20 +1159,22 @@ function openAdOverlay(duration, section, pendingFile) {
   _pendingFile = pendingFile;
   currentAdTarget = section;
 
-  // Message
+  // Carica l'annuncio nell'iframe sandboxato
+  const iframe = document.getElementById('adIframe');
+  iframe.src = 'https://www.profitablecpmratenetwork.com/cnahs6tm?key=5afe4a242dd75e5e13e9d4c4fdddade7';
+
+  // Messaggio iniziale
   document.getElementById('adOverlayMsg').textContent =
     section ? 'Guarda la pubblicità per sbloccare il contenuto' : 'Un momento…';
+  document.getElementById('adOverlaySecs').textContent = duration + 's';
 
-  // Reset X button and arc
+  // Reset X button
   const btn = document.getElementById('adCloseBtn');
-  const arc = document.getElementById('adCloseArc');
-  const numEl = document.getElementById('adBigNum');
+  const arc = document.getElementById('adSmallArc');
   btn.classList.remove('ready');
-
-  const perim = 2 * Math.PI * 52; // r=52 → 326.7
-  arc.style.strokeDashoffset = perim;
+  const perim = 2 * Math.PI * 19; // 119.4
   arc.style.transition = 'none';
-  if (numEl) numEl.textContent = duration;
+  arc.style.strokeDashoffset = perim;
 
   document.getElementById('adOverlay').classList.add('show');
 
@@ -1162,25 +1186,26 @@ function openAdOverlay(duration, section, pendingFile) {
     const progress = (duration - secs) / duration;
     arc.style.transition = 'stroke-dashoffset 1s linear';
     arc.style.strokeDashoffset = perim - (perim * progress);
-    if (numEl) numEl.textContent = Math.max(0, secs);
+    document.getElementById('adOverlaySecs').textContent = secs > 0 ? secs + 's' : '';
 
     if (secs <= 0) {
       clearInterval(adModalTimer);
-      if (numEl) numEl.textContent = '✕';
       btn.classList.add('ready');
       document.getElementById('adOverlayMsg').textContent =
-        section ? 'Contenuto sbloccato! Chiudi per continuare.' : '';
-      // Upload mode: auto-dismiss
-      if (!section) setTimeout(() => closeAdOverlay(), 400);
+        section ? 'Puoi chiudere la pubblicità ✕' : '';
+      // Upload: auto-chiudi subito
+      if (!section) setTimeout(() => closeAdOverlay(), 500);
     }
   }, 1000);
 }
 
 function closeAdOverlay() {
   document.getElementById('adOverlay').classList.remove('show');
+  // Svuota iframe per fermare la pubblicità e liberare memoria
+  setTimeout(() => { document.getElementById('adIframe').src = ''; }, 300);
   if (adModalTimer) clearInterval(adModalTimer);
 
-  // Unlock section or process file
+  // Unlock section o process file
   if (currentAdTarget) {
     unlockedSections[currentAdTarget] = true;
     unlockSection(currentAdTarget);
