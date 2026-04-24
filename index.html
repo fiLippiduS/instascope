@@ -377,6 +377,76 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
   display: flex; align-items: center; justify-content: center;
 }
 
+/* ─── Ad Overlay ─────────────────────────────────────────────── */
+#adOverlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,.92);
+  backdrop-filter: blur(6px);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+#adOverlay.show { display: flex; }
+
+/* X button with ring */
+#adCloseWrap {
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 44px; height: 44px;
+}
+#adCloseRing {
+  position: absolute; inset: 0;
+  width: 44px; height: 44px;
+}
+#adCloseBtn {
+  position: absolute; inset: 0;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.1);
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s;
+  opacity: 0;
+  pointer-events: none;
+}
+#adCloseBtn.ready {
+  opacity: 1;
+  pointer-events: auto;
+  background: rgba(255,255,255,.15);
+}
+#adCloseBtn.ready:hover { background: rgba(255,255,255,.28); }
+
+#adOverlayLabel {
+  font-size: .68rem;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: rgba(255,255,255,.3);
+  margin-bottom: -10px;
+}
+#adBannerContainer {
+  display: flex; align-items: center; justify-content: center;
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+}
+#adBannerContainer iframe { border-radius: 8px; }
+
+#adOverlayInfo {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+}
+#adOverlayMsg { font-size: .85rem; color: rgba(255,255,255,.5); }
+#adOverlaySecs {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.2rem; font-weight: 700;
+  color: rgba(255,255,255,.8);
+}
+
 /* ─── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 700px) {
   .stats-bar { grid-template-columns: repeat(2, 1fr); }
@@ -562,16 +632,7 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
         <h3>Contenuto Premium</h3>
         <p>Scopri chi tra le persone che segui <strong>non ti segue indietro</strong>. Guarda un breve annuncio per sbloccare.</p>
         <button class="btn-watch" onclick="startAdGate('notback')">▶ Guarda annuncio &amp; Sblocca</button>
-        <div class="countdown-wrap" id="cd-notback">
-          <div class="ring">
-            <svg viewBox="0 0 56 56" width="60" height="60">
-              <circle class="track" cx="28" cy="28" r="25"/>
-              <circle class="fill" id="cd-notback-fill" cx="28" cy="28" r="25"/>
-            </svg>
-            <div class="num" id="cd-notback-num">30</div>
-          </div>
-          <p>Attendi il termine dell'annuncio…</p>
-        </div>
+
       </div>
       <div id="content-notback" style="display:none">
         <div class="search-row">
@@ -589,16 +650,7 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
         <h3>Contenuto Premium</h3>
         <p>Scopri chi ti segue ma che <strong>tu non segui ancora</strong>. Guarda un breve annuncio per sbloccare.</p>
         <button class="btn-watch" onclick="startAdGate('notfollow')">▶ Guarda annuncio &amp; Sblocca</button>
-        <div class="countdown-wrap" id="cd-notfollow">
-          <div class="ring">
-            <svg viewBox="0 0 56 56" width="60" height="60">
-              <circle class="track" cx="28" cy="28" r="25"/>
-              <circle class="fill" id="cd-notfollow-fill" cx="28" cy="28" r="25"/>
-            </svg>
-            <div class="num" id="cd-notfollow-num">30</div>
-          </div>
-          <p>Attendi il termine dell'annuncio…</p>
-        </div>
+
       </div>
       <div id="content-notfollow" style="display:none">
         <div class="search-row">
@@ -674,13 +726,55 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
 </div>
 
 <!-- ─── Ad Modal (popup Adsterra Direct Link) ────────────────── -->
-<div id="adModal" style="display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);align-items:center;justify-content:center;">
-  <div style="background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px;max-width:420px;width:90%;text-align:center;">
-    <div style="font-size:2rem;margin-bottom:12px">📺</div>
-    <h3 style="font-family:'Syne',sans-serif;margin-bottom:8px">Annuncio aperto</h3>
-    <p style="color:var(--muted);font-size:.88rem;margin-bottom:20px">L'annuncio si è aperto in una nuova scheda. Guardalo e poi torna qui — il contenuto si sblocca automaticamente.</p>
-    <p style="color:var(--muted);font-size:.8rem;margin-bottom:20px">Sblocco in: <strong id="modal-countdown">30</strong>s</p>
-    <button class="btn-watch" id="modal-unlock-btn" onclick="closeAdModal()" style="opacity:.4;pointer-events:none">🔓 Sblocca ora</button>
+<!-- ─── Ad Overlay (fullscreen, mobile-friendly) ──────────────── -->
+<div id="adOverlay">
+  <!-- X button top-right with circular countdown -->
+  <div id="adCloseWrap">
+    <svg id="adCloseRing" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="22" cy="22" r="19" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="3"/>
+      <circle id="adCloseArc" cx="22" cy="22" r="19" fill="none"
+              stroke="#fff" stroke-width="3"
+              stroke-dasharray="119.4" stroke-dashoffset="119.4"
+              stroke-linecap="round" transform="rotate(-90 22 22)"/>
+    </svg>
+    <button id="adCloseBtn" onclick="closeAdOverlay()">✕</button>
+  </div>
+
+  <!-- Ad label -->
+  <div id="adOverlayLabel">Pubblicità</div>
+
+  <!-- Banner container — swaps between 728x90 and 320x50 based on screen -->
+  <div id="adBannerContainer">
+    <div id="adBanner728">
+      <script>
+        atOptions = {
+          'key' : 'a0e43591563ce0e9b1e03957502bcfbd',
+          'format' : 'iframe',
+          'height' : 90,
+          'width' : 728,
+          'params' : {}
+        };
+      </script>
+      <script src="https://www.highperformanceformat.com/a0e43591563ce0e9b1e03957502bcfbd/invoke.js"></script>
+    </div>
+    <div id="adBanner320" style="display:none">
+      <script>
+        atOptions = {
+          'key' : '5cd524f63e2955b48fda7bd8f79a36bf',
+          'format' : 'iframe',
+          'height' : 50,
+          'width' : 320,
+          'params' : {}
+        };
+      </script>
+      <script src="https://www.highperformanceformat.com/5cd524f63e2955b48fda7bd8f79a36bf/invoke.js"></script>
+    </div>
+  </div>
+
+  <!-- Info text -->
+  <div id="adOverlayInfo">
+    <span id="adOverlayMsg">Attendi per sbloccare il contenuto</span>
+    <span id="adOverlaySecs"></span>
   </div>
 </div>
 
@@ -716,6 +810,16 @@ let adModalTimer = null;
 // ═══════════════════════════════════════════════════════════════
 async function handleFile(file) {
   if (!file) return;
+  // Show quick ad (3s) before loading — skips if already shown this session
+  if (!sessionStorage.getItem('uploadAdShown')) {
+    sessionStorage.setItem('uploadAdShown', '1');
+    openAdOverlay(3, null, file); // 3s timer, then auto-process file
+    return;
+  }
+  await processFile(file);
+}
+
+async function processFile(file) {
   showLoading(true);
   try {
     const zip = await JSZip.loadAsync(file);
@@ -1002,52 +1106,80 @@ function switchTab(name) {
 function startAdGate(section) {
   if (unlockedSections[section]) { unlockSection(section); return; }
   currentAdTarget = section;
+  openAdOverlay(30, section, null);
+}
 
-  // Open Adsterra Direct Link in new tab
-  window.open(ADSTERRA_DIRECT_LINK, '_blank', 'noopener');
+// ── Universal Ad Overlay ──────────────────────────────────────
+// duration: seconds before X appears
+// section: 'notback'|'notfollow' (null for file upload)
+// pendingFile: File object to process after overlay (null for section unlock)
+let _pendingFile = null;
 
-  // Show modal with countdown
-  const modal = document.getElementById('adModal');
-  modal.style.display = 'flex';
-  let secs = 30;
-  document.getElementById('modal-countdown').textContent = secs;
-  const unlockBtn = document.getElementById('modal-unlock-btn');
-  unlockBtn.style.opacity = '.4';
-  unlockBtn.style.pointerEvents = 'none';
+function openAdOverlay(duration, section, pendingFile) {
+  _pendingFile = pendingFile;
+  currentAdTarget = section;
 
-  // Also run the ring countdown inline
-  const cdWrap = document.getElementById('cd-' + section);
-  const fillEl = document.getElementById('cd-' + section + '-fill');
-  const numEl  = document.getElementById('cd-' + section + '-num');
-  const btn    = document.querySelector(`#gate-${section} .btn-watch`);
-  cdWrap.classList.add('show');
-  btn.disabled = true;
-  const perim = 2 * Math.PI * 25; // 157
+  // Pick banner size based on screen width
+  const isMobile = window.innerWidth < 600;
+  document.getElementById('adBanner728').style.display = isMobile ? 'none' : 'block';
+  document.getElementById('adBanner320').style.display = isMobile ? 'block' : 'none';
+
+  // Labels
+  document.getElementById('adOverlayMsg').textContent =
+    section ? 'Attendi per sbloccare il contenuto' : 'Caricamento in corso…';
+  document.getElementById('adOverlaySecs').textContent = duration + 's';
+
+  // Reset close button
+  const btn = document.getElementById('adCloseBtn');
+  const arc = document.getElementById('adCloseArc');
+  btn.classList.remove('ready');
+  const perim = 2 * Math.PI * 19; // 119.4
+  arc.style.strokeDashoffset = perim;
+
+  document.getElementById('adOverlay').classList.add('show');
+
+  let secs = duration;
+  if (adModalTimer) clearInterval(adModalTimer);
 
   adModalTimer = setInterval(() => {
     secs--;
-    document.getElementById('modal-countdown').textContent = secs;
-    if (numEl) numEl.textContent = secs;
-    if (fillEl) fillEl.style.strokeDashoffset = perim - (perim * (30 - secs) / 30);
+    document.getElementById('adOverlaySecs').textContent = secs > 0 ? secs + 's' : '';
+    // Animate ring fill (clockwise)
+    const progress = (duration - secs) / duration;
+    arc.style.strokeDashoffset = perim - (perim * progress);
+
     if (secs <= 0) {
       clearInterval(adModalTimer);
-      unlockBtn.style.opacity = '1';
-      unlockBtn.style.pointerEvents = 'auto';
-      // Auto-unlock
-      unlockedSections[section] = true;
-      closeAdModal();
-      unlockSection(section);
+      // Show X
+      btn.classList.add('ready');
+      document.getElementById('adOverlayMsg').textContent = '';
+      document.getElementById('adOverlaySecs').textContent = '';
+      // If file upload: auto-close after X is ready
+      if (!section) {
+        setTimeout(() => closeAdOverlay(), 300);
+      }
     }
   }, 1000);
 }
 
-function closeAdModal() {
-  document.getElementById('adModal').style.display = 'none';
+function closeAdOverlay() {
+  document.getElementById('adOverlay').classList.remove('show');
   if (adModalTimer) clearInterval(adModalTimer);
-  if (currentAdTarget && unlockedSections[currentAdTarget]) {
+
+  // Unlock section or process file
+  if (currentAdTarget) {
+    unlockedSections[currentAdTarget] = true;
     unlockSection(currentAdTarget);
+    currentAdTarget = null;
+  }
+  if (_pendingFile) {
+    const f = _pendingFile;
+    _pendingFile = null;
+    processFile(f);
   }
 }
+
+function closeAdModal() { closeAdOverlay(); } // legacy alias
 
 function unlockSection(section) {
   document.getElementById('gate-' + section).style.display = 'none';
@@ -1132,7 +1264,6 @@ function resetApp() {
   ['notback','notfollow'].forEach(s => {
     document.getElementById('gate-' + s).style.display = 'block';
     document.getElementById('content-' + s).style.display = 'none';
-    document.getElementById('cd-' + s).classList.remove('show');
     document.querySelector(`#gate-${s} .btn-watch`).disabled = false;
   });
   document.getElementById('storico-results').innerHTML = '';
