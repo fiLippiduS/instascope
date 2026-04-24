@@ -447,8 +447,9 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
     <div class="drop-zone" id="dropZone">
       <input type="file" accept=".zip" id="fileInput" onchange="handleFile(this.files[0])">
       <div class="drop-icon">📦</div>
-      <h3>Trascina il tuo ZIP qui</h3>
+      <h3>Trascina il tuo file <u>.zip</u> qui</h3>
       <p>oppure clicca per selezionare il file</p>
+      <p style="margin-top:8px;font-size:.75rem;color:#e1306c">⚠️ Carica il file .zip intero — non la cartella estratta</p>
     </div>
 
     <div class="howto">
@@ -631,6 +632,19 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
           </div>
         </div>
         <button class="btn-watch" id="compareBtn" onclick="runComparison()" style="display:none;margin-bottom:24px">🔍 Confronta</button>
+        <div id="storico-ad-banner" class="ad-banner-wrap" style="display:none">
+          <div class="ad-slot-label">Pubblicità</div>
+          <div class="ad-slot"><script>
+  atOptions = {
+    'key' : 'a0e43591563ce0e9b1e03957502bcfbd',
+    'format' : 'iframe',
+    'height' : 90,
+    'width' : 728,
+    'params' : {}
+  };
+</script>
+<script src="https://www.highperformanceformat.com/a0e43591563ce0e9b1e03957502bcfbd/invoke.js"></script></div>
+        </div>
         <div id="storico-results"></div>
       </div>
     </div>
@@ -1077,19 +1091,8 @@ function runComparison() {
   container.innerHTML = '';
 
   // Banner ad between results
-  container.innerHTML += `<div class="ad-banner-wrap">
-    <div class="ad-slot-label">Pubblicità</div>
-    <div class="ad-slot"><script>
-  atOptions = {
-    'key' : 'a0e43591563ce0e9b1e03957502bcfbd',
-    'format' : 'iframe',
-    'height' : 90,
-    'width' : 728,
-    'params' : {}
-  };
-</script>
-<script src="https://www.highperformanceformat.com/a0e43591563ce0e9b1e03957502bcfbd/invoke.js"></script></div>
-  </div>`;
+  // Banner starico sopra i risultati (vedi HTML #storico-ad-banner)
+  document.getElementById('storico-ad-banner').style.display = 'block';
 
   renderDiffSection(container, 'new-followers', '🟢 Nuovi follower', newFollowers, 'var(--green)');
   renderDiffSection(container, 'lost-followers', '🔴 Follower persi', lostFollowers, 'var(--accent)');
@@ -1133,6 +1136,7 @@ function resetApp() {
     document.querySelector(`#gate-${s} .btn-watch`).disabled = false;
   });
   document.getElementById('storico-results').innerHTML = '';
+  document.getElementById('storico-ad-banner').style.display = 'none';
   document.getElementById('compareBtn').style.display = 'none';
   document.getElementById('old-name').style.display = 'none';
   document.getElementById('new-name').style.display = 'none';
