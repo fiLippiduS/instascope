@@ -168,17 +168,17 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
 /* ─── Tabs ──────────────────────────────────────────────────── */
 .tabs-wrap { margin-bottom: 4px; }
 .tabs {
-  display: flex; gap: 4px; flex-wrap: wrap;
+  display: flex; gap: 4px;
   background: var(--surface); border-radius: 12px; padding: 5px;
   border: 1px solid var(--border);
 }
 .tab-btn {
-  flex: 1; min-width: 120px; padding: 9px 14px;
+  flex: 1; padding: 9px 10px;
   background: none; border: none; color: var(--muted);
   font-family: 'DM Sans', sans-serif; font-size: .85rem; font-weight: 500;
   border-radius: 8px; cursor: pointer; transition: all .2s;
-  display: flex; align-items: center; justify-content: center; gap: 6px;
-  white-space: nowrap;
+  display: flex; align-items: center; justify-content: center; gap: 5px;
+  white-space: nowrap; min-width: 0;
 }
 .tab-btn.active {
   background: linear-gradient(135deg, var(--grad1), var(--grad2));
@@ -186,9 +186,12 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
 }
 .tab-btn .badge {
   background: rgba(255,255,255,.2); border-radius: 20px;
-  padding: 1px 7px; font-size: .75rem;
+  padding: 1px 6px; font-size: .72rem; flex-shrink: 0;
 }
 .tab-btn:not(.active) .badge { background: rgba(255,255,255,.08); }
+.t-short { display: none; }
+.t-full  { display: inline; }
+.t-icon  { font-size: .95rem; flex-shrink: 0; }
 
 /* ─── Tab panels ────────────────────────────────────────────── */
 .tab-panel { display: none; animation: fadeUp .3s ease; }
@@ -450,14 +453,38 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
 /* ─── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 700px) {
   .stats-bar { grid-template-columns: repeat(2, 1fr); }
-  .tabs { gap: 3px; }
-  .tab-btn { font-size: .75rem; padding: 8px 8px; min-width: 80px; }
   #storico-panel .upload-duo { grid-template-columns: 1fr; }
   .header-ad { display: none; }
 }
+@media (max-width: 600px) {
+  /* Tab in griglia 2x2 + Storico full width */
+  .tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .tabs .tab-btn:last-child { grid-column: 1 / -1; }
+  .tab-btn {
+    flex-direction: column;
+    padding: 11px 6px;
+    gap: 4px;
+    font-size: .72rem;
+    white-space: normal;
+    text-align: center;
+    min-height: 64px;
+  }
+  .t-icon  { font-size: 1.2rem; }
+  .t-full  { display: none; }
+  .t-short { display: inline; font-size: .72rem; line-height: 1.2; }
+  .tab-btn .badge { font-size: .65rem; padding: 1px 5px; }
+}
 @media (max-width: 480px) {
   main { padding: 16px 12px 80px; }
-  .stat-card .val { font-size: 1.6rem; }
+  .stat-card .val { font-size: 1.5rem; }
+  .stat-card .lbl { font-size: .68rem; }
+  .user-item { padding: 10px 12px; }
+  .user-info .uname { font-size: .85rem; }
+  .user-link { font-size: .75rem; padding: 5px 10px; }
 }
 </style>
 </head>
@@ -567,11 +594,25 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
     <!-- Tabs -->
     <div class="tabs-wrap">
       <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('followers')">👥 Follower <span class="badge" id="bFollowers">0</span></button>
-        <button class="tab-btn" onclick="switchTab('following')">➡️ Following <span class="badge" id="bFollowing">0</span></button>
-        <button class="tab-btn" onclick="switchTab('notback')">❌ Non ti seguono <span class="badge" id="bNotBack">0</span></button>
-        <button class="tab-btn" onclick="switchTab('notfollow')">🔔 Non segui back <span class="badge" id="bNotFollow">0</span></button>
-        <button class="tab-btn" onclick="switchTab('storico')">📊 Storico</button>
+        <button class="tab-btn active" onclick="switchTab('followers')">
+          <span class="t-icon">👥</span><span class="t-full">Follower</span><span class="t-short">Follower</span>
+          <span class="badge" id="bFollowers">0</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('following')">
+          <span class="t-icon">➡️</span><span class="t-full">Following</span><span class="t-short">Following</span>
+          <span class="badge" id="bFollowing">0</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('notback')">
+          <span class="t-icon">❌</span><span class="t-full">Non ti seguono</span><span class="t-short">Non seguono</span>
+          <span class="badge" id="bNotBack">0</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('notfollow')">
+          <span class="t-icon">🔔</span><span class="t-full">Non segui back</span><span class="t-short">Non segui</span>
+          <span class="badge" id="bNotFollow">0</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('storico')">
+          <span class="t-icon">📊</span><span class="t-full">Storico</span><span class="t-short">Storico</span>
+        </button>
       </div>
     </div>
 
@@ -780,20 +821,14 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
 
 <!-- ─── Scripts ───────────────────────────────────────────────── -->
 
-<!-- ══ ADSTERRA – Popunder (opzionale, si attiva al primo click) ══
-     Incolla qui il codice popunder di Adsterra se lo usi.
-     ESEMPIO: <script async src="//pl00000000.profitablegateway.com/00000000/invoke.js"></script>
-     -->
-<script src="https://pl29223707.profitablecpmratenetwork.com/e6/1b/d0/e61bd0925e362dccfbe5a8e64c299729.js"></script>
+<!-- Popunder rimosso: causa popup aggressivi su Android -->
 
 <script>
 // ═══════════════════════════════════════════════════════════════
 //  CONFIGURAZIONE ADSTERRA – Direct Link per sblocco contenuti
 //  Incolla qui il tuo URL Direct Link di Adsterra
 // ═══════════════════════════════════════════════════════════════
-const ADSTERRA_DIRECT_LINK = "https://www.profitablecpmratenetwork.com/cnahs6tm?key=5afe4a242dd75e5e13e9d4c4fdddade7"; 
-// ↑ Sostituisci con il tuo URL Direct Link Adsterra
-// Trovi il link in: Adsterra Dashboard → Siti → Add Site → Direct Link
+// Direct link rimosso — sblocco basato solo su timer + banner iframe (sicuro su mobile)
 
 // ═══════════════════════════════════════════════════════════════
 //  State
