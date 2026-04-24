@@ -384,37 +384,38 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
 #adOverlay {
   display: none;
   position: fixed; inset: 0; z-index: 9999;
-  background: rgba(0,0,0,.92);
-  backdrop-filter: blur(6px);
+  background: linear-gradient(135deg, rgba(8,8,15,.97), rgba(20,10,30,.97));
+  backdrop-filter: blur(8px);
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 20px;
-  padding: 20px;
+  gap: 24px;
+  padding: 24px;
 }
-#adOverlay.show { display: flex; }
+#adOverlay.show { display: flex; animation: fadeUp .25s ease; }
 
-/* X button with ring */
+/* X button top-right */
 #adCloseWrap {
   position: absolute;
-  top: 16px; right: 16px;
+  top: 18px; right: 18px;
   width: 44px; height: 44px;
 }
 #adCloseRing {
   position: absolute; inset: 0;
   width: 44px; height: 44px;
+  display: none; /* small ring hidden — big ring used instead */
 }
 #adCloseBtn {
   position: absolute; inset: 0;
   width: 44px; height: 44px;
   border-radius: 50%;
-  background: rgba(255,255,255,.1);
-  border: none;
+  background: rgba(255,255,255,.08);
+  border: 1.5px solid rgba(255,255,255,.15);
   color: #fff;
-  font-size: 1rem;
+  font-size: 1.05rem;
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  transition: background .2s;
+  transition: all .2s;
   opacity: 0;
   pointer-events: none;
 }
@@ -422,33 +423,30 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
   opacity: 1;
   pointer-events: auto;
   background: rgba(255,255,255,.15);
+  border-color: rgba(255,255,255,.35);
 }
-#adCloseBtn.ready:hover { background: rgba(255,255,255,.28); }
+#adCloseBtn.ready:hover { background: rgba(225,48,108,.4); border-color: var(--accent); }
 
 #adOverlayLabel {
   font-size: .68rem;
   text-transform: uppercase;
-  letter-spacing: .12em;
-  color: rgba(255,255,255,.3);
-  margin-bottom: -10px;
+  letter-spacing: .14em;
+  color: rgba(255,255,255,.25);
 }
-#adBannerContainer {
-  display: flex; align-items: center; justify-content: center;
-  max-width: 100%;
-  overflow: hidden;
-  border-radius: 8px;
-}
-#adBannerContainer iframe { border-radius: 8px; }
+
+/* Big countdown ring */
+#adCountdownWrap { position: relative; }
+#adBigRing { width: 140px; height: 140px; filter: drop-shadow(0 0 20px rgba(225,48,108,.3)); }
 
 #adOverlayInfo {
-  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  text-align: center;
 }
-#adOverlayMsg { font-size: .85rem; color: rgba(255,255,255,.5); }
-#adOverlaySecs {
-  font-family: 'Syne', sans-serif;
-  font-size: 1.2rem; font-weight: 700;
-  color: rgba(255,255,255,.8);
+#adOverlayMsg {
+  font-size: .9rem; color: rgba(255,255,255,.55);
+  max-width: 260px; line-height: 1.4;
 }
+#adOverlaySecs { display: none; } /* number shown inside SVG now */
 
 /* ─── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 700px) {
@@ -553,7 +551,7 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
       <div class="howto-step">
         <div class="num">1</div>
         <h4>Esporta da Instagram</h4>
-        <p>Impostazioni → Privacy → Scarica i tuoi dati → Seleziona "Follower e Following" → formato JSON</p>
+        <p>Impostazioni → Privacy → Scarica i tuoi dati → Seleziona "Follower e Following" → formato JSON → come intervallo di date seleziona sempre <strong>"Tutto il tempo"</strong></p>
       </div>
       <div class="howto-step">
         <div class="num">2</div>
@@ -781,35 +779,26 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
     <button id="adCloseBtn" onclick="closeAdOverlay()">✕</button>
   </div>
 
-  <!-- Ad label -->
+  <!-- Icona e titolo -->
   <div id="adOverlayLabel">Pubblicità</div>
 
-  <!-- Banner container — swaps between 728x90 and 320x50 based on screen -->
-  <div id="adBannerContainer">
-    <div id="adBanner728">
-      <script>
-        atOptions = {
-          'key' : 'a0e43591563ce0e9b1e03957502bcfbd',
-          'format' : 'iframe',
-          'height' : 90,
-          'width' : 728,
-          'params' : {}
-        };
-      </script>
-      <script src="https://www.highperformanceformat.com/a0e43591563ce0e9b1e03957502bcfbd/invoke.js"></script>
-    </div>
-    <div id="adBanner320" style="display:none">
-      <script>
-        atOptions = {
-          'key' : '5cd524f63e2955b48fda7bd8f79a36bf',
-          'format' : 'iframe',
-          'height' : 50,
-          'width' : 320,
-          'params' : {}
-        };
-      </script>
-      <script src="https://www.highperformanceformat.com/5cd524f63e2955b48fda7bd8f79a36bf/invoke.js"></script>
-    </div>
+  <!-- Countdown ring grande — nessuno script interno, sicuro su iOS/Android -->
+  <div id="adCountdownWrap">
+    <svg id="adBigRing" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="cGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#e1306c"/>
+          <stop offset="100%" style="stop-color:#833ab4"/>
+        </linearGradient>
+      </defs>
+      <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="6"/>
+      <circle id="adCloseArc" cx="60" cy="60" r="52" fill="none"
+              stroke="url(#cGrad)" stroke-width="6"
+              stroke-dasharray="326.7" stroke-dashoffset="326.7"
+              stroke-linecap="round" transform="rotate(-90 60 60)"/>
+      <text id="adBigNum" x="60" y="60" text-anchor="middle" dominant-baseline="central"
+            fill="#fff" font-family="Syne,sans-serif" font-size="32" font-weight="800">30</text>
+    </svg>
   </div>
 
   <!-- Info text -->
@@ -845,12 +834,6 @@ let adModalTimer = null;
 // ═══════════════════════════════════════════════════════════════
 async function handleFile(file) {
   if (!file) return;
-  // Show quick ad (3s) before loading — skips if already shown this session
-  if (!sessionStorage.getItem('uploadAdShown')) {
-    sessionStorage.setItem('uploadAdShown', '1');
-    openAdOverlay(3, null, file); // 3s timer, then auto-process file
-    return;
-  }
   await processFile(file);
 }
 
@@ -1154,22 +1137,20 @@ function openAdOverlay(duration, section, pendingFile) {
   _pendingFile = pendingFile;
   currentAdTarget = section;
 
-  // Pick banner size based on screen width
-  const isMobile = window.innerWidth < 600;
-  document.getElementById('adBanner728').style.display = isMobile ? 'none' : 'block';
-  document.getElementById('adBanner320').style.display = isMobile ? 'block' : 'none';
-
-  // Labels
+  // Message
   document.getElementById('adOverlayMsg').textContent =
-    section ? 'Attendi per sbloccare il contenuto' : 'Caricamento in corso…';
-  document.getElementById('adOverlaySecs').textContent = duration + 's';
+    section ? 'Guarda la pubblicità per sbloccare il contenuto' : 'Un momento…';
 
-  // Reset close button
+  // Reset X button and arc
   const btn = document.getElementById('adCloseBtn');
   const arc = document.getElementById('adCloseArc');
+  const numEl = document.getElementById('adBigNum');
   btn.classList.remove('ready');
-  const perim = 2 * Math.PI * 19; // 119.4
+
+  const perim = 2 * Math.PI * 52; // r=52 → 326.7
   arc.style.strokeDashoffset = perim;
+  arc.style.transition = 'none';
+  if (numEl) numEl.textContent = duration;
 
   document.getElementById('adOverlay').classList.add('show');
 
@@ -1178,21 +1159,19 @@ function openAdOverlay(duration, section, pendingFile) {
 
   adModalTimer = setInterval(() => {
     secs--;
-    document.getElementById('adOverlaySecs').textContent = secs > 0 ? secs + 's' : '';
-    // Animate ring fill (clockwise)
     const progress = (duration - secs) / duration;
+    arc.style.transition = 'stroke-dashoffset 1s linear';
     arc.style.strokeDashoffset = perim - (perim * progress);
+    if (numEl) numEl.textContent = Math.max(0, secs);
 
     if (secs <= 0) {
       clearInterval(adModalTimer);
-      // Show X
+      if (numEl) numEl.textContent = '✕';
       btn.classList.add('ready');
-      document.getElementById('adOverlayMsg').textContent = '';
-      document.getElementById('adOverlaySecs').textContent = '';
-      // If file upload: auto-close after X is ready
-      if (!section) {
-        setTimeout(() => closeAdOverlay(), 300);
-      }
+      document.getElementById('adOverlayMsg').textContent =
+        section ? 'Contenuto sbloccato! Chiudi per continuare.' : '';
+      // Upload mode: auto-dismiss
+      if (!section) setTimeout(() => closeAdOverlay(), 400);
     }
   }, 1000);
 }
