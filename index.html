@@ -1,9 +1,50 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>InstaScope – Analizza i tuoi Follower</title>
+<title>InstaScope – Analyze Your Instagram Followers, Following & Who Doesn't Follow Back</title>
+<meta name="description" content="Analyze your Instagram followers and following. Find out who doesn't follow you back, who you don't follow back, and much more. Upload your Instagram ZIP file — 100% private, runs in your browser.">
+<meta name="keywords" content="instagram follower analyzer, who unfollowed me, instagram following checker, who doesn't follow back, instagram insights, social media analytics">
+<meta name="author" content="InstaScope">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+<!-- Open Graph (per preview su social/chat) -->
+<meta property="og:title" content="InstaScope – Find Out Who Doesn't Follow You Back on Instagram">
+<meta property="og:description" content="Analyze your followers, find out who doesn't follow you back, and much more. Free, right in your browser.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://filippidus.github.io/instascope/">
+<meta property="og:image" content="https://filippidus.github.io/instascope/og-image.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="InstaScope – Instagram Follower Analyzer">
+<meta name="twitter:description" content="Find out who doesn't follow you back on Instagram">
+
+<!-- Schema.org JSON-LD (per Rich Results su Google) -->
+<script type="application/ld+json">
+{{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "InstaScope",
+  "description": "Analyze your Instagram followers and following",
+  "url": "https://filippidus.github.io/instascope/",
+  "applicationCategory": "UtilitiesApplication",
+  "offers": {{
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+  }},
+  "operatingSystem": "Web",
+  "browserRequirements": "Requires JavaScript"
+}}
+</script>
+
+<!-- Canonical link (per evitare duplicate content) -->
+<link rel="canonical" href="https://filippidus.github.io/instascope/">
+
+<!-- Favicon -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -294,7 +335,7 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
   border-radius: 8px; padding: 8px; margin: 16px 0;
 }
 
-/* ─── Storico section ───────────────────────────────────────── */
+/* ─── History section ───────────────────────────────────────── */
 #storico-panel .upload-duo {
   display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;
 }
@@ -372,6 +413,32 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
 .btn-reset:hover { border-color: var(--accent); color: var(--text); }
 
 /* ─── Bottom ad bar ─────────────────────────────────────────── */
+/* ─── Ko-fi FAB ──────────────────────────────────────────────── */
+#kofiFab {
+  position: fixed;
+  bottom: 80px; left: 16px;
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FF5E5B, #FF9B4E);
+  box-shadow: 0 4px 20px rgba(255,94,91,.45);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+  text-decoration: none;
+  z-index: 89;
+  transition: transform .25s, box-shadow .25s;
+  animation: kofi-pulse 3s ease-in-out infinite;
+}
+#kofiFab:hover {
+  transform: scale(1.12);
+  box-shadow: 0 8px 32px rgba(255,94,91,.6);
+}
+#kofiFab:active { transform: scale(.95); }
+@keyframes kofi-pulse {
+  0%, 100% { box-shadow: 0 4px 20px rgba(255,94,91,.45); }
+  50%       { box-shadow: 0 4px 32px rgba(255,94,91,.75), 0 0 0 8px rgba(255,94,91,.1); }
+}
+
+/* ─── Bottom ad bar ──────────────────────────────────────────── */
 .bottom-ad-bar {
   position: fixed; bottom: 0; left: 0; right: 0; z-index: 90;
   background: rgba(8,8,15,.9); backdrop-filter: blur(12px);
@@ -434,28 +501,18 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
   margin-bottom: -4px;
 }
 
-/* iframe ad container */
-#adIframeWrap {
-  width: 100%;
-  max-width: 700px;
-  border-radius: 12px;
+/* Banner slot nell'overlay */
+#overlayBannerSlot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
   overflow: hidden;
-  background: #111;
-  box-shadow: 0 4px 40px rgba(0,0,0,.6);
-  flex-shrink: 0;
+  background: rgba(255,255,255,.04);
+  box-shadow: 0 4px 30px rgba(0,0,0,.5);
+  min-height: 52px;
 }
-#adIframe {
-  width: 100%;
-  height: 420px;
-  border: none;
-  display: block;
-}
-@media (max-width: 600px) {
-  #adIframe { height: 320px; }
-}
-@media (max-width: 380px) {
-  #adIframe { height: 260px; }
-}
+#ob728, #ob320 { display: block; line-height: 0; }
 
 #adOverlayInfo {
   display: flex; flex-direction: column; align-items: center; gap: 4px;
@@ -470,6 +527,93 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
   font-size: 1rem; font-weight: 700;
   color: rgba(255,255,255,.6);
   min-height: 24px;
+}
+
+/* ─── Ko-fi Button ───────────────────────────────────────────── */
+.kofi-wrap {
+  text-align: center;
+  padding: 32px 20px 16px;
+}
+.kofi-card {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  background: var(--card);
+  border: 1px solid rgba(255,94,91,.25);
+  border-radius: 20px;
+  padding: 24px 32px;
+  max-width: 360px;
+  width: 100%;
+  box-shadow: 0 0 40px rgba(255,94,91,.07);
+  position: relative;
+  overflow: hidden;
+}
+.kofi-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,94,91,.06), rgba(255,163,76,.04));
+  pointer-events: none;
+}
+.kofi-emoji {
+  font-size: 2.2rem;
+  animation: kofi-bounce 2s ease-in-out infinite;
+}
+@keyframes kofi-bounce {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50%       { transform: translateY(-6px) rotate(5deg); }
+}
+.kofi-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+}
+.kofi-sub {
+  font-size: .82rem;
+  color: var(--muted);
+  line-height: 1.5;
+  text-align: center;
+  max-width: 240px;
+}
+.kofi-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #FF5E5B, #FF9B4E);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 28px;
+  font-family: 'Syne', sans-serif;
+  font-size: .92rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all .25s;
+  box-shadow: 0 4px 20px rgba(255,94,91,.35);
+  position: relative;
+  overflow: hidden;
+}
+.kofi-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0);
+  transition: background .2s;
+}
+.kofi-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 30px rgba(255,94,91,.5);
+}
+.kofi-btn:hover::after { background: rgba(255,255,255,.08); }
+.kofi-btn:active { transform: scale(.98); }
+.kofi-hearts {
+  font-size: .75rem;
+  color: rgba(255,255,255,.6);
+  letter-spacing: .05em;
 }
 
 /* ─── Responsive ─────────────────────────────────────────────── */
@@ -509,6 +653,17 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
   .user-link { font-size: .75rem; padding: 5px 10px; }
 }
 </style>
+  <!-- Sitemap: crea un file sitemap.xml nella root del repo per SEO ancora migliore -->
+  <!-- Contenuto consigliato (salva come sitemap.xml in GitHub):
+  <?xml version="1.0" encoding="UTF-8"?>
+  <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+      <loc>https://filippidus.github.io/instascope/</loc>
+      <changefreq>monthly</changefreq>
+      <priority>1.0</priority>
+    </url>
+  </urlset>
+  -->
 </head>
 <body>
 
@@ -525,7 +680,7 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
 <!-- ─── Loading overlay ──────────────────────────────────────── -->
 <div id="loading-overlay">
   <div class="spinner"></div>
-  <p>Analisi del file in corso…</p>
+  <p>Analyzing file…</p>
 </div>
 
 <!-- ─── Toast ────────────────────────────────────────────────── -->
@@ -539,7 +694,7 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
          Incolla qui il tuo codice banner Adsterra.
          Esempio: <script async src="//...adsterra.com/..."></script> -->
     <div class="ad-slot" style="width:100%;max-width:468px;">
-      <div class="ad-slot-label">Pubblicità</div>
+      <div class="ad-slot-label">Advertisement</div>
       <script>
   atOptions = {
     'key' : 'a0e43591563ce0e9b1e03957502bcfbd',
@@ -560,32 +715,32 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
 
   <!-- ── Hero / Upload ──────────────────────────────────────── -->
   <section id="hero">
-    <h1>Scopri chi ti <span class="grad">segue davvero</span></h1>
-    <p>Carica il file ZIP esportato da Instagram e analizza follower, following e molto altro — tutto in privato, nel tuo browser.</p>
+    <h1>Find out who truly <span class="grad">follows you back</span></h1>
+    <p>Upload the ZIP file exported from Instagram and analyze followers, following and much more — fully private, right in your browser.</p>
 
     <div class="drop-zone" id="dropZone">
       <input type="file" accept=".zip" id="fileInput" onchange="handleFile(this.files[0])">
       <div class="drop-icon">📦</div>
-      <h3>Trascina il tuo file <u>.zip</u> qui</h3>
-      <p>oppure clicca per selezionare il file</p>
-      <p style="margin-top:8px;font-size:.75rem;color:#e1306c">⚠️ Carica il file .zip intero — non la cartella estratta</p>
+      <h3>Drag your <u>.zip</u> file here</h3>
+      <p>or click to select the file</p>
+      <p style="margin-top:8px;font-size:.75rem;color:#e1306c">⚠️ Upload the entire .zip file — not the extracted folder</p>
     </div>
 
     <div class="howto">
       <div class="howto-step">
         <div class="num">1</div>
-        <h4>Esporta da Instagram</h4>
-        <p>Impostazioni → Privacy → Scarica i tuoi dati → Seleziona "Follower e Following" → formato JSON → come intervallo di date seleziona sempre <strong>"Tutto il tempo"</strong></p>
+        <h4>Export from Instagram</h4>
+        <p>Settings → Privacy → Download your data → Select "Followers and Following" → JSON format → always set the date range to <strong>"All time"</strong></p>
       </div>
       <div class="howto-step">
         <div class="num">2</div>
-        <h4>Carica il file ZIP</h4>
-        <p>Riceverai una email con il link per scaricare il tuo file .zip. Caricalo qui sopra.</p>
+        <h4>Upload the ZIP file</h4>
+        <p>You'll receive an email with a download link for your .zip file. Upload it above.</p>
       </div>
       <div class="howto-step">
         <div class="num">3</div>
-        <h4>Analizza i risultati</h4>
-        <p>Vedi follower, following, chi non ti ricambia e molto altro in pochi secondi.</p>
+        <h4>Analyze the results</h4>
+        <p>See your followers, following, who doesn't follow you back and much more in seconds.</p>
       </div>
     </div>
   </section>
@@ -597,7 +752,7 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
     <div class="stats-bar">
       <div class="stat-card">
         <div class="val grad" id="statFollowers">0</div>
-        <div class="lbl">Follower</div>
+        <div class="lbl">Followers</div>
       </div>
       <div class="stat-card">
         <div class="val grad" id="statFollowing">0</div>
@@ -605,11 +760,11 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
       </div>
       <div class="stat-card">
         <div class="val" style="color:var(--accent)" id="statNotBack">0</div>
-        <div class="lbl">Non ti seguono</div>
+        <div class="lbl">Don't follow back</div>
       </div>
       <div class="stat-card">
         <div class="val" style="color:var(--orange)" id="statNotFollow">0</div>
-        <div class="lbl">Non segui back</div>
+        <div class="lbl">Not following back</div>
       </div>
     </div>
 
@@ -632,7 +787,7 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
           <span class="t-icon">🔔</span><span class="t-full">Non segui back</span><span class="t-short">Non segui</span>
           <span class="badge" id="bNotFollow">0</span>
         </button>
-        <button class="tab-btn" onclick="switchTab('storico')">
+        <button class="tab-btn" onclick="switchTab('history')">
           <span class="t-icon">📊</span><span class="t-full">Storico</span><span class="t-short">Storico</span>
         </button>
       </div>
@@ -641,12 +796,12 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
     <!-- ── TAB: Followers ───────────────────────────────────── -->
     <div class="tab-panel active" id="tab-followers">
       <div class="search-row">
-        <input type="text" placeholder="🔍 Cerca follower…" oninput="filterList('followers-list', this.value)">
-        <button class="sort-btn" onclick="sortList('followers-list')">⇅ Ordine</button>
+        <input type="text" placeholder="🔍 Search followers…" oninput="filterList('followers-list', this.value)">
+        <button class="sort-btn" onclick="sortList('followers-list')">⇅ Sort</button>
       </div>
       <!-- ══ ADSTERRA Banner 728×90 – tra i contenuti ══ -->
       <div class="ad-banner-wrap">
-        <div class="ad-slot-label">Pubblicità</div>
+        <div class="ad-slot-label">Advertisement</div>
         <div class="ad-slot">
           <script>
   atOptions = {
@@ -666,12 +821,12 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
     <!-- ── TAB: Following ───────────────────────────────────── -->
     <div class="tab-panel" id="tab-following">
       <div class="search-row">
-        <input type="text" placeholder="🔍 Cerca following…" oninput="filterList('following-list', this.value)">
-        <button class="sort-btn" onclick="sortList('following-list')">⇅ Ordine</button>
+        <input type="text" placeholder="🔍 Search following…" oninput="filterList('following-list', this.value)">
+        <button class="sort-btn" onclick="sortList('following-list')">⇅ Sort</button>
       </div>
       <!-- ══ ADSTERRA Banner ══ -->
       <div class="ad-banner-wrap">
-        <div class="ad-slot-label">Pubblicità</div>
+        <div class="ad-slot-label">Advertisement</div>
         <div class="ad-slot">
           <script>
   atOptions = {
@@ -692,15 +847,15 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
     <div class="tab-panel" id="tab-notback">
       <div id="gate-notback" class="lock-gate">
         <div class="lock-icon">🔒</div>
-        <h3>Contenuto Premium</h3>
-        <p>Scopri chi tra le persone che segui <strong>non ti segue indietro</strong>. Guarda un breve annuncio per sbloccare.</p>
-        <button class="btn-watch" onclick="startAdGate('notback')">▶ Guarda annuncio &amp; Sblocca</button>
+        <h3>Premium Content</h3>
+        <p>Find out who among the people you follow <strong>doesn't follow you back</strong>. Watch a short ad to unlock.</p>
+        <button class="btn-watch" onclick="startAdGate('notback')">▶ Watch Ad &amp; Unlock</button>
 
       </div>
       <div id="content-notback" style="display:none">
         <div class="search-row">
-          <input type="text" placeholder="🔍 Cerca…" oninput="filterList('notback-list', this.value)">
-          <button class="sort-btn" onclick="sortList('notback-list')">⇅ Ordine</button>
+          <input type="text" placeholder="🔍 Search…" oninput="filterList('notback-list', this.value)">
+          <button class="sort-btn" onclick="sortList('notback-list')">⇅ Sort</button>
         </div>
         <div class="user-list" id="notback-list"></div>
       </div>
@@ -710,45 +865,45 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
     <div class="tab-panel" id="tab-notfollow">
       <div id="gate-notfollow" class="lock-gate">
         <div class="lock-icon">🔒</div>
-        <h3>Contenuto Premium</h3>
-        <p>Scopri chi ti segue ma che <strong>tu non segui ancora</strong>. Guarda un breve annuncio per sbloccare.</p>
-        <button class="btn-watch" onclick="startAdGate('notfollow')">▶ Guarda annuncio &amp; Sblocca</button>
+        <h3>Premium Content</h3>
+        <p>Find out who follows you but <strong>you're not following back</strong>. Watch a short ad to unlock.</p>
+        <button class="btn-watch" onclick="startAdGate('notfollow')">▶ Watch Ad &amp; Unlock</button>
 
       </div>
       <div id="content-notfollow" style="display:none">
         <div class="search-row">
-          <input type="text" placeholder="🔍 Cerca…" oninput="filterList('notfollow-list', this.value)">
-          <button class="sort-btn" onclick="sortList('notfollow-list')">⇅ Ordine</button>
+          <input type="text" placeholder="🔍 Search…" oninput="filterList('notfollow-list', this.value)">
+          <button class="sort-btn" onclick="sortList('notfollow-list')">⇅ Sort</button>
         </div>
         <div class="user-list" id="notfollow-list"></div>
       </div>
     </div>
 
     <!-- ── TAB: Storico ─────────────────────────────────────── -->
-    <div class="tab-panel" id="tab-storico">
-      <div id="storico-panel">
+    <div class="tab-panel" id="tab-history">
+      <div id="history-panel">
         <p style="color:var(--muted);font-size:.9rem;margin:16px 0 20px">
-          Carica due file ZIP esportati in momenti diversi per confrontarli e vedere i cambiamenti.
+          Upload two ZIP files exported at different times to compare them and see what changed.
         </p>
         <div class="upload-duo">
           <div class="mini-drop" id="oldDrop">
             <input type="file" accept=".zip" onchange="loadStorico('old', this.files[0])">
             <div class="icon">🗂️</div>
-            <h4>File Vecchio</h4>
-            <p>Export precedente</p>
+            <h4>Old File</h4>
+            <p>Previous export</p>
             <div class="loaded-name" id="old-name" style="display:none"></div>
           </div>
           <div class="mini-drop" id="newDrop">
             <input type="file" accept=".zip" onchange="loadStorico('new', this.files[0])">
             <div class="icon">📁</div>
-            <h4>File Corrente</h4>
-            <p>Export recente</p>
+            <h4>Current File</h4>
+            <p>Recent export</p>
             <div class="loaded-name" id="new-name" style="display:none"></div>
           </div>
         </div>
-        <button class="btn-watch" id="compareBtn" onclick="runComparison()" style="display:none;margin-bottom:24px">🔍 Confronta</button>
-        <div id="storico-ad-banner" class="ad-banner-wrap" style="display:none">
-          <div class="ad-slot-label">Pubblicità</div>
+        <button class="btn-watch" id="compareBtn" onclick="runComparison()" style="display:none;margin-bottom:24px">🔍 Compare</button>
+        <div id="history-ad-banner" class="ad-banner-wrap" style="display:none">
+          <div class="ad-slot-label">Advertisement</div>
           <div class="ad-slot"><script>
   atOptions = {
     'key' : 'a0e43591563ce0e9b1e03957502bcfbd',
@@ -760,13 +915,40 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
 </script>
 <script src="https://www.highperformanceformat.com/a0e43591563ce0e9b1e03957502bcfbd/invoke.js"></script></div>
         </div>
-        <div id="storico-results"></div>
+        <div id="history-results"></div>
       </div>
     </div>
 
   </section><!-- /dashboard -->
 
+
+  <!-- ─── Ko-fi Support Section ────────────────────────────────── -->
+  <div class="kofi-wrap" id="kofiSection" style="display:none">
+    <div class="kofi-card">
+      <div class="kofi-emoji">☕</div>
+      <p class="kofi-title">Was it helpful?</p>
+      <p class="kofi-sub">InstaScope is free. If it helped you, buy me a coffee — it costs less than an espresso!</p>
+      <a class="kofi-btn"
+         href="https://ko-fi.com/instascope"
+         target="_blank"
+         rel="noopener"
+         id="kofiBtnMain">
+        ☕ Offrimi un caffè
+      </a>
+      <span class="kofi-hearts">Every bit of support matters ❤️</span>
+    </div>
+  </div>
+
 </main>
+
+<!-- ─── Ko-fi Floating Button ───────────────────────────────────── -->
+<a id="kofiFab"
+   href="https://ko-fi.com/instascope"
+   target="_blank"
+   rel="noopener"
+   title="Supporta InstaScope">
+  ☕
+</a>
 
 <!-- ─── Bottom sticky ad bar ─────────────────────────────────── -->
 <div class="bottom-ad-bar">
@@ -774,7 +956,7 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
        Incolla qui il tuo codice Adsterra per il banner in basso.
        Suggerito: Smart Banner o Sticky Banner di Adsterra. -->
   <div class="ad-slot" style="width:100%">
-    <div class="ad-slot-label">Pubblicità</div>
+    <div class="ad-slot-label">Advertisement</div>
     <script>
   atOptions = {
     'key' : '5cd524f63e2955b48fda7bd8f79a36bf',
@@ -791,10 +973,10 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
 <!-- ─── Ad Overlay fullscreen ──────────────────────────────────── -->
 <div id="adOverlay">
 
-  <!-- X con timer nell'angolo in alto a destra -->
+  <!-- X con ring di countdown nell'angolo -->
   <div id="adCloseWrap">
     <svg id="adCloseRing" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="22" cy="22" r="19" fill="rgba(0,0,0,.4)" stroke="rgba(255,255,255,.15)" stroke-width="2.5"/>
+      <circle cx="22" cy="22" r="19" fill="rgba(0,0,0,.5)" stroke="rgba(255,255,255,.12)" stroke-width="2.5"/>
       <circle id="adSmallArc" cx="22" cy="22" r="19" fill="none"
               stroke="url(#cGrad)" stroke-width="2.5"
               stroke-dasharray="119.4" stroke-dashoffset="119.4"
@@ -804,22 +986,41 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
   </div>
 
   <!-- Label -->
-  <div id="adOverlayLabel">Pubblicità</div>
+  <div id="adOverlayLabel">Advertisement</div>
 
-  <!-- iframe sandboxato: mostra l'annuncio, non può reindirizzare la pagina -->
-  <div id="adIframeWrap">
-    <iframe id="adIframe"
-      src=""
-      sandbox="allow-scripts allow-same-origin allow-forms allow-popups-to-escape-sandbox"
-      scrolling="yes"
-      frameborder="0"
-      referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
+  <!-- Banner slot — i banner sono pre-caricati qui una volta sola, sicuri su iOS/Android -->
+  <div id="overlayBannerSlot">
+    <!-- Banner 728x90 desktop -->
+    <div id="ob728">
+      <script>
+        atOptions = {
+          'key' : 'a0e43591563ce0e9b1e03957502bcfbd',
+          'format' : 'iframe',
+          'height' : 90,
+          'width' : 728,
+          'params' : {}
+        };
+      </script>
+      <script src="https://www.highperformanceformat.com/a0e43591563ce0e9b1e03957502bcfbd/invoke.js"></script>
+    </div>
+    <!-- Banner 320x50 mobile -->
+    <div id="ob320" style="display:none">
+      <script>
+        atOptions = {
+          'key' : '5cd524f63e2955b48fda7bd8f79a36bf',
+          'format' : 'iframe',
+          'height' : 50,
+          'width' : 320,
+          'params' : {}
+        };
+      </script>
+      <script src="https://www.highperformanceformat.com/5cd524f63e2955b48fda7bd8f79a36bf/invoke.js"></script>
+    </div>
   </div>
 
   <!-- Countdown e messaggio -->
   <div id="adOverlayInfo">
-    <span id="adOverlayMsg">Attendi per sbloccare il contenuto</span>
+    <span id="adOverlayMsg">Watch the ad to unlock this content</span>
     <span id="adOverlaySecs"></span>
   </div>
 </div>
@@ -865,9 +1066,9 @@ async function processFile(file) {
     const zip = await JSZip.loadAsync(file);
     data = await parseInstagramZip(zip);
     renderDashboard();
-    showToast('✅ File caricato con successo!');
+    showToast('✅ File loaded successfully!');
   } catch (e) {
-    showToast('❌ Errore: ' + e.message);
+    showToast('❌ Error: ' + e.message);
     console.error(e);
   }
   showLoading(false);
@@ -1083,14 +1284,20 @@ function renderDashboard() {
 
   // Show dashboard
   document.getElementById('hero').style.display = 'none';
+  document.getElementById('kofiSection').style.display = 'none'; // shown after dashboard
   document.getElementById('dashboard').classList.add('visible');
+  // Show ko-fi after a short delay — feels natural, not intrusive
+  setTimeout(() => {
+    const ks = document.getElementById('kofiSection');
+    if (ks) ks.style.display = 'block';
+  }, 8000);
   document.getElementById('resetBtn').style.display = 'inline-flex';
 }
 
 function renderList(listId, users, c1, c2) {
   const el = document.getElementById(listId);
   if (!users.length) {
-    el.innerHTML = `<div class="empty"><div class="e-icon">🎉</div><p>Nessun utente in questa categoria</p></div>`;
+    el.innerHTML = `<div class="empty"><div class="e-icon">🎉</div><p>No users in this category</p></div>`;
     return;
   }
   el.innerHTML = users.map(u => {
@@ -1103,7 +1310,7 @@ function renderList(listId, users, c1, c2) {
         <div class="uname">@${escHtml(u.username)}</div>
         ${date ? `<div class="udate">Dal ${date}</div>` : ''}
       </div>
-      <a href="${escHtml(href)}" target="_blank" rel="noopener" class="user-link">Apri ↗</a>
+      <a href="${escHtml(href)}" target="_blank" rel="noopener" class="user-link">Open ↗</a>
     </div>`;
   }).join('');
 }
@@ -1159,13 +1366,16 @@ function openAdOverlay(duration, section, pendingFile) {
   _pendingFile = pendingFile;
   currentAdTarget = section;
 
-  // Carica l'annuncio nell'iframe sandboxato
-  const iframe = document.getElementById('adIframe');
-  iframe.src = 'https://www.profitablecpmratenetwork.com/cnahs6tm?key=5afe4a242dd75e5e13e9d4c4fdddade7';
+  // Pick the right banner for screen size (pre-loaded in DOM)
+  const isMobile = window.innerWidth < 600;
+  const b728 = document.getElementById('ob728');
+  const b320 = document.getElementById('ob320');
+  if (b728) b728.style.display = isMobile ? 'none' : 'block';
+  if (b320) b320.style.display = isMobile ? 'block' : 'none';
 
   // Messaggio iniziale
   document.getElementById('adOverlayMsg').textContent =
-    section ? 'Guarda la pubblicità per sbloccare il contenuto' : 'Un momento…';
+    section ? 'Watch the ad to unlock this content' : 'Just a moment…';
   document.getElementById('adOverlaySecs').textContent = duration + 's';
 
   // Reset X button
@@ -1192,7 +1402,7 @@ function openAdOverlay(duration, section, pendingFile) {
       clearInterval(adModalTimer);
       btn.classList.add('ready');
       document.getElementById('adOverlayMsg').textContent =
-        section ? 'Puoi chiudere la pubblicità ✕' : '';
+        section ? 'You can close the ad ✕' : '';
       // Upload: auto-chiudi subito
       if (!section) setTimeout(() => closeAdOverlay(), 500);
     }
@@ -1201,8 +1411,6 @@ function openAdOverlay(duration, section, pendingFile) {
 
 function closeAdOverlay() {
   document.getElementById('adOverlay').classList.remove('show');
-  // Svuota iframe per fermare la pubblicità e liberare memoria
-  setTimeout(() => { document.getElementById('adIframe').src = ''; }, 300);
   if (adModalTimer) clearInterval(adModalTimer);
 
   // Unlock section o process file
@@ -1223,7 +1431,7 @@ function closeAdModal() { closeAdOverlay(); } // legacy alias
 function unlockSection(section) {
   document.getElementById('gate-' + section).style.display = 'none';
   document.getElementById('content-' + section).style.display = 'block';
-  showToast('🔓 Contenuto sbloccato!');
+  showToast('🔓 Content unlocked!');
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1242,7 +1450,7 @@ async function loadStorico(type, file) {
     if (storData.old && storData['new']) {
       document.getElementById('compareBtn').style.display = 'inline-flex';
     }
-    showToast('✅ ' + (type === 'old' ? 'File vecchio' : 'File corrente') + ' caricato');
+    showToast('✅ ' + (type === 'old' ? 'Old file' : 'Current file') + ' loaded');
   } catch (e) { showToast('❌ ' + e.message); }
   showLoading(false);
 }
@@ -1258,17 +1466,17 @@ function runComparison() {
   const newFollowing  = storData['new'].following.filter(u => !oldFg.has(u.username.toLowerCase()));
   const lostFollowing = storData.old.following.filter(u => !newFg.has(u.username.toLowerCase()));
 
-  const container = document.getElementById('storico-results');
+  const container = document.getElementById('history-results');
   container.innerHTML = '';
 
   // Banner ad between results
-  // Banner starico sopra i risultati (vedi HTML #storico-ad-banner)
-  document.getElementById('storico-ad-banner').style.display = 'block';
+  // Banner starico sopra i risultati (vedi HTML #history-ad-banner)
+  document.getElementById('history-ad-banner').style.display = 'block';
 
-  renderDiffSection(container, 'new-followers', '🟢 Nuovi follower', newFollowers, 'var(--green)');
-  renderDiffSection(container, 'lost-followers', '🔴 Follower persi', lostFollowers, 'var(--accent)');
-  renderDiffSection(container, 'new-following', '🟠 Nuovi following', newFollowing, 'var(--orange)');
-  renderDiffSection(container, 'lost-following', '🟣 Following rimossi', lostFollowing, '#a855f7');
+  renderDiffSection(container, 'new-followers', '🟢 New followers', newFollowers, 'var(--green)');
+  renderDiffSection(container, 'lost-followers', '🔴 Lost followers', lostFollowers, 'var(--accent)');
+  renderDiffSection(container, 'new-following', '🟠 New following', newFollowing, 'var(--orange)');
+  renderDiffSection(container, 'lost-following', '🟣 Removed following', lostFollowing, '#a855f7');
 
   if (!newFollowers.length && !lostFollowers.length && !newFollowing.length && !lostFollowing.length) {
     container.innerHTML = `<div class="empty"><div class="e-icon">📊</div><p>Nessun cambiamento rilevato tra i due file</p></div>`;
@@ -1296,6 +1504,7 @@ function resetApp() {
   storData = { old: null, 'new': null };
   unlockedSections = { notback: false, notfollow: false };
   document.getElementById('hero').style.display = 'block';
+  document.getElementById('kofiSection').style.display = 'none';
   document.getElementById('dashboard').classList.remove('visible');
   document.getElementById('resetBtn').style.display = 'none';
   document.getElementById('fileInput').value = '';
@@ -1305,8 +1514,8 @@ function resetApp() {
     document.getElementById('content-' + s).style.display = 'none';
     document.querySelector(`#gate-${s} .btn-watch`).disabled = false;
   });
-  document.getElementById('storico-results').innerHTML = '';
-  document.getElementById('storico-ad-banner').style.display = 'none';
+  document.getElementById('history-results').innerHTML = '';
+  document.getElementById('history-ad-banner').style.display = 'none';
   document.getElementById('compareBtn').style.display = 'none';
   document.getElementById('old-name').style.display = 'none';
   document.getElementById('new-name').style.display = 'none';
@@ -1346,7 +1555,7 @@ dz.addEventListener('drop', e => {
   e.preventDefault(); dz.classList.remove('drag-over');
   const f = e.dataTransfer.files[0];
   if (f?.name.endsWith('.zip')) handleFile(f);
-  else showToast('⚠️ Carica un file .zip');
+  else showToast('⚠️ Please upload a .zip file');
 });
 </script>
 </body>
