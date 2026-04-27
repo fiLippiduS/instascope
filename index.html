@@ -23,21 +23,21 @@
 
 <!-- Schema.org JSON-LD (per Rich Results su Google) -->
 <script type="application/ld+json">
-{{
+{
   "@context": "https://schema.org",
   "@type": "WebApplication",
   "name": "InstaScope",
   "description": "Analyze your Instagram followers and following",
   "url": "https://filippidus.github.io/instascope/",
   "applicationCategory": "UtilitiesApplication",
-  "offers": {{
+  "offers": {
     "@type": "Offer",
     "price": "0",
     "priceCurrency": "EUR"
   }},
   "operatingSystem": "Web",
   "browserRequirements": "Requires JavaScript"
-}}
+}
 </script>
 
 <!-- Canonical link (per evitare duplicate content) -->
@@ -49,21 +49,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9665914988223658" crossorigin="anonymous"></script>
+
 <!-- ═══════════════════════════════════════════════════════════
      ADSTERRA – Banner 728×90 (Header, visibile sempre)
      Sostituisci il contenuto del div con il tuo codice Adsterra
      ═══════════════════════════════════════════════════════════ -->
-<script>
-  atOptions = {
-    'key' : 'a0e43591563ce0e9b1e03957502bcfbd',
-    'format' : 'iframe',
-    'height' : 90,
-    'width' : 728,
-    'params' : {}
-  };
-</script>
-<script src="https://www.highperformanceformat.com/a0e43591563ce0e9b1e03957502bcfbd/invoke.js"></script>
-<div id="adsterra-header-slot" style="display:none"></div>
+
 
 <style>
 /* ─── Reset & Base ─────────────────────────────────────────── */
@@ -501,18 +494,14 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
   margin-bottom: -4px;
 }
 
-/* Banner slot nell'overlay */
+/* AdSense banner slot */
 #overlayBannerSlot {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100%;
+  max-width: 700px;
+  min-height: 90px;
   border-radius: 10px;
   overflow: hidden;
-  background: rgba(255,255,255,.04);
-  box-shadow: 0 4px 30px rgba(0,0,0,.5);
-  min-height: 52px;
 }
-#ob728, #ob320 { display: block; line-height: 0; }
 
 #adOverlayInfo {
   display: flex; flex-direction: column; align-items: center; gap: 4px;
@@ -695,16 +684,7 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
          Esempio: <script async src="//...adsterra.com/..."></script> -->
     <div class="ad-slot" style="width:100%;max-width:468px;">
       <div class="ad-slot-label">Advertisement</div>
-      <script>
-  atOptions = {
-    'key' : 'a0e43591563ce0e9b1e03957502bcfbd',
-    'format' : 'iframe',
-    'height' : 90,
-    'width' : 728,
-    'params' : {}
-  };
-</script>
-<script src="https://www.highperformanceformat.com/a0e43591563ce0e9b1e03957502bcfbd/invoke.js"></script>
+      
     </div>
   </div>
   <button class="btn-reset" id="resetBtn" style="display:none" onclick="resetApp()">↩ Reset</button>
@@ -799,21 +779,15 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
         <input type="text" placeholder="🔍 Search followers…" oninput="filterList('followers-list', this.value)">
         <button class="sort-btn" onclick="sortList('followers-list')">⇅ Sort</button>
       </div>
-      <!-- ══ ADSTERRA Banner 728×90 – tra i contenuti ══ -->
       <div class="ad-banner-wrap">
         <div class="ad-slot-label">Advertisement</div>
-        <div class="ad-slot">
-          <script>
-  atOptions = {
-    'key' : 'a0e43591563ce0e9b1e03957502bcfbd',
-    'format' : 'iframe',
-    'height' : 90,
-    'width' : 728,
-    'params' : {}
-  };
-</script>
-<script src="https://www.highperformanceformat.com/a0e43591563ce0e9b1e03957502bcfbd/invoke.js"></script>
-        </div>
+        <div class="ad-slot"><ins class="adsbygoogle"
+  style="display:block"
+  data-ad-client="ca-pub-9665914988223658"
+  data-ad-slot="auto"
+  data-ad-format="auto"
+  data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
       </div>
       <div class="user-list" id="followers-list"></div>
     </div>
@@ -824,21 +798,15 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
         <input type="text" placeholder="🔍 Search following…" oninput="filterList('following-list', this.value)">
         <button class="sort-btn" onclick="sortList('following-list')">⇅ Sort</button>
       </div>
-      <!-- ══ ADSTERRA Banner ══ -->
       <div class="ad-banner-wrap">
         <div class="ad-slot-label">Advertisement</div>
-        <div class="ad-slot">
-          <script>
-  atOptions = {
-    'key' : 'a0e43591563ce0e9b1e03957502bcfbd',
-    'format' : 'iframe',
-    'height' : 90,
-    'width' : 728,
-    'params' : {}
-  };
-</script>
-<script src="https://www.highperformanceformat.com/a0e43591563ce0e9b1e03957502bcfbd/invoke.js"></script>
-        </div>
+        <div class="ad-slot"><ins class="adsbygoogle"
+  style="display:block"
+  data-ad-client="ca-pub-9665914988223658"
+  data-ad-slot="auto"
+  data-ad-format="auto"
+  data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
       </div>
       <div class="user-list" id="following-list"></div>
     </div>
@@ -904,16 +872,13 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
         <button class="btn-watch" id="compareBtn" onclick="runComparison()" style="display:none;margin-bottom:24px">🔍 Compare</button>
         <div id="history-ad-banner" class="ad-banner-wrap" style="display:none">
           <div class="ad-slot-label">Advertisement</div>
-          <div class="ad-slot"><script>
-  atOptions = {
-    'key' : 'a0e43591563ce0e9b1e03957502bcfbd',
-    'format' : 'iframe',
-    'height' : 90,
-    'width' : 728,
-    'params' : {}
-  };
-</script>
-<script src="https://www.highperformanceformat.com/a0e43591563ce0e9b1e03957502bcfbd/invoke.js"></script></div>
+          <div class="ad-slot"><ins class="adsbygoogle"
+  style="display:block"
+  data-ad-client="ca-pub-9665914988223658"
+  data-ad-slot="auto"
+  data-ad-format="auto"
+  data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
         </div>
         <div id="history-results"></div>
       </div>
@@ -957,16 +922,13 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
        Suggerito: Smart Banner o Sticky Banner di Adsterra. -->
   <div class="ad-slot" style="width:100%">
     <div class="ad-slot-label">Advertisement</div>
-    <script>
-  atOptions = {
-    'key' : '5cd524f63e2955b48fda7bd8f79a36bf',
-    'format' : 'iframe',
-    'height' : 50,
-    'width' : 320,
-    'params' : {}
-  };
-</script>
-<script src="https://www.highperformanceformat.com/5cd524f63e2955b48fda7bd8f79a36bf/invoke.js"></script>
+    <ins class="adsbygoogle"
+  style="display:block"
+  data-ad-client="ca-pub-9665914988223658"
+  data-ad-slot="auto"
+  data-ad-format="auto"
+  data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
   </div>
 </div>
 
@@ -988,34 +950,15 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 100px; }
   <!-- Label -->
   <div id="adOverlayLabel">Advertisement</div>
 
-  <!-- Banner slot — i banner sono pre-caricati qui una volta sola, sicuri su iOS/Android -->
+  <!-- AdSense ad in overlay -->
   <div id="overlayBannerSlot">
-    <!-- Banner 728x90 desktop -->
-    <div id="ob728">
-      <script>
-        atOptions = {
-          'key' : 'a0e43591563ce0e9b1e03957502bcfbd',
-          'format' : 'iframe',
-          'height' : 90,
-          'width' : 728,
-          'params' : {}
-        };
-      </script>
-      <script src="https://www.highperformanceformat.com/a0e43591563ce0e9b1e03957502bcfbd/invoke.js"></script>
-    </div>
-    <!-- Banner 320x50 mobile -->
-    <div id="ob320" style="display:none">
-      <script>
-        atOptions = {
-          'key' : '5cd524f63e2955b48fda7bd8f79a36bf',
-          'format' : 'iframe',
-          'height' : 50,
-          'width' : 320,
-          'params' : {}
-        };
-      </script>
-      <script src="https://www.highperformanceformat.com/5cd524f63e2955b48fda7bd8f79a36bf/invoke.js"></script>
-    </div>
+    <ins class="adsbygoogle"
+  style="display:block"
+  data-ad-client="ca-pub-9665914988223658"
+  data-ad-slot="auto"
+  data-ad-format="auto"
+  data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
   </div>
 
   <!-- Countdown e messaggio -->
@@ -1366,12 +1309,7 @@ function openAdOverlay(duration, section, pendingFile) {
   _pendingFile = pendingFile;
   currentAdTarget = section;
 
-  // Pick the right banner for screen size (pre-loaded in DOM)
-  const isMobile = window.innerWidth < 600;
-  const b728 = document.getElementById('ob728');
-  const b320 = document.getElementById('ob320');
-  if (b728) b728.style.display = isMobile ? 'none' : 'block';
-  if (b320) b320.style.display = isMobile ? 'block' : 'none';
+  // AdSense handles sizing automatically
 
   // Messaggio iniziale
   document.getElementById('adOverlayMsg').textContent =
