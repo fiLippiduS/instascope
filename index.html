@@ -280,7 +280,8 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
 @keyframes kofi-pulse { 0%, 100% { box-shadow: 0 4px 20px rgba(255,94,91,.45); } 50% { box-shadow: 0 4px 32px rgba(255,94,91,.75), 0 0 0 8px rgba(255,94,91,.1); } }
 
 /* ─── Bottom ad bar ──────────────────────────────────────────── */
-.bottom-ad-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 90; background: rgba(8,8,15,.9); backdrop-filter: blur(12px); border-top: 1px solid var(--border); padding: 8px; text-align: center; min-height: 58px; display: flex; align-items: center; justify-content: center; }
+.bottom-ad-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 90; background: rgba(8,8,15,.9); backdrop-filter: blur(12px); border-top: 1px solid var(--border); padding: 8px; text-align: center; display: none; align-items: center; justify-content: center; min-height: 50px; }
+.bottom-ad-bar.loaded { display: flex; }
 
 /* ─── Ad Overlay ─────────────────────────────────────────────── */
 #adOverlay { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,.94); backdrop-filter: blur(10px); flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 20px 16px 24px; }
@@ -365,12 +366,7 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
 <!-- ─── Header ──────────────────────────────────────────────── -->
 <header>
   <div class="logo">Insta<span>Scope</span></div>
-  <div class="header-ad">
-    <ins class="adsbygoogle"
-      style="display:inline-block;width:468px;height:60px"
-      data-ad-client="ca-pub-9665914988223658"
-      data-ad-slot="auto"></ins>
-  </div>
+  <div class="header-ad" id="headerAdWrap"></div>
   <button class="btn-reset" id="resetBtn" style="display:none" onclick="resetApp()">↩ Reset</button>
 </header>
 
@@ -705,7 +701,6 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
         <button class="sort-btn" onclick="sortList('followers-list')">⇅ Sort</button>
       </div>
       <div class="ad-banner-wrap">
-        <div class="ad-slot-label">Advertisement</div>
         <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9665914988223658" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
       </div>
       <div class="user-list" id="followers-list"></div>
@@ -718,7 +713,6 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
         <button class="sort-btn" onclick="sortList('following-list')">⇅ Sort</button>
       </div>
       <div class="ad-banner-wrap">
-        <div class="ad-slot-label">Advertisement</div>
         <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9665914988223658" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
       </div>
       <div class="user-list" id="following-list"></div>
@@ -781,7 +775,6 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
       </div>
       <button class="btn-watch" id="compareBtn" onclick="runComparison()" style="display:none;margin-bottom:24px">🔍 Compare</button>
       <div id="history-ad-banner" class="ad-banner-wrap" style="display:none">
-        <div class="ad-slot-label">Advertisement</div>
         <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9665914988223658" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
       </div>
       <div id="history-results"></div>
@@ -806,8 +799,10 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
     <p style="margin-top:6px">
       <a href="#legal-privacy" onclick="scrollToLegal('privacy')">Privacy Policy</a> ·
       <a href="#legal-terms" onclick="scrollToLegal('terms')">Terms of Service</a> ·
-      <a href="https://ko-fi.com/instascope" target="_blank" rel="noopener">Support ☕</a>
+      <a href="https://ko-fi.com/instascope" target="_blank" rel="noopener">Support ☕</a> ·
+      <a href="mailto:1onlytopp@gmail.com">Contact</a>
     </p>
+    <p style="margin-top:6px;font-size:.72rem">📧 <a href="mailto:1onlytopp@gmail.com">1onlytopp@gmail.com</a></p>
   </footer>
 
 </main>
@@ -816,11 +811,8 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
 <a id="kofiFab" href="https://ko-fi.com/instascope" target="_blank" rel="noopener" title="Support InstaScope on Ko-fi">☕</a>
 
 <!-- Bottom sticky ad bar -->
-<div class="bottom-ad-bar">
-  <div style="width:100%;text-align:center">
-    <div class="ad-slot-label">Advertisement</div>
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9665914988223658" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-  </div>
+<div class="bottom-ad-bar" id="bottomAdBar">
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9665914988223658" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
 </div>
 
 <!-- Ad Overlay fullscreen -->
@@ -835,7 +827,7 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
     </svg>
     <button id="adCloseBtn" onclick="closeAdOverlay()">✕</button>
   </div>
-  <div id="adOverlayLabel">Advertisement</div>
+  <div id="adOverlayLabel" style="font-size:.65rem;text-transform:uppercase;letter-spacing:.15em;color:rgba(255,255,255,.2);margin-bottom:-4px">Ad</div>
   <div id="overlayBannerSlot">
     <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9665914988223658" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
   </div>
@@ -861,9 +853,27 @@ let _pendingFile = null;
 //  AdSense push (run once after DOM ready)
 // ═══════════════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('.adsbygoogle').forEach(function(ins) {
+  // Push all static ins tags except the bottom bar (handled separately)
+  document.querySelectorAll('.adsbygoogle:not(#bottomAdBar ins)').forEach(function(ins) {
     try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
   });
+
+  // Bottom bar: push and observe — only show bar if ad actually renders
+  var bottomIns = document.querySelector('#bottomAdBar ins');
+  if (bottomIns) {
+    try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
+    var obs = new MutationObserver(function() {
+      if (bottomIns.dataset.adStatus === 'filled' || bottomIns.offsetHeight > 10) {
+        document.getElementById('bottomAdBar').classList.add('loaded');
+        obs.disconnect();
+      }
+    });
+    obs.observe(bottomIns, { attributes: true, childList: true, subtree: true });
+    // Fallback: show after 4s regardless (AdSense may not fire mutation)
+    setTimeout(function() {
+      document.getElementById('bottomAdBar').classList.add('loaded');
+    }, 4000);
+  }
 });
 
 // ═══════════════════════════════════════════════════════════════
