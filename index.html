@@ -4,1348 +4,191 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-adsense-account" content="ca-pub-9665914988223658">
-<title>InstaScope – Analyze Your Instagram Followers & Who Doesn't Follow Back</title>
-<meta name="description" content="Find out who doesn't follow you back on Instagram. Upload your ZIP export and instantly analyze followers, following and changes — 100% private, runs in your browser.">
-<meta name="keywords" content="instagram follower analyzer, who unfollowed me, instagram following checker, who doesn't follow back, instagram insights, social media analytics">
-<meta name="author" content="InstaScope">
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-<meta property="og:title" content="InstaScope – Find Out Who Doesn't Follow You Back on Instagram">
-<meta property="og:description" content="Analyze your followers, find out who doesn't follow you back, and much more. Free, right in your browser.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://filippidus.github.io/instascope/">
-<meta property="og:image" content="https://filippidus.github.io/instascope/og-image.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="InstaScope – Instagram Follower Analyzer">
-<meta name="twitter:description" content="Find out who doesn't follow you back on Instagram. Free & private.">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "InstaScope",
-  "description": "Analyze your Instagram followers and following. Find out who doesn't follow you back — 100% private, runs in your browser.",
-  "url": "https://filippidus.github.io/instascope/",
-  "applicationCategory": "UtilitiesApplication",
-  "operatingSystem": "Web",
-  "browserRequirements": "Requires JavaScript",
-  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
-}
-</script>
-<link rel="canonical" href="https://filippidus.github.io/instascope/">
+<title>InstaScope Blog – Instagram Tips, Guides & Follower Insights</title>
+<meta name="description" content="Guides, tips and strategies about Instagram followers, data export, growth and account management. Free resources from InstaScope.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://filippidus.github.io/instascope/blog/">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9665914988223658" crossorigin="anonymous"></script>
-
 <style>
-/* ─── Reset & Base ─────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --bg:       #08080f;
-  --surface:  #111119;
-  --card:     #16161f;
-  --border:   rgba(255,255,255,.07);
-  --grad1:    #e1306c;
-  --grad2:    #833ab4;
-  --grad3:    #fd1d1d;
-  --accent:   #e1306c;
-  --text:     #f0f0f5;
-  --muted:    #7a7a95;
-  --green:    #22d37e;
-  --orange:   #ff8c42;
-  --radius:   14px;
-  --shadow:   0 8px 40px rgba(0,0,0,.6);
-}
-html { scroll-behavior: smooth; }
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-body::before {
-  content: '';
-  position: fixed; inset: 0; z-index: -2;
-  background:
-    radial-gradient(ellipse 60% 50% at 20% 10%, rgba(131,58,180,.18) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 60% at 80% 90%, rgba(225,48,108,.14) 0%, transparent 60%),
-    var(--bg);
-}
-h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
-.grad { background: linear-gradient(135deg, var(--grad1), var(--grad2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#08080f;--surface:#111119;--card:#16161f;--border:rgba(255,255,255,.07);--grad1:#e1306c;--grad2:#833ab4;--accent:#e1306c;--text:#f0f0f5;--muted:#7a7a95;--radius:14px}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;z-index:-2;background:radial-gradient(ellipse 60% 50% at 20% 10%,rgba(131,58,180,.18) 0%,transparent 60%),radial-gradient(ellipse 50% 60% at 80% 90%,rgba(225,48,108,.14) 0%,transparent 60%),var(--bg)}
+h1,h2,h3,h4{font-family:'Syne',sans-serif}
+.grad{background:linear-gradient(135deg,var(--grad1),var(--grad2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+header{position:sticky;top:0;z-index:100;background:rgba(8,8,15,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 24px;height:62px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.25rem;letter-spacing:-.5px;text-decoration:none;color:var(--text)}
+.logo span{font-weight:300;opacity:.5}
+.header-cta{background:linear-gradient(135deg,var(--grad1),var(--grad2));color:#fff;border:none;border-radius:8px;padding:8px 16px;font-family:'Syne',sans-serif;font-weight:700;font-size:.82rem;cursor:pointer;text-decoration:none;white-space:nowrap}
+main{max-width:1000px;margin:0 auto;padding:48px 20px 120px}
+.blog-hero{text-align:center;margin-bottom:56px}
+.blog-hero h1{font-size:clamp(1.8rem,5vw,3rem);font-weight:800;margin-bottom:14px}
+.blog-hero p{color:var(--muted);font-size:1rem;max-width:500px;margin:0 auto}
+.ad-wrap{background:rgba(255,255,255,.02);border:1px dashed rgba(255,255,255,.06);border-radius:8px;padding:8px;margin:28px 0;text-align:center}
+.ad-label{font-size:.62rem;color:rgba(255,255,255,.12);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
 
-/* ─── Header ────────────────────────────────────────────────── */
-header {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(8,8,15,.85);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 24px;
-  height: 62px;
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 16px;
-}
-.logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.25rem; letter-spacing: -.5px; flex-shrink: 0; }
-.logo span { font-weight: 300; opacity: .5; }
-.header-ad { flex: 1; display: flex; justify-content: center; align-items: center; max-width: 400px; margin: 0 auto; overflow: hidden; }
+/* Featured article */
+.featured{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:36px 32px;margin-bottom:40px;display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;transition:border-color .2s;text-decoration:none}
+.featured:hover{border-color:rgba(225,48,108,.35)}
+.featured-tag{display:inline-block;background:rgba(225,48,108,.12);border:1px solid rgba(225,48,108,.25);color:var(--accent);border-radius:6px;padding:4px 12px;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px}
+.featured h2{font-size:1.5rem;font-weight:800;margin-bottom:12px;line-height:1.25;color:var(--text)}
+.featured p{color:var(--muted);font-size:.9rem;line-height:1.65;margin-bottom:20px}
+.featured .read-more{color:var(--accent);font-size:.85rem;font-weight:600}
+.featured-visual{background:linear-gradient(135deg,rgba(225,48,108,.15),rgba(131,58,180,.15));border-radius:16px;height:200px;display:flex;align-items:center;justify-content:center;font-size:5rem}
 
-/* ─── Main layout ───────────────────────────────────────────── */
-main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
+/* Articles grid */
+.section-title{font-size:1.1rem;font-weight:700;margin-bottom:20px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-family:'Syne',sans-serif}
+.articles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;margin-bottom:48px}
+.article-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px 20px;display:flex;flex-direction:column;gap:12px;text-decoration:none;transition:all .2s}
+.article-card:hover{border-color:rgba(225,48,108,.3);transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.4)}
+.ac-tag{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--accent)}
+.ac-tag.green{color:#22d37e}
+.ac-tag.orange{color:#ff8c42}
+.ac-tag.purple{color:#a855f7}
+.article-card h3{font-size:1rem;font-weight:700;line-height:1.35;color:var(--text)}
+.article-card p{font-size:.83rem;color:var(--muted);line-height:1.6;flex:1}
+.ac-footer{display:flex;justify-content:space-between;align-items:center;font-size:.75rem;color:var(--muted)}
+.ac-footer .read-time{background:rgba(255,255,255,.05);border-radius:20px;padding:2px 8px}
 
-/* ─── Hero / Upload ─────────────────────────────────────────── */
-#hero { text-align: center; padding: 60px 20px 40px; }
-#hero h1 { font-size: clamp(2rem, 6vw, 3.8rem); font-weight: 800; line-height: 1.1; margin-bottom: 16px; }
-#hero > p { color: var(--muted); font-size: 1.05rem; max-width: 520px; margin: 0 auto 40px; line-height: 1.6; }
+.site-footer{text-align:center;padding:20px;font-size:.78rem;color:var(--muted);border-top:1px solid var(--border);margin-top:20px;line-height:1.8}
+.site-footer a{color:var(--muted);text-decoration:none}
+.site-footer a:hover{color:var(--accent)}
 
-/* ─── Drop Zone ─────────────────────────────────────────────── */
-.drop-zone {
-  border: 2px dashed rgba(225,48,108,.4);
-  border-radius: 20px; padding: 50px 30px; cursor: pointer;
-  transition: all .3s; background: rgba(225,48,108,.04);
-  position: relative; max-width: 560px; margin: 0 auto;
-}
-.drop-zone:hover, .drop-zone.drag-over {
-  border-color: var(--accent); background: rgba(225,48,108,.10);
-  transform: translateY(-2px); box-shadow: 0 0 40px rgba(225,48,108,.15);
-}
-.drop-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
-.drop-icon { width: 64px; height: 64px; background: linear-gradient(135deg, var(--grad1), var(--grad2)); border-radius: 18px; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; font-size: 1.8rem; }
-.drop-zone h3 { font-family: 'Syne', sans-serif; font-size: 1.2rem; margin-bottom: 8px; }
-.drop-zone p { color: var(--muted); font-size: .9rem; }
-.drop-warn { margin-top: 8px; font-size: .75rem; color: #e1306c; }
-
-/* ─── How-to steps ──────────────────────────────────────────── */
-.howto { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 40px auto; max-width: 700px; }
-.howto-step { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 16px; text-align: center; }
-.howto-step .num { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--grad1), var(--grad2)); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: .85rem; }
-.howto-step h4 { font-size: .9rem; margin-bottom: 6px; }
-.howto-step p { font-size: .8rem; color: var(--muted); line-height: 1.5; }
-
-/* ─── Features section ──────────────────────────────────────── */
-.features-section { margin: 20px auto 40px; max-width: 860px; }
-.features-section h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: 20px; text-align: center; }
-.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
-.feature-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 18px; display: flex; flex-direction: column; gap: 8px; }
-.feature-card .f-icon { font-size: 1.6rem; }
-.feature-card h4 { font-size: .92rem; font-weight: 700; }
-.feature-card p { font-size: .8rem; color: var(--muted); line-height: 1.5; }
-
-/* ─── Privacy / Trust badges ─────────────────────────────────── */
-.trust-bar { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 0 auto 40px; max-width: 660px; }
-.trust-badge { background: var(--card); border: 1px solid var(--border); border-radius: 50px; padding: 8px 16px; font-size: .8rem; color: var(--muted); display: flex; align-items: center; gap: 6px; }
-.trust-badge .tb-icon { font-size: .95rem; }
-
-/* ─── FAQ section ───────────────────────────────────────────── */
-.faq-section { margin: 0 auto 48px; max-width: 700px; }
-.faq-section h2 { font-size: 1.4rem; font-weight: 800; margin-bottom: 20px; text-align: center; }
-.faq-item { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; overflow: hidden; }
-.faq-question { padding: 16px 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: .92rem; user-select: none; transition: background .2s; }
-.faq-question:hover { background: rgba(255,255,255,.03); }
-.faq-question .faq-arrow { font-size: .75rem; color: var(--muted); transition: transform .2s; flex-shrink: 0; margin-left: 12px; }
-.faq-question.open .faq-arrow { transform: rotate(180deg); }
-.faq-answer { display: none; padding: 0 20px 16px; font-size: .86rem; color: var(--muted); line-height: 1.65; }
-.faq-answer.show { display: block; }
-.faq-answer a { color: var(--accent); text-decoration: none; }
-.faq-answer a:hover { text-decoration: underline; }
-
-/* ─── Troubleshooting section ───────────────────────────────── */
-.trouble-section { margin: 0 auto 48px; max-width: 700px; }
-.trouble-section h2 { font-size: 1.4rem; font-weight: 800; margin-bottom: 8px; text-align: center; }
-.trouble-section .trouble-intro { text-align: center; font-size: .88rem; color: var(--muted); margin-bottom: 20px; line-height: 1.6; }
-.trouble-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 12px; }
-.trouble-card .tc-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-.trouble-card .tc-icon { font-size: 1.2rem; flex-shrink: 0; }
-.trouble-card h4 { font-size: .9rem; font-weight: 700; }
-.trouble-card p { font-size: .82rem; color: var(--muted); line-height: 1.6; }
-.trouble-card ul { margin: 8px 0 0 18px; font-size: .82rem; color: var(--muted); line-height: 1.8; }
-.trouble-card .tc-tag { display: inline-block; background: rgba(225,48,108,.12); border: 1px solid rgba(225,48,108,.2); color: var(--accent); border-radius: 6px; padding: 2px 8px; font-size: .72rem; font-weight: 600; margin-bottom: 6px; }
-
-/* ─── About section ─────────────────────────────────────────── */
-.about-section { margin: 0 auto 48px; max-width: 700px; }
-.about-section h2 { font-size: 1.4rem; font-weight: 800; margin-bottom: 16px; text-align: center; }
-.about-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 28px; }
-.about-card p { font-size: .88rem; color: var(--muted); line-height: 1.75; margin-bottom: 12px; }
-.about-card p:last-child { margin-bottom: 0; }
-.about-card strong { color: var(--text); }
-
-/* ─── Legal section ─────────────────────────────────────────── */
-.legal-section { margin: 0 auto 48px; max-width: 700px; }
-.legal-tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
-.legal-tab { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 8px 16px; font-size: .83rem; font-weight: 600; cursor: pointer; transition: all .2s; color: var(--muted); }
-.legal-tab.active { background: linear-gradient(135deg, var(--grad1), var(--grad2)); color: #fff; border-color: transparent; }
-.legal-panel { display: none; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 24px; }
-.legal-panel.active { display: block; }
-.legal-panel h3 { font-size: 1rem; margin-bottom: 14px; }
-.legal-panel p, .legal-panel li { font-size: .83rem; color: var(--muted); line-height: 1.75; margin-bottom: 10px; }
-.legal-panel ul { margin-left: 18px; margin-bottom: 10px; }
-.legal-panel strong { color: var(--text); }
-.legal-panel a { color: var(--accent); text-decoration: none; }
-
-/* ─── Dashboard ─────────────────────────────────────────────── */
-#dashboard { display: none; }
-#dashboard.visible { display: block; animation: fadeUp .5s ease; }
-@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-/* ─── Stats bar ─────────────────────────────────────────────── */
-.stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 28px; }
-.stat-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 16px; text-align: center; transition: transform .2s; }
-.stat-card:hover { transform: translateY(-3px); }
-.stat-card .val { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; }
-.stat-card .lbl { font-size: .78rem; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: .05em; }
-
-/* ─── Tabs ──────────────────────────────────────────────────── */
-.tabs { display: flex; gap: 4px; background: var(--surface); border-radius: 12px; padding: 5px; border: 1px solid var(--border); margin-bottom: 4px; }
-.tab-btn { flex: 1; padding: 9px 10px; background: none; border: none; color: var(--muted); font-family: 'DM Sans', sans-serif; font-size: .85rem; font-weight: 500; border-radius: 8px; cursor: pointer; transition: all .2s; display: flex; align-items: center; justify-content: center; gap: 5px; white-space: nowrap; min-width: 0; }
-.tab-btn.active { background: linear-gradient(135deg, var(--grad1), var(--grad2)); color: #fff; font-weight: 600; }
-.tab-btn .badge { background: rgba(255,255,255,.2); border-radius: 20px; padding: 1px 6px; font-size: .72rem; flex-shrink: 0; }
-.tab-btn:not(.active) .badge { background: rgba(255,255,255,.08); }
-.t-short { display: none; }
-.t-full  { display: inline; }
-.t-icon  { font-size: .95rem; flex-shrink: 0; }
-
-/* ─── Tab panels ────────────────────────────────────────────── */
-.tab-panel { display: none; animation: fadeUp .3s ease; }
-.tab-panel.active { display: block; }
-
-/* ─── Search bar ─────────────────────────────────────────────── */
-.search-row { display: flex; gap: 10px; margin: 16px 0; align-items: center; }
-.search-row input { flex: 1; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 10px 16px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: .9rem; outline: none; transition: border-color .2s; }
-.search-row input:focus { border-color: rgba(225,48,108,.5); }
-.sort-btn { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; color: var(--muted); cursor: pointer; font-size: .85rem; white-space: nowrap; transition: all .2s; }
-.sort-btn:hover { border-color: var(--accent); color: var(--text); }
-
-/* ─── User list ─────────────────────────────────────────────── */
-.user-list { display: flex; flex-direction: column; gap: 8px; }
-.user-item { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 13px 16px; display: flex; align-items: center; gap: 12px; transition: all .2s; }
-.user-item:hover { border-color: rgba(225,48,108,.3); transform: translateX(3px); }
-.avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--grad1), var(--grad2)); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 700; font-size: .9rem; flex-shrink: 0; color: #fff; }
-.user-info { flex: 1; min-width: 0; }
-.user-info .uname { font-weight: 500; font-size: .9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.user-info .udate { font-size: .75rem; color: var(--muted); margin-top: 2px; }
-.user-link { background: rgba(225,48,108,.12); border: 1px solid rgba(225,48,108,.25); color: var(--accent); border-radius: 8px; padding: 6px 12px; text-decoration: none; font-size: .8rem; font-weight: 500; transition: all .2s; white-space: nowrap; flex-shrink: 0; }
-.user-link:hover { background: rgba(225,48,108,.25); }
-
-/* ─── Ad banner ─────────────────────────────────────────────── */
-.ad-banner-wrap { background: rgba(255,255,255,.02); border: 1px dashed rgba(255,255,255,.06); border-radius: 8px; padding: 8px; margin: 16px 0; text-align: center; }
-.ad-slot-label { font-size: .65rem; color: rgba(255,255,255,.15); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 4px; }
-
-/* ─── Lock gate ─────────────────────────────────────────────── */
-.lock-gate { background: linear-gradient(135deg, rgba(131,58,180,.15), rgba(225,48,108,.15)); border: 1px solid rgba(225,48,108,.3); border-radius: var(--radius); padding: 40px 24px; text-align: center; margin-bottom: 12px; }
-.lock-gate .lock-icon { font-size: 2.5rem; margin-bottom: 12px; }
-.lock-gate h3 { font-family: 'Syne', sans-serif; font-size: 1.2rem; margin-bottom: 8px; }
-.lock-gate p { color: var(--muted); font-size: .9rem; margin-bottom: 24px; max-width: 400px; margin-left: auto; margin-right: auto; }
-.btn-watch { background: linear-gradient(135deg, var(--grad1), var(--grad2)); color: #fff; border: none; border-radius: 10px; padding: 12px 28px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: .95rem; cursor: pointer; transition: all .25s; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
-.btn-watch:hover { opacity: .85; transform: scale(1.03); box-shadow: 0 0 30px rgba(225,48,108,.4); }
-.btn-watch:disabled { opacity: .5; cursor: not-allowed; transform: none; }
-
-/* ─── History ────────────────────────────────────────────────── */
-.upload-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
-.mini-drop { border: 2px dashed rgba(255,255,255,.15); border-radius: var(--radius); padding: 24px 16px; text-align: center; cursor: pointer; position: relative; transition: all .3s; background: var(--card); }
-.mini-drop:hover, .mini-drop.loaded { border-color: var(--accent); background: rgba(225,48,108,.06); }
-.mini-drop input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
-.mini-drop .icon { font-size: 1.8rem; margin-bottom: 8px; }
-.mini-drop h4 { font-family: 'Syne', sans-serif; font-size: .9rem; margin-bottom: 4px; }
-.mini-drop p { font-size: .78rem; color: var(--muted); }
-.mini-drop .loaded-name { font-size: .78rem; color: var(--green); margin-top: 6px; font-weight: 500; }
-.diff-section { margin-bottom: 24px; }
-.diff-section h3 { font-family: 'Syne', sans-serif; font-size: 1rem; margin-bottom: 12px; padding: 10px 16px; border-radius: 10px; display: flex; align-items: center; gap: 8px; }
-.diff-section.new-followers h3 { background: rgba(34,211,126,.1); border: 1px solid rgba(34,211,126,.2); color: var(--green); }
-.diff-section.lost-followers h3 { background: rgba(225,48,108,.1); border: 1px solid rgba(225,48,108,.2); color: var(--accent); }
-.diff-section.new-following h3 { background: rgba(255,140,66,.1); border: 1px solid rgba(255,140,66,.2); color: var(--orange); }
-.diff-section.lost-following h3 { background: rgba(131,58,180,.1); border: 1px solid rgba(131,58,180,.2); color: #a855f7; }
-.diff-item { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
-.diff-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-
-/* ─── Empty / Loading ───────────────────────────────────────── */
-.empty { text-align: center; padding: 60px 20px; color: var(--muted); font-size: .9rem; }
-.empty .e-icon { font-size: 3rem; margin-bottom: 12px; }
-#loading-overlay { display: none; position: fixed; inset: 0; z-index: 999; background: rgba(8,8,15,.92); backdrop-filter: blur(12px); flex-direction: column; align-items: center; justify-content: center; gap: 16px; }
-#loading-overlay.show { display: flex; }
-.spinner { width: 48px; height: 48px; border-radius: 50%; border: 3px solid rgba(225,48,108,.2); border-top-color: var(--accent); animation: spin .8s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
-#loading-overlay p { color: var(--muted); font-size: .9rem; }
-
-/* ─── Toast ─────────────────────────────────────────────────── */
-.toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 20px; font-size: .88rem; transition: transform .3s; z-index: 1000; white-space: nowrap; box-shadow: var(--shadow); }
-.toast.show { transform: translateX(-50%) translateY(0); }
-
-/* ─── Reset btn ─────────────────────────────────────────────── */
-.btn-reset { background: rgba(255,255,255,.06); border: 1px solid var(--border); color: var(--muted); border-radius: 10px; padding: 9px 16px; font-family: 'DM Sans', sans-serif; font-size: .85rem; cursor: pointer; transition: all .2s; }
-.btn-reset:hover { border-color: var(--accent); color: var(--text); }
-
-/* ─── Ko-fi FAB ──────────────────────────────────────────────── */
-#kofiFab { position: fixed; bottom: 80px; left: 16px; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #FF5E5B, #FF9B4E); box-shadow: 0 4px 20px rgba(255,94,91,.45); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; text-decoration: none; z-index: 89; transition: transform .25s, box-shadow .25s; animation: kofi-pulse 3s ease-in-out infinite; }
-#kofiFab:hover { transform: scale(1.12); box-shadow: 0 8px 32px rgba(255,94,91,.6); }
-@keyframes kofi-pulse { 0%, 100% { box-shadow: 0 4px 20px rgba(255,94,91,.45); } 50% { box-shadow: 0 4px 32px rgba(255,94,91,.75), 0 0 0 8px rgba(255,94,91,.1); } }
-
-/* ─── Bottom ad bar ──────────────────────────────────────────── */
-.bottom-ad-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 90; background: rgba(8,8,15,.9); backdrop-filter: blur(12px); border-top: 1px solid var(--border); padding: 8px; text-align: center; display: none; align-items: center; justify-content: center; min-height: 50px; }
-.bottom-ad-bar.loaded { display: flex; }
-
-/* ─── Ad Overlay ─────────────────────────────────────────────── */
-#adOverlay { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,.94); backdrop-filter: blur(10px); flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 20px 16px 24px; }
-#adOverlay.show { display: flex; animation: fadeUp .2s ease; }
-#adCloseWrap { position: absolute; top: 14px; right: 14px; width: 44px; height: 44px; z-index: 10; }
-#adCloseRing { position: absolute; inset: 0; width: 44px; height: 44px; }
-#adCloseBtn { position: absolute; inset: 0; width: 44px; height: 44px; border-radius: 50%; background: rgba(20,20,30,.85); border: none; color: rgba(255,255,255,.5); font-size: 1rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .25s; opacity: 0; pointer-events: none; }
-#adCloseBtn.ready { opacity: 1; pointer-events: auto; color: #fff; }
-#adOverlayLabel { font-size: .65rem; text-transform: uppercase; letter-spacing: .15em; color: rgba(255,255,255,.2); margin-bottom: -4px; }
-#overlayBannerSlot { width: 100%; max-width: 700px; min-height: 90px; border-radius: 10px; overflow: hidden; }
-#adOverlayInfo { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
-#adOverlayMsg { font-size: .82rem; color: rgba(255,255,255,.4); max-width: 280px; line-height: 1.4; }
-#adOverlaySecs { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: rgba(255,255,255,.6); min-height: 24px; }
-
-/* ─── Ko-fi card ─────────────────────────────────────────────── */
-.kofi-wrap { text-align: center; padding: 32px 20px 16px; }
-.kofi-card { display: inline-flex; flex-direction: column; align-items: center; gap: 12px; background: var(--card); border: 1px solid rgba(255,94,91,.25); border-radius: 20px; padding: 24px 32px; max-width: 360px; width: 100%; box-shadow: 0 0 40px rgba(255,94,91,.07); position: relative; overflow: hidden; }
-.kofi-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,94,91,.06), rgba(255,163,76,.04)); pointer-events: none; }
-.kofi-emoji { font-size: 2.2rem; animation: kofi-bounce 2s ease-in-out infinite; }
-@keyframes kofi-bounce { 0%, 100% { transform: translateY(0) rotate(-5deg); } 50% { transform: translateY(-6px) rotate(5deg); } }
-.kofi-title { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; }
-.kofi-sub { font-size: .82rem; color: var(--muted); line-height: 1.5; text-align: center; max-width: 240px; }
-.kofi-btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #FF5E5B, #FF9B4E); color: #fff; border: none; border-radius: 50px; padding: 12px 28px; font-family: 'Syne', sans-serif; font-size: .92rem; font-weight: 700; cursor: pointer; text-decoration: none; transition: all .25s; box-shadow: 0 4px 20px rgba(255,94,91,.35); }
-.kofi-btn:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 8px 30px rgba(255,94,91,.5); }
-.kofi-hearts { font-size: .75rem; color: rgba(255,255,255,.6); letter-spacing: .05em; }
-
-/* ─── Site footer ────────────────────────────────────────────── */
-.site-footer { text-align: center; padding: 20px; font-size: .78rem; color: var(--muted); border-top: 1px solid var(--border); margin-top: 20px; line-height: 1.8; }
-.site-footer a { color: var(--muted); text-decoration: none; }
-.site-footer a:hover { color: var(--accent); }
-
-/* ─── Responsive ─────────────────────────────────────────────── */
-@media (max-width: 700px) {
-  .stats-bar { grid-template-columns: repeat(2, 1fr); }
-  .upload-duo { grid-template-columns: 1fr; }
-  .header-ad { display: none; }
-}
-@media (max-width: 600px) {
-  .tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-  .tabs .tab-btn:last-child { grid-column: 1 / -1; }
-  .tab-btn { flex-direction: column; padding: 11px 6px; gap: 4px; font-size: .72rem; white-space: normal; text-align: center; min-height: 64px; }
-  .t-icon  { font-size: 1.2rem; }
-  .t-full  { display: none; }
-  .t-short { display: inline; font-size: .72rem; line-height: 1.2; }
-  .tab-btn .badge { font-size: .65rem; padding: 1px 5px; }
-  .legal-tabs { gap: 6px; }
-  .legal-tab { font-size: .78rem; padding: 7px 12px; }
-}
-@media (max-width: 480px) {
-  main { padding: 16px 12px 100px; }
-  .stat-card .val { font-size: 1.5rem; }
-  .stat-card .lbl { font-size: .68rem; }
-  .user-item { padding: 10px 12px; }
-  .user-info .uname { font-size: .85rem; }
-  .user-link { font-size: .75rem; padding: 5px 10px; }
-  .about-card { padding: 20px 16px; }
-  .kofi-card { padding: 20px 16px; }
+@media(max-width:700px){
+  .featured{grid-template-columns:1fr}
+  .featured-visual{display:none}
+  main{padding:32px 14px 100px}
 }
 </style>
 </head>
 <body>
 
-<!-- SVG defs for ad overlay ring gradient -->
-<svg width="0" height="0" style="position:absolute">
-  <defs>
-    <linearGradient id="cGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#e1306c"/>
-      <stop offset="100%" style="stop-color:#833ab4"/>
-    </linearGradient>
-  </defs>
-</svg>
-
-<!-- ─── Loading overlay ──────────────────────────────────────── -->
-<div id="loading-overlay">
-  <div class="spinner"></div>
-  <p>Analyzing file…</p>
-</div>
-
-<!-- ─── Toast ────────────────────────────────────────────────── -->
-<div class="toast" id="toast"></div>
-
-<!-- ─── Header ──────────────────────────────────────────────── -->
 <header>
-  <div class="logo">Insta<span>Scope</span></div>
-  <div class="header-ad" id="headerAdWrap"></div>
-  <button class="btn-reset" id="resetBtn" style="display:none" onclick="resetApp()">↩ Reset</button>
+  <a class="logo" href="../index.html">Insta<span>Scope</span></a>
+  <a class="header-cta" href="../index.html">📦 Analyze my Instagram</a>
 </header>
 
-<!-- ─── Main ─────────────────────────────────────────────────── -->
 <main>
 
-  <!-- ── Hero / Upload ──────────────────────────────────────── -->
-  <section id="hero">
-    <h1>Find out who truly <span class="grad">follows you back</span></h1>
-    <p>Upload the ZIP file exported from Instagram and instantly analyze your followers, following and more — 100% private, everything runs in your browser.</p>
-
-    <div class="drop-zone" id="dropZone">
-      <input type="file" accept=".zip" id="fileInput" onchange="handleFile(this.files[0])">
-      <div class="drop-icon">📦</div>
-      <h3>Drag your <u>.zip</u> file here</h3>
-      <p>or click to select it</p>
-      <p class="drop-warn">⚠️ Upload the entire .zip file — not the extracted folder</p>
-    </div>
-
-    <!-- How-to steps -->
-    <div class="howto">
-      <div class="howto-step">
-        <div class="num">1</div>
-        <h4>Export from Instagram</h4>
-        <p>Go to Settings → Privacy → Download your data → Select "Followers and Following" → choose <strong>JSON format</strong> → set date range to <strong>"All time"</strong></p>
-      </div>
-      <div class="howto-step">
-        <div class="num">2</div>
-        <h4>Upload the ZIP file</h4>
-        <p>Instagram will send you an email with a download link. Download the .zip file and upload it above — without extracting it.</p>
-      </div>
-      <div class="howto-step">
-        <div class="num">3</div>
-        <h4>Analyze the results</h4>
-        <p>See your followers, who doesn't follow you back, who you're not following back and changes over time — in seconds.</p>
-      </div>
-    </div>
-
-    <!-- Trust badges -->
-    <div class="trust-bar">
-      <div class="trust-badge"><span class="tb-icon">🔒</span> 100% Private</div>
-      <div class="trust-badge"><span class="tb-icon">⚡</span> Instant Analysis</div>
-      <div class="trust-badge"><span class="tb-icon">🌐</span> Runs in your browser</div>
-      <div class="trust-badge"><span class="tb-icon">🆓</span> Completely Free</div>
-      <div class="trust-badge"><span class="tb-icon">📁</span> No data sent to servers</div>
-    </div>
-
-    <!-- Features -->
-    <div class="features-section">
-      <h2>What you can do with <span class="grad">InstaScope</span></h2>
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="f-icon">👥</div>
-          <h4>Full Followers List</h4>
-          <p>Browse all your followers with names, dates and direct links to their profiles.</p>
-        </div>
-        <div class="feature-card">
-          <div class="f-icon">➡️</div>
-          <h4>Full Following List</h4>
-          <p>See everyone you follow in a clean, searchable and sortable list.</p>
-        </div>
-        <div class="feature-card">
-          <div class="f-icon">❌</div>
-          <h4>Who Doesn't Follow Back</h4>
-          <p>Find all the accounts you follow that are not following you back.</p>
-        </div>
-        <div class="feature-card">
-          <div class="f-icon">🔔</div>
-          <h4>Who You Don't Follow Back</h4>
-          <p>Discover accounts that follow you but you haven't followed back yet.</p>
-        </div>
-        <div class="feature-card">
-          <div class="f-icon">📊</div>
-          <h4>History Comparison</h4>
-          <p>Compare two exports taken at different times and see exactly who followed or unfollowed you.</p>
-        </div>
-        <div class="feature-card">
-          <div class="f-icon">🔍</div>
-          <h4>Search & Sort</h4>
-          <p>Quickly find any user and sort results alphabetically or by follow date.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- FAQ -->
-    <div class="faq-section">
-      <h2>Frequently Asked Questions</h2>
-
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">
-          How do I export my data from Instagram?
-          <span class="faq-arrow">▼</span>
-        </div>
-        <div class="faq-answer">
-          Open Instagram → go to your profile → tap the three lines (☰) → Settings and Privacy → Account → Your activity → Download your information. Select <strong>"Followers and following"</strong>, choose <strong>JSON</strong> as the format and set the date range to <strong>"All time"</strong>. Instagram will send you an email with a download link within a few hours.
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">
-          Is my data safe? Do you store it?
-          <span class="faq-arrow">▼</span>
-        </div>
-        <div class="faq-answer">
-          Absolutely. InstaScope runs entirely in your browser — <strong>no data is ever sent to any server</strong>. Your ZIP file is read locally on your device. When you close the page, everything is gone. We never see, collect or store any of your Instagram data.
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">
-          Why does InstaScope show different numbers than Instagram?
-          <span class="faq-arrow">▼</span>
-        </div>
-        <div class="faq-answer">
-          There are a few common reasons for discrepancies. See the <strong>Troubleshooting</strong> section below for a detailed explanation of each possible cause and how to fix it.
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">
-          Can I use InstaScope on mobile?
-          <span class="faq-arrow">▼</span>
-        </div>
-        <div class="faq-answer">
-          Yes! InstaScope is fully responsive and works on any device — phone, tablet or desktop. Just download your Instagram export on your phone and upload the ZIP file directly from there.
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">
-          How do I use the History comparison feature?
-          <span class="faq-arrow">▼</span>
-        </div>
-        <div class="faq-answer">
-          Request two data exports from Instagram at different times (e.g. today and in a month). Then go to the <strong>History</strong> tab, upload the older ZIP as "Old File" and the newer one as "Current File", and click Compare. InstaScope will show you exactly who followed or unfollowed you in that period.
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">
-          Why does it say "0 following" after I upload?
-          <span class="faq-arrow">▼</span>
-        </div>
-        <div class="faq-answer">
-          This usually happens when you export data in <strong>HTML format instead of JSON</strong>. Make sure to select <strong>JSON</strong> when requesting your export from Instagram. Also ensure the date range is set to <strong>"All time"</strong>, otherwise older following data may be missing.
-        </div>
-      </div>
-    </div>
-
-    <!-- Troubleshooting -->
-    <div class="trouble-section">
-      <h2>⚠️ Troubleshooting — Why numbers may not match</h2>
-      <p class="trouble-intro">If the counts shown by InstaScope differ from what you see on Instagram, here are all the possible reasons and what to do about each one.</p>
-
-      <div class="trouble-card">
-        <div class="tc-header">
-          <div class="tc-icon">📄</div>
-          <h4>Wrong export format (HTML instead of JSON)</h4>
-        </div>
-        <div class="tc-tag">Most common cause</div>
-        <p>Instagram lets you export in HTML or JSON. InstaScope only reads <strong>JSON format</strong>. If you see 0 users or very few results, you likely exported in the wrong format.</p>
-        <ul>
-          <li>Go back to Instagram and request a new export</li>
-          <li>When selecting format, choose <strong>JSON</strong> (not HTML)</li>
-          <li>Set the date range to <strong>"All time"</strong></li>
-        </ul>
-      </div>
-
-      <div class="trouble-card">
-        <div class="tc-header">
-          <div class="tc-icon">📅</div>
-          <h4>Date range not set to "All time"</h4>
-        </div>
-        <p>If you set a limited date range during export (e.g. "Last 30 days"), Instagram will only include accounts you started following or who started following you within that period — not your full list.</p>
-        <ul>
-          <li>Request a new export and set the date range to <strong>"All time"</strong></li>
-        </ul>
-      </div>
-
-      <div class="trouble-card">
-        <div class="tc-header">
-          <div class="tc-icon">⏳</div>
-          <h4>Export data is not up to date</h4>
-        </div>
-        <p>Instagram exports are a <strong>snapshot in time</strong>. If someone followed or unfollowed you after you requested the export, those changes won't be reflected. The export can also take several hours to be generated.</p>
-        <ul>
-          <li>Request a fresh export if you need current data</li>
-          <li>Use the History tab to compare two exports and see changes</li>
-        </ul>
-      </div>
-
-      <div class="trouble-card">
-        <div class="tc-header">
-          <div class="tc-icon">👻</div>
-          <h4>Ghost or deactivated accounts</h4>
-        </div>
-        <p>Instagram's in-app follower count includes <strong>deactivated, deleted and suspended accounts</strong>. These accounts still appear in your follower count on Instagram but may not always appear in the JSON export, causing a small discrepancy.</p>
-      </div>
-
-      <div class="trouble-card">
-        <div class="tc-header">
-          <div class="tc-icon">📦</div>
-          <h4>Uploaded the extracted folder instead of the ZIP file</h4>
-        </div>
-        <p>InstaScope needs the <strong>original .zip file</strong>, not the folder you get after extracting it. If you unzipped the file first, you uploaded the wrong thing.</p>
-        <ul>
-          <li>Find the original .zip file (usually in your Downloads folder)</li>
-          <li>Upload that file directly — do not unzip it first</li>
-        </ul>
-      </div>
-
-      <div class="trouble-card">
-        <div class="tc-header">
-          <div class="tc-icon">🔢</div>
-          <h4>Instagram export split across multiple files</h4>
-        </div>
-        <p>If you follow or are followed by a large number of accounts, Instagram may split your follower data across multiple files (followers_1.json, followers_2.json, etc.). InstaScope automatically reads all of them from the ZIP, so this should not cause issues — but make sure you uploaded the <strong>complete ZIP</strong> and not a partial one.</p>
-      </div>
-
-      <div class="trouble-card">
-        <div class="tc-header">
-          <div class="tc-icon">🔄</div>
-          <h4>Still seeing wrong numbers?</h4>
-        </div>
-        <p>Try this checklist:</p>
-        <ul>
-          <li>Request a <strong>brand new export</strong> from Instagram</li>
-          <li>Select format: <strong>JSON</strong></li>
-          <li>Date range: <strong>All time</strong></li>
-          <li>Wait for the email from Instagram (can take up to a few hours)</li>
-          <li>Download and upload the <strong>original .zip file</strong></li>
-          <li>Open browser DevTools (F12) → Console tab → check for any errors</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- About -->
-    <div class="about-section">
-      <h2>About InstaScope</h2>
-      <div class="about-card">
-        <p>InstaScope is a <strong>free, open-source tool</strong> that helps you understand your Instagram audience better. No login required, no Instagram API access, no data collection of any kind.</p>
-        <p>The tool works by reading the ZIP file that Instagram provides when you request a copy of your data — a standard feature available to all users. Everything happens locally in your browser using JavaScript, so <strong>your data never leaves your device</strong>.</p>
-        <p>InstaScope was built to give people a clear, simple and private way to manage their Instagram presence — whether you want to clean up who you follow, track follower changes over time, or simply get a better overview of your account.</p>
-        <p>If InstaScope has been useful to you, consider <a href="https://ko-fi.com/instascope" target="_blank" rel="noopener">buying me a coffee ☕</a> — it helps keep the tool free and maintained.</p>
-      </div>
-    </div>
-
-    <!-- Legal (Privacy + Terms) -->
-    <div class="legal-section">
-      <div class="legal-tabs">
-        <div class="legal-tab active" onclick="switchLegal('privacy', this)">Privacy Policy</div>
-        <div class="legal-tab" onclick="switchLegal('terms', this)">Terms of Service</div>
-      </div>
-
-      <div class="legal-panel active" id="legal-privacy">
-        <h3>Privacy Policy</h3>
-        <p><strong>Last updated:</strong> May 2025</p>
-        <p>InstaScope is committed to protecting your privacy. This policy explains how InstaScope handles your data.</p>
-        <p><strong>No data collection.</strong> InstaScope does not collect, store, transmit or process any personal data on any server. All file processing happens entirely within your browser on your device.</p>
-        <p><strong>ZIP file processing.</strong> When you upload your Instagram ZIP file, it is read locally by your browser using JavaScript. The file and its contents are never sent to any external server or third party.</p>
-        <p><strong>Cookies and advertising.</strong> InstaScope uses Google AdSense to display advertisements, which may use cookies to show relevant ads. You can manage ad preferences via Google's ad settings. We also use anonymous analytics to understand how the tool is used, without collecting any personally identifiable information.</p>
-        <p><strong>Third-party links.</strong> InstaScope contains links to Instagram profiles and Ko-fi. We are not responsible for the privacy practices of third-party websites.</p>
-        <p>For any privacy-related questions, you can reach us via <a href="https://ko-fi.com/instascope" target="_blank" rel="noopener">Ko-fi</a>.</p>
-      </div>
-
-      <div class="legal-panel" id="legal-terms">
-        <h3>Terms of Service</h3>
-        <p><strong>Last updated:</strong> May 2025</p>
-        <p>By using InstaScope, you agree to the following terms:</p>
-        <ul>
-          <li><strong>Personal use only.</strong> InstaScope is provided for personal, non-commercial use only.</li>
-          <li><strong>No warranty.</strong> InstaScope is provided "as is" without any warranties. We do not guarantee the accuracy, completeness or availability of the tool at any time.</li>
-          <li><strong>Instagram compliance.</strong> You are responsible for ensuring your use of your Instagram data complies with Instagram's Terms of Service. InstaScope does not interact with Instagram's API and does not require your Instagram credentials.</li>
-          <li><strong>No liability.</strong> InstaScope and its creator are not liable for any damages or losses resulting from the use or inability to use this tool.</li>
-          <li><strong>Advertising.</strong> InstaScope displays ads via Google AdSense to support free access to the tool. By using InstaScope you acknowledge that ads may be displayed.</li>
-          <li><strong>Changes.</strong> We reserve the right to modify or discontinue InstaScope at any time without notice.</li>
-        </ul>
-        <p>Continued use of InstaScope constitutes acceptance of these terms.</p>
-      </div>
-    </div>
-
-  </section><!-- /hero -->
-
-  <!-- ── Dashboard ──────────────────────────────────────────── -->
-  <section id="dashboard">
-
-    <div class="stats-bar">
-      <div class="stat-card">
-        <div class="val grad" id="statFollowers">0</div>
-        <div class="lbl">Followers</div>
-      </div>
-      <div class="stat-card">
-        <div class="val grad" id="statFollowing">0</div>
-        <div class="lbl">Following</div>
-      </div>
-      <div class="stat-card">
-        <div class="val" style="color:var(--accent)" id="statNotBack">0</div>
-        <div class="lbl">Don't Follow Back</div>
-      </div>
-      <div class="stat-card">
-        <div class="val" style="color:var(--orange)" id="statNotFollow">0</div>
-        <div class="lbl">You Don't Follow</div>
-      </div>
-    </div>
-
-    <div class="tabs">
-      <button class="tab-btn active" onclick="switchTab('followers', event)">
-        <span class="t-icon">👥</span><span class="t-full">Followers</span><span class="t-short">Followers</span>
-        <span class="badge" id="bFollowers">0</span>
-      </button>
-      <button class="tab-btn" onclick="switchTab('following', event)">
-        <span class="t-icon">➡️</span><span class="t-full">Following</span><span class="t-short">Following</span>
-        <span class="badge" id="bFollowing">0</span>
-      </button>
-      <button class="tab-btn" onclick="switchTab('notback', event)">
-        <span class="t-icon">❌</span><span class="t-full">Don't Follow Back</span><span class="t-short">Don't Follow</span>
-        <span class="badge" id="bNotBack">0</span>
-      </button>
-      <button class="tab-btn" onclick="switchTab('notfollow', event)">
-        <span class="t-icon">🔔</span><span class="t-full">You Don't Follow</span><span class="t-short">Don't Follow</span>
-        <span class="badge" id="bNotFollow">0</span>
-      </button>
-      <button class="tab-btn" onclick="switchTab('history', event)">
-        <span class="t-icon">📊</span><span class="t-full">History</span><span class="t-short">History</span>
-      </button>
-    </div>
-
-    <!-- TAB: Followers -->
-    <div class="tab-panel active" id="tab-followers">
-      <div class="search-row">
-        <input type="text" placeholder="🔍 Search followers…" oninput="filterList('followers-list', this.value)">
-        <button class="sort-btn" onclick="sortList('followers-list')">⇅ Sort</button>
-      </div>
-      <div class="ad-banner-wrap">
-        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9665914988223658" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-      </div>
-      <div class="user-list" id="followers-list"></div>
-    </div>
-
-    <!-- TAB: Following -->
-    <div class="tab-panel" id="tab-following">
-      <div class="search-row">
-        <input type="text" placeholder="🔍 Search following…" oninput="filterList('following-list', this.value)">
-        <button class="sort-btn" onclick="sortList('following-list')">⇅ Sort</button>
-      </div>
-      <div class="ad-banner-wrap">
-        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9665914988223658" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-      </div>
-      <div class="user-list" id="following-list"></div>
-    </div>
-
-    <!-- TAB: Don't Follow Back (LOCKED) -->
-    <div class="tab-panel" id="tab-notback">
-      <div id="gate-notback" class="lock-gate">
-        <div class="lock-icon">🔒</div>
-        <h3>Premium Content</h3>
-        <p>Find out who among the people you follow <strong>doesn't follow you back</strong>. Watch a short ad to unlock.</p>
-        <button class="btn-watch" onclick="startAdGate('notback')">▶ Watch Ad &amp; Unlock</button>
-      </div>
-      <div id="content-notback" style="display:none">
-        <div class="search-row">
-          <input type="text" placeholder="🔍 Search…" oninput="filterList('notback-list', this.value)">
-          <button class="sort-btn" onclick="sortList('notback-list')">⇅ Sort</button>
-        </div>
-        <div class="user-list" id="notback-list"></div>
-      </div>
-    </div>
-
-    <!-- TAB: You Don't Follow (LOCKED) -->
-    <div class="tab-panel" id="tab-notfollow">
-      <div id="gate-notfollow" class="lock-gate">
-        <div class="lock-icon">🔒</div>
-        <h3>Premium Content</h3>
-        <p>Find out who follows you but <strong>you're not following back</strong>. Watch a short ad to unlock.</p>
-        <button class="btn-watch" onclick="startAdGate('notfollow')">▶ Watch Ad &amp; Unlock</button>
-      </div>
-      <div id="content-notfollow" style="display:none">
-        <div class="search-row">
-          <input type="text" placeholder="🔍 Search…" oninput="filterList('notfollow-list', this.value)">
-          <button class="sort-btn" onclick="sortList('notfollow-list')">⇅ Sort</button>
-        </div>
-        <div class="user-list" id="notfollow-list"></div>
-      </div>
-    </div>
-
-    <!-- TAB: History -->
-    <div class="tab-panel" id="tab-history">
-      <p style="color:var(--muted);font-size:.9rem;margin:16px 0 20px">
-        Upload two ZIP files exported at different times to compare and see what changed — new followers, lost followers, new following and unfollowed accounts.
-      </p>
-      <div class="upload-duo">
-        <div class="mini-drop" id="oldDrop">
-          <input type="file" accept=".zip" onchange="loadHistory('old', this.files[0])">
-          <div class="icon">🗂️</div>
-          <h4>Old File</h4>
-          <p>Previous export</p>
-          <div class="loaded-name" id="old-name" style="display:none"></div>
-        </div>
-        <div class="mini-drop" id="newDrop">
-          <input type="file" accept=".zip" onchange="loadHistory('new', this.files[0])">
-          <div class="icon">📁</div>
-          <h4>Current File</h4>
-          <p>Recent export</p>
-          <div class="loaded-name" id="new-name" style="display:none"></div>
-        </div>
-      </div>
-      <button class="btn-watch" id="compareBtn" onclick="runComparison()" style="display:none;margin-bottom:24px">🔍 Compare</button>
-      <div id="history-ad-banner" class="ad-banner-wrap" style="display:none">
-        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9665914988223658" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-      </div>
-      <div id="history-results"></div>
-    </div>
-
-  </section><!-- /dashboard -->
-
-  <!-- Ko-fi support card -->
-  <div class="kofi-wrap" id="kofiSection" style="display:none">
-    <div class="kofi-card">
-      <div class="kofi-emoji">☕</div>
-      <p class="kofi-title">Was InstaScope helpful?</p>
-      <p class="kofi-sub">It's completely free. If it saved you time, consider buying me a coffee — it costs less than an espresso!</p>
-      <a class="kofi-btn" href="https://ko-fi.com/instascope" target="_blank" rel="noopener">☕ Buy me a coffee</a>
-      <span class="kofi-hearts">Every bit of support keeps this tool free ❤️</span>
-    </div>
+  <div class="blog-hero">
+    <h1>InstaScope <span class="grad">Blog</span></h1>
+    <p>Guides, tips and strategies to understand your Instagram audience and grow your account.</p>
   </div>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <p>© 2025 InstaScope · Free Instagram Follower Analyzer · Runs 100% in your browser</p>
-    <p style="margin-top:6px">
-      <a href="#legal-privacy" onclick="scrollToLegal('privacy')">Privacy Policy</a> ·
-      <a href="#legal-terms" onclick="scrollToLegal('terms')">Terms of Service</a> ·
-      <a href="https://ko-fi.com/instascope" target="_blank" rel="noopener">Support ☕</a> ·
-	<a href="mailto:1onlytopp@gmail.com">Contact</a> ·
-	<a href="blog/">📝 Blog</a>    </p>
-    <p style="margin-top:6px;font-size:.72rem">📧 <a href="mailto:1onlytopp@gmail.com">1onlytopp@gmail.com</a></p>
-	<p style="margin-top:10px;font-size:.70rem;color:rgba(255,255,255,.18);max-width:620px;margin-left:auto;margin-right:auto;line-height:1.6">
- 	 InstaScope is not affiliated with, endorsed by, or connected to Meta Platforms, Inc. or Instagram.
- 	 Instagram&#8482; is a trademark of Meta Platforms, Inc. InstaScope is an independent tool that uses only data exported by the user from their own account.
-</p>
-  </footer>
+  <div class="ad-wrap">
+    <div class="ad-label">Advertisement</div>
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9665914988223658" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  </div>
+
+  <!-- Featured -->
+  <a class="featured" href="how-to-see-who-doesnt-follow-you-back-on-instagram.html">
+    <div>
+      <div class="featured-tag">⭐ Featured Guide</div>
+      <h2>How to See Who Doesn't Follow You Back on Instagram (2026)</h2>
+      <p>The only safe, privacy-respecting method to find unfollowers — using Instagram's official data export and your browser. No password sharing, no app permissions.</p>
+      <span class="read-more">Read the full guide →</span>
+    </div>
+    <div class="featured-visual">🔍</div>
+  </a>
+
+  <div class="section-title">All Articles</div>
+
+  <div class="articles-grid">
+
+    <a class="article-card" href="why-you-lose-instagram-followers.html">
+      <div class="ac-tag">Analysis</div>
+      <h3>Why You Lose Instagram Followers (And What to Do About It)</h3>
+      <p>The real reasons behind follower drops — algorithm changes, posting gaps, content shifts — and concrete steps to stabilize your count.</p>
+      <div class="ac-footer"><span>May 2026</span><span class="read-time">⏱ 7 min</span></div>
+    </a>
+
+    <a class="article-card" href="how-to-request-instagram-data-export.html">
+      <div class="ac-tag green">Tutorial</div>
+      <h3>How to Request Your Instagram Data Export in 2026</h3>
+      <p>Step-by-step walkthrough with screenshots of every screen — how to get your ZIP file from Instagram in JSON format.</p>
+      <div class="ac-footer"><span>May 2026</span><span class="read-time">⏱ 4 min</span></div>
+    </a>
+
+    <a class="article-card" href="instagram-growth-strategies-2026.html">
+      <div class="ac-tag orange">Strategy</div>
+      <h3>Instagram Growth Strategies That Actually Work in 2026</h3>
+      <p>Forget the tired advice. Here's what the algorithm actually rewards in 2026 — and how to use it to grow a real, engaged audience.</p>
+      <div class="ac-footer"><span>May 2026</span><span class="read-time">⏱ 8 min</span></div>
+    </a>
+
+    <a class="article-card" href="how-to-protect-your-instagram-account.html">
+      <div class="ac-tag purple">Security</div>
+      <h3>How to Protect Your Instagram Account from Hackers in 2026</h3>
+      <p>Two-factor auth, login activity, suspicious apps — everything you need to lock down your account before something goes wrong.</p>
+      <div class="ac-footer"><span>May 2026</span><span class="read-time">⏱ 6 min</span></div>
+    </a>
+
+    <a class="article-card" href="instagram-shadowban-what-it-is.html">
+      <div class="ac-tag">Analysis</div>
+      <h3>Instagram Shadowban: What It Is, How to Detect It and How to Fix It</h3>
+      <p>Is your reach suddenly tanking? You might be shadowbanned. Here's how to find out and what steps to take to recover.</p>
+      <div class="ac-footer"><span>May 2026</span><span class="read-time">⏱ 6 min</span></div>
+    </a>
+
+    <a class="article-card" href="best-time-to-post-on-instagram.html">
+      <div class="ac-tag orange">Strategy</div>
+      <h3>The Best Time to Post on Instagram in 2026 (By Niche)</h3>
+      <p>Timing still matters. We break down the optimal posting windows by content category and audience geography.</p>
+      <div class="ac-footer"><span>May 2026</span><span class="read-time">⏱ 5 min</span></div>
+    </a>
+
+    <a class="article-card" href="instagram-algorithm-explained.html">
+      <div class="ac-tag green">Guide</div>
+      <h3>The Instagram Algorithm Explained: How It Decides Who Sees Your Posts</h3>
+      <p>Ranking signals, engagement windows, content types — a clear breakdown of how the feed, Reels and Explore algorithm actually works.</p>
+      <div class="ac-footer"><span>May 2026</span><span class="read-time">⏱ 9 min</span></div>
+    </a>
+
+    <a class="article-card" href="instagram-follower-quality-vs-quantity.html">
+      <div class="ac-tag">Analysis</div>
+      <h3>Instagram Follower Quality vs Quantity: Which Matters More?</h3>
+      <p>10k passive followers or 1k engaged ones? The honest answer about what follower count actually means for reach and monetization.</p>
+      <div class="ac-footer"><span>May 2026</span><span class="read-time">⏱ 6 min</span></div>
+    </a>
+
+    <a class="article-card" href="how-to-clean-up-instagram-following-list.html">
+      <div class="ac-tag green">Tutorial</div>
+      <h3>How to Clean Up Your Instagram Following List Without Getting Banned</h3>
+      <p>Safe limits, manual unfollowing strategy, and how to use InstaScope to prioritize who to remove first.</p>
+      <div class="ac-footer"><span>May 2026</span><span class="read-time">⏱ 5 min</span></div>
+    </a>
+
+    <a class="article-card" href="instagram-private-vs-public-account.html">
+      <div class="ac-tag purple">Strategy</div>
+      <h3>Private vs Public Instagram Account: Which Is Better for Growth?</h3>
+      <p>The pros and cons of each setting, and how switching between them affects your follower count, reach and Explore visibility.</p>
+      <div class="ac-footer"><span>May 2026</span><span class="read-time">⏱ 5 min</span></div>
+    </a>
+
+  </div>
+
+  <div class="ad-wrap">
+    <div class="ad-label">Advertisement</div>
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9665914988223658" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  </div>
 
 </main>
 
-<!-- Ko-fi floating button -->
-<a id="kofiFab" href="https://ko-fi.com/instascope" target="_blank" rel="noopener" title="Support InstaScope on Ko-fi">☕</a>
-
-<!-- Bottom sticky ad bar -->
-<div class="bottom-ad-bar" id="bottomAdBar">
-  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9665914988223658" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-</div>
-
-<!-- Ad Overlay fullscreen -->
-<div id="adOverlay">
-  <div id="adCloseWrap">
-    <svg id="adCloseRing" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="22" cy="22" r="19" fill="rgba(0,0,0,.5)" stroke="rgba(255,255,255,.12)" stroke-width="2.5"/>
-      <circle id="adSmallArc" cx="22" cy="22" r="19" fill="none"
-              stroke="url(#cGrad)" stroke-width="2.5"
-              stroke-dasharray="119.4" stroke-dashoffset="119.4"
-              stroke-linecap="round" transform="rotate(-90 22 22)"/>
-    </svg>
-    <button id="adCloseBtn" onclick="closeAdOverlay()">✕</button>
-  </div>
-  <div id="adOverlayLabel" style="font-size:.65rem;text-transform:uppercase;letter-spacing:.15em;color:rgba(255,255,255,.2);margin-bottom:-4px">Ad</div>
-  <div id="overlayBannerSlot">
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9665914988223658" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-  </div>
-  <div id="adOverlayInfo">
-    <span id="adOverlayMsg">Watch the ad to unlock this content</span>
-    <span id="adOverlaySecs"></span>
-  </div>
-</div>
+<footer class="site-footer">
+  <p>© 2025 InstaScope · <a href="../index.html">Back to the tool</a></p>
+  <p style="margin-top:8px;font-size:.7rem;color:rgba(255,255,255,.15)">
+    InstaScope is not affiliated with, endorsed by, or connected to Meta Platforms, Inc. or Instagram. Instagram™ is a trademark of Meta Platforms, Inc.
+  </p>
+</footer>
 
 <script>
-// ═══════════════════════════════════════════════════════════════
-//  State
-// ═══════════════════════════════════════════════════════════════
-let appData = { followers: [], following: [] };
-let historyData = { old: null, 'new': null };
-let unlockedSections = { notback: false, notfollow: false };
-let sortAsc = {};
-let currentAdTarget = null;
-let adModalTimer = null;
-let _pendingFile = null;
-
-// ═══════════════════════════════════════════════════════════════
-//  AdSense push (run once after DOM ready)
-// ═══════════════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', function() {
-  // Push all static ins tags except the bottom bar (handled separately)
-  document.querySelectorAll('.adsbygoogle:not(#bottomAdBar ins)').forEach(function(ins) {
+  document.querySelectorAll('.adsbygoogle').forEach(function(ins) {
     try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
   });
-
-  // Bottom bar: push and observe — only show bar if ad actually renders
-  var bottomIns = document.querySelector('#bottomAdBar ins');
-  if (bottomIns) {
-    try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
-    var obs = new MutationObserver(function() {
-      if (bottomIns.dataset.adStatus === 'filled' || bottomIns.offsetHeight > 10) {
-        document.getElementById('bottomAdBar').classList.add('loaded');
-        obs.disconnect();
-      }
-    });
-    obs.observe(bottomIns, { attributes: true, childList: true, subtree: true });
-    // Fallback: show after 4s regardless (AdSense may not fire mutation)
-    setTimeout(function() {
-      document.getElementById('bottomAdBar').classList.add('loaded');
-    }, 4000);
-  }
-});
-
-// ═══════════════════════════════════════════════════════════════
-//  ZIP Parsing
-// ═══════════════════════════════════════════════════════════════
-async function handleFile(file) {
-  if (!file) return;
-  if (!sessionStorage.getItem('uploadAdShown')) {
-    sessionStorage.setItem('uploadAdShown', '1');
-    openAdOverlay(5, null, file);
-    return;
-  }
-  await processFile(file);
-}
-
-async function processFile(file) {
-  showLoading(true);
-  try {
-    const zip = await JSZip.loadAsync(file);
-    appData = await parseInstagramZip(zip);
-    renderDashboard();
-    showToast('✅ File loaded successfully!');
-  } catch (e) {
-    showToast('❌ Error: ' + e.message);
-    console.error(e);
-  }
-  showLoading(false);
-}
-
-async function parseInstagramZip(zip) {
-  const followers = [];
-  const following = [];
-  const allFiles = Object.keys(zip.files).filter(f => !zip.files[f].dir);
-  console.log('[InstaScope] Files in ZIP:', allFiles);
-
-  const fname = path => path.split('/').pop().toLowerCase();
-
-  // ── Followers ──
-  const followerFiles = allFiles.filter(f => /^followers[\d_]*\.json$/.test(fname(f)));
-  console.log('[InstaScope] Follower files:', followerFiles);
-
-  for (const f of followerFiles) {
-    try {
-      const raw = await zip.files[f].async('string');
-      const parsed = JSON.parse(raw);
-      const arr = Array.isArray(parsed) ? parsed : (parsed.relationships_followers || []);
-      for (const item of arr) {
-        const d = extractUser(item);
-        if (d) followers.push(d);
-      }
-    } catch(e) { console.warn('[InstaScope] Error parsing', f, e); }
-  }
-
-  // ── Following ──
-  const followingFiles = allFiles.filter(f => {
-    const n = fname(f);
-    return n.includes('following') && !n.startsWith('followers') && n.endsWith('.json');
-  });
-  console.log('[InstaScope] Following files:', followingFiles);
-
-  for (const f of followingFiles) {
-    try {
-      const raw = await zip.files[f].async('string');
-      const parsed = JSON.parse(raw);
-      let arr = [];
-      if (Array.isArray(parsed)) {
-        arr = parsed;
-      } else if (parsed.relationships_following) {
-        arr = parsed.relationships_following;
-      } else {
-        const findArr = (obj, depth = 0) => {
-          if (depth > 6 || !obj || typeof obj !== 'object') return [];
-          if (Array.isArray(obj)) {
-            if (obj.length && obj[0]?.string_list_data) return obj;
-            return obj.flatMap(v => findArr(v, depth + 1));
-          }
-          return Object.values(obj).flatMap(v => findArr(v, depth + 1));
-        };
-        arr = findArr(parsed);
-      }
-      for (const item of arr) {
-        const d = extractUser(item);
-        if (d) following.push(d);
-      }
-      if (arr.length) console.log('[InstaScope] Sample following item:', JSON.stringify(arr[0]).slice(0,300));
-      console.log('[InstaScope] Following from', f, ':', following.length);
-    } catch(e) { console.warn('[InstaScope] Error parsing', f, e); }
-  }
-
-  // ── Fallback deep scan ──
-  if (!following.length || !followers.length) {
-    console.log('[InstaScope] Running fallback deep scan…');
-    const jsonFiles = allFiles.filter(f => fname(f).endsWith('.json'));
-    for (const f of jsonFiles) {
-      if (followingFiles.includes(f) || followerFiles.includes(f)) continue;
-      try {
-        const raw = await zip.files[f].async('string');
-        const parsed = JSON.parse(raw);
-        const deepSearch = (obj, depth = 0) => {
-          if (depth > 8 || !obj || typeof obj !== 'object') return [];
-          if (Array.isArray(obj)) return obj.flatMap(v => deepSearch(v, depth + 1));
-          if (obj.string_list_data) return [obj];
-          return Object.values(obj).flatMap(v => deepSearch(v, depth + 1));
-        };
-        const items = deepSearch(parsed);
-        const n = fname(f);
-        const isFollowing = n.includes('following') && !n.startsWith('followers');
-        const isFollower  = n.startsWith('followers') || n.includes('follower');
-        items.forEach(item => {
-          const d = extractUser(item);
-          if (!d) return;
-          if (isFollowing && !following.find(u => u.username === d.username)) following.push(d);
-          else if (isFollower && !followers.find(u => u.username === d.username)) followers.push(d);
-        });
-      } catch(e) {}
-    }
-    console.log('[InstaScope] After fallback — followers:', followers.length, 'following:', following.length);
-  }
-
-  if (!followers.length && !following.length) {
-    const fileList = allFiles.slice(0,10).join(', ');
-    throw new Error(
-      'Unrecognized file structure. Files found in ZIP: ' + (fileList || 'none') + '. ' +
-      'Make sure you exported from Instagram in JSON format (not HTML).'
-    );
-  }
-
-  const dedup = arr => {
-    const seen = new Set();
-    return arr.filter(u => { if (seen.has(u.username)) return false; seen.add(u.username); return true; });
-  };
-  return { followers: dedup(followers), following: dedup(following) };
-}
-
-function extractUser(item) {
-  if (!item || typeof item !== 'object') return null;
-  let username = null, href = '', ts = 0;
-
-  if (Array.isArray(item.string_list_data) && item.string_list_data.length > 0) {
-    const d = item.string_list_data[0];
-    ts = d?.timestamp || 0;
-    href = d?.href || '';
-    if (d?.value && d.value.trim()) username = d.value.trim();
-  }
-  if (!username && item.title && item.title.trim()) username = item.title.trim();
-  if (!username && href) username = usernameFromHref(href);
-  if (!username || /^\d{6,}$/.test(username)) return null;
-
-  return { username, href: 'https://www.instagram.com/' + username, ts };
-}
-
-function usernameFromHref(url) {
-  if (!url || typeof url !== 'string') return null;
-  const m = url.match(/instagram\.com\/_u\/([^\/?#]+)/i)
-           || url.match(/instagram\.com\/([^\/?#]+)/i);
-  if (!m) return null;
-  const u = m[1].trim();
-  if (!u || u === '_u') return null;
-  return u;
-}
-
-// ═══════════════════════════════════════════════════════════════
-//  Render Dashboard
-// ═══════════════════════════════════════════════════════════════
-function renderDashboard() {
-  const { followers, following } = appData;
-  const follSet  = new Set(followers.map(u => u.username.toLowerCase()));
-  const follgSet = new Set(following.map(u => u.username.toLowerCase()));
-  const notBack   = following.filter(u => !follSet.has(u.username.toLowerCase()));
-  const notFollow = followers.filter(u => !follgSet.has(u.username.toLowerCase()));
-
-  document.getElementById('statFollowers').textContent = followers.length;
-  document.getElementById('statFollowing').textContent = following.length;
-  document.getElementById('statNotBack').textContent   = notBack.length;
-  document.getElementById('statNotFollow').textContent = notFollow.length;
-  document.getElementById('bFollowers').textContent = followers.length;
-  document.getElementById('bFollowing').textContent = following.length;
-  document.getElementById('bNotBack').textContent   = notBack.length;
-  document.getElementById('bNotFollow').textContent = notFollow.length;
-
-  renderList('followers-list', followers, 'var(--grad1)', 'var(--grad2)');
-  renderList('following-list', following, '#833ab4', '#e1306c');
-  renderList('notback-list',   notBack,   '#e1306c', '#fd1d1d');
-  renderList('notfollow-list', notFollow, '#ff8c42', '#e1306c');
-
-  document.getElementById('hero').style.display = 'none';
-  document.getElementById('kofiSection').style.display = 'none';
-  document.getElementById('dashboard').classList.add('visible');
-  setTimeout(() => {
-    const ks = document.getElementById('kofiSection');
-    if (ks) ks.style.display = 'block';
-  }, 8000);
-  document.getElementById('resetBtn').style.display = 'inline-flex';
-}
-
-function renderList(listId, users, c1, c2) {
-  const el = document.getElementById(listId);
-  if (!users.length) {
-    el.innerHTML = '<div class="empty"><div class="e-icon">🎉</div><p>No users in this category.</p></div>';
-    return;
-  }
-  el.innerHTML = users.map(u => {
-    const letter = (u.username[0] || '?').toUpperCase();
-    const date = u.ts ? new Date(u.ts * 1000).toLocaleDateString('en-GB') : '';
-    const href = u.href || 'https://instagram.com/' + u.username;
-    return '<div class="user-item" data-name="' + u.username.toLowerCase() + '">' +
-      '<div class="avatar" style="background:linear-gradient(135deg,' + c1 + ',' + c2 + ')">' + letter + '</div>' +
-      '<div class="user-info">' +
-        '<div class="uname">@' + escHtml(u.username) + '</div>' +
-        (date ? '<div class="udate">Since ' + date + '</div>' : '') +
-      '</div>' +
-      '<a href="' + escHtml(href) + '" target="_blank" rel="noopener" class="user-link">Open ↗</a>' +
-    '</div>';
-  }).join('');
-}
-
-// ═══════════════════════════════════════════════════════════════
-//  Search & Sort
-// ═══════════════════════════════════════════════════════════════
-function filterList(listId, query) {
-  const items = document.querySelectorAll('#' + listId + ' .user-item');
-  const q = query.toLowerCase();
-  items.forEach(item => { item.style.display = item.dataset.name?.includes(q) ? '' : 'none'; });
-}
-
-function sortList(listId) {
-  const container = document.getElementById(listId);
-  const items = [...container.querySelectorAll('.user-item')];
-  sortAsc[listId] = !sortAsc[listId];
-  items.sort((a, b) => {
-    const na = a.dataset.name || '', nb = b.dataset.name || '';
-    return sortAsc[listId] ? na.localeCompare(nb) : nb.localeCompare(na);
-  });
-  items.forEach(i => container.appendChild(i));
-}
-
-// ═══════════════════════════════════════════════════════════════
-//  Tabs
-// ═══════════════════════════════════════════════════════════════
-function switchTab(name, e) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
-  if (e && e.currentTarget) e.currentTarget.classList.add('active');
-}
-
-// ═══════════════════════════════════════════════════════════════
-//  Ad Gate
-// ═══════════════════════════════════════════════════════════════
-function startAdGate(section) {
-  if (unlockedSections[section]) { unlockSection(section); return; }
-  currentAdTarget = section;
-  openAdOverlay(30, section, null);
-}
-
-function openAdOverlay(duration, section, pendingFile) {
-  _pendingFile = pendingFile;
-  currentAdTarget = section;
-
-  document.getElementById('adOverlayMsg').textContent =
-    section ? 'Watch the ad to unlock this content' : 'Just a moment…';
-  document.getElementById('adOverlaySecs').textContent = duration + 's';
-
-  const btn = document.getElementById('adCloseBtn');
-  const arc = document.getElementById('adSmallArc');
-  btn.classList.remove('ready');
-  const perim = 2 * Math.PI * 19;
-  arc.style.transition = 'none';
-  arc.style.strokeDashoffset = perim;
-  document.getElementById('adOverlay').classList.add('show');
-
-  let secs = duration;
-  if (adModalTimer) clearInterval(adModalTimer);
-  adModalTimer = setInterval(() => {
-    secs--;
-    const progress = (duration - secs) / duration;
-    arc.style.transition = 'stroke-dashoffset 1s linear';
-    arc.style.strokeDashoffset = perim - (perim * progress);
-    document.getElementById('adOverlaySecs').textContent = secs > 0 ? secs + 's' : '';
-    if (secs <= 0) {
-      clearInterval(adModalTimer);
-      btn.classList.add('ready');
-      document.getElementById('adOverlayMsg').textContent = section ? 'You can close the ad ✕' : '';
-      if (!section) setTimeout(() => closeAdOverlay(), 500);
-    }
-  }, 1000);
-}
-
-function closeAdOverlay() {
-  document.getElementById('adOverlay').classList.remove('show');
-  if (adModalTimer) clearInterval(adModalTimer);
-  if (currentAdTarget) {
-    unlockedSections[currentAdTarget] = true;
-    unlockSection(currentAdTarget);
-    currentAdTarget = null;
-  }
-  if (_pendingFile) {
-    const f = _pendingFile;
-    _pendingFile = null;
-    processFile(f);
-  }
-}
-
-function unlockSection(section) {
-  document.getElementById('gate-' + section).style.display = 'none';
-  document.getElementById('content-' + section).style.display = 'block';
-  showToast('🔓 Content unlocked!');
-}
-
-// ═══════════════════════════════════════════════════════════════
-//  History comparison
-// ═══════════════════════════════════════════════════════════════
-async function loadHistory(type, file) {
-  if (!file) return;
-  showLoading(true);
-  try {
-    const zip = await JSZip.loadAsync(file);
-    historyData[type] = await parseInstagramZip(zip);
-    const nameEl = document.getElementById(type + '-name');
-    nameEl.textContent = '✓ ' + file.name;
-    nameEl.style.display = 'block';
-    document.getElementById(type === 'old' ? 'oldDrop' : 'newDrop').classList.add('loaded');
-    if (historyData.old && historyData['new']) {
-      document.getElementById('compareBtn').style.display = 'inline-flex';
-    }
-    showToast('✅ ' + (type === 'old' ? 'Old file' : 'Current file') + ' loaded');
-  } catch(e) { showToast('❌ ' + e.message); }
-  showLoading(false);
-}
-
-function runComparison() {
-  const oldF  = new Set(historyData.old.followers.map(u => u.username.toLowerCase()));
-  const newF  = new Set(historyData['new'].followers.map(u => u.username.toLowerCase()));
-  const oldFg = new Set(historyData.old.following.map(u => u.username.toLowerCase()));
-  const newFg = new Set(historyData['new'].following.map(u => u.username.toLowerCase()));
-
-  const newFollowers  = historyData['new'].followers.filter(u => !oldF.has(u.username.toLowerCase()));
-  const lostFollowers = historyData.old.followers.filter(u => !newF.has(u.username.toLowerCase()));
-  const newFollowing  = historyData['new'].following.filter(u => !oldFg.has(u.username.toLowerCase()));
-  const lostFollowing = historyData.old.following.filter(u => !newFg.has(u.username.toLowerCase()));
-
-  const container = document.getElementById('history-results');
-  container.innerHTML = '';
-  document.getElementById('history-ad-banner').style.display = 'block';
-  try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
-
-  renderDiffSection(container, 'new-followers',  '🟢 New followers',       newFollowers,  'var(--green)');
-  renderDiffSection(container, 'lost-followers', '🔴 Lost followers',      lostFollowers, 'var(--accent)');
-  renderDiffSection(container, 'new-following',  '🟠 New following',       newFollowing,  'var(--orange)');
-  renderDiffSection(container, 'lost-following', '🟣 Removed following',   lostFollowing, '#a855f7');
-
-  if (!newFollowers.length && !lostFollowers.length && !newFollowing.length && !lostFollowing.length) {
-    container.innerHTML = '<div class="empty"><div class="e-icon">📊</div><p>No changes detected between the two files.</p></div>';
-  }
-}
-
-function renderDiffSection(container, cls, title, users, dotColor) {
-  if (!users.length) return;
-  const sec = document.createElement('div');
-  sec.className = 'diff-section ' + cls;
-  sec.innerHTML = '<h3>' + title + ' (' + users.length + ')</h3>' +
-    users.map(u =>
-      '<div class="diff-item">' +
-        '<div class="diff-dot" style="background:' + dotColor + '"></div>' +
-        '<div style="flex:1;font-size:.88rem">@' + escHtml(u.username) + '</div>' +
-        '<a href="' + escHtml(u.href || 'https://instagram.com/' + u.username) + '" target="_blank" rel="noopener" class="user-link" style="font-size:.75rem">↗</a>' +
-      '</div>'
-    ).join('');
-  container.appendChild(sec);
-}
-
-// ═══════════════════════════════════════════════════════════════
-//  Reset
-// ═══════════════════════════════════════════════════════════════
-function resetApp() {
-  appData = { followers: [], following: [] };
-  historyData = { old: null, 'new': null };
-  unlockedSections = { notback: false, notfollow: false };
-  document.getElementById('hero').style.display = 'block';
-  document.getElementById('kofiSection').style.display = 'none';
-  document.getElementById('dashboard').classList.remove('visible');
-  document.getElementById('resetBtn').style.display = 'none';
-  document.getElementById('fileInput').value = '';
-  ['notback','notfollow'].forEach(s => {
-    document.getElementById('gate-' + s).style.display = 'block';
-    document.getElementById('content-' + s).style.display = 'none';
-  });
-  document.getElementById('history-results').innerHTML = '';
-  document.getElementById('history-ad-banner').style.display = 'none';
-  document.getElementById('compareBtn').style.display = 'none';
-  document.getElementById('old-name').style.display = 'none';
-  document.getElementById('new-name').style.display = 'none';
-  ['oldDrop','newDrop'].forEach(id => document.getElementById(id).classList.remove('loaded'));
-  switchTabDirect('followers');
-}
-
-function switchTabDirect(name) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
-  document.querySelector('.tab-btn[onclick*="' + name + '"]')?.classList.add('active');
-}
-
-// ═══════════════════════════════════════════════════════════════
-//  FAQ accordion
-// ═══════════════════════════════════════════════════════════════
-function toggleFaq(el) {
-  const answer = el.nextElementSibling;
-  const isOpen = answer.classList.contains('show');
-  document.querySelectorAll('.faq-answer.show').forEach(a => a.classList.remove('show'));
-  document.querySelectorAll('.faq-question.open').forEach(q => q.classList.remove('open'));
-  if (!isOpen) {
-    answer.classList.add('show');
-    el.classList.add('open');
-  }
-}
-
-// ═══════════════════════════════════════════════════════════════
-//  Legal tabs
-// ═══════════════════════════════════════════════════════════════
-function switchLegal(panel, el) {
-  document.querySelectorAll('.legal-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.legal-tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('legal-' + panel).classList.add('active');
-  el.classList.add('active');
-}
-
-function scrollToLegal(panel) {
-  const section = document.querySelector('.legal-section');
-  if (!section) return;
-  document.querySelectorAll('.legal-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.legal-tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('legal-' + panel).classList.add('active');
-  document.querySelectorAll('.legal-tab').forEach(t => {
-    if (t.getAttribute('onclick').includes(panel)) t.classList.add('active');
-  });
-  section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-// ═══════════════════════════════════════════════════════════════
-//  Utilities
-// ═══════════════════════════════════════════════════════════════
-function showLoading(show) {
-  document.getElementById('loading-overlay').classList.toggle('show', show);
-}
-
-let toastTimer;
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 3200);
-}
-
-function escHtml(str) {
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-// ─── Drag & Drop ─────────────────────────────────────────────
-const dz = document.getElementById('dropZone');
-dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag-over'); });
-dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
-dz.addEventListener('drop', e => {
-  e.preventDefault(); dz.classList.remove('drag-over');
-  const f = e.dataTransfer.files[0];
-  if (f?.name.endsWith('.zip')) handleFile(f);
-  else showToast('⚠️ Please upload a .zip file');
 });
 </script>
 </body>
