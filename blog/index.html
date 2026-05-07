@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google-adsense-account" content="ca-pub-9665914988223658">
+<title>InstaScope Blog – Instagram Tips, Guides & Follower Insights</title>
+<meta name="description" content="Guides, tips and strategies about Instagram followers, data export, growth and account management. Free resources from InstaScope.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://filippidus.github.io/instascope/blog/">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9665914988223658" crossorigin="anonymous"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#08080f;--surface:#111119;--card:#16161f;--border:rgba(255,255,255,.07);--grad1:#e1306c;--grad2:#833ab4;--accent:#e1306c;--text:#f0f0f5;--muted:#7a7a95;--radius:14px}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;z-index:-2;background:radial-gradient(ellipse 60% 50% at 20% 10%,rgba(131,58,180,.18) 0%,transparent 60%),radial-gradient(ellipse 50% 60% at 80% 90%,rgba(225,48,108,.14) 0%,transparent 60%),var(--bg)}
+h1,h2,h3,h4{font-family:'Syne',sans-serif}
+.grad{background:linear-gradient(135deg,var(--grad1),var(--grad2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+header{position:sticky;top:0;z-index:100;background:rgba(8,8,15,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 24px;height:62px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.25rem;letter-spacing:-.5px;text-decoration:none;color:var(--text)}
+.logo span{font-weight:300;opacity:.5}
+.header-cta{background:linear-gradient(135deg,var(--grad1),var(--grad2));color:#fff;border:none;border-radius:8px;padding:8px 16px;font-family:'Syne',sans-serif;font-weight:700;font-size:.82rem;cursor:pointer;text-decoration:none;white-space:nowrap}
+main{max-width:1000px;margin:0 auto;padding:48px 20px 120px}
+.blog-hero{text-align:center;margin-bottom:56px}
+.blog-hero h1{font-size:clamp(1.8rem,5vw,3rem);font-weight:800;margin-bottom:14px}
+.blog-hero p{color:var(--muted);font-size:1rem;max-width:500px;margin:0 auto}
+.ad-wrap{background:rgba(255,255,255,.02);border:1px dashed rgba(255,255,255,.06);border-radius:8px;padding:8px;margin:28px 0;text-align:center}
+.ad-label{font-size:.62rem;color:rgba(255,255,255,.12);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
+
+/* Featured article */
+.featured{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:36px 32px;margin-bottom:40px;display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;transition:border-color .2s;text-decoration:none}
+.featured:hover{border-color:rgba(225,48,108,.35)}
+.featured-tag{display:inline-block;background:rgba(225,48,108,.12);border:1px solid rgba(225,48,108,.25);color:var(--accent);border-radius:6px;padding:4px 12px;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px}
+.featured h2{font-size:1.5rem;font-weight:800;margin-bottom:12px;line-height:1.25;color:var(--text)}
+.featured p{color:var(--muted);font-size:.9rem;line-height:1.65;margin-bottom:20px}
+.featured .read-more{color:var(--accent);font-size:.85rem;font-weight:600}
+.featured-visual{background:linear-gradient(135deg,rgba(225,48,108,.15),rgba(131,58,180,.15));border-radius:16px;height:200px;display:flex;align-items:center;justify-content:center;font-size:5rem}
+
+/* Articles grid */
+.section-title{font-size:1.1rem;font-weight:700;margin-bottom:20px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-family:'Syne',sans-serif}
+.articles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;margin-bottom:48px}
+.article-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px 20px;display:flex;flex-direction:column;gap:12px;text-decoration:none;transition:all .2s}
+.article-card:hover{border-color:rgba(225,48,108,.3);transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.4)}
+.ac-tag{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--accent)}
+.ac-tag.green{color:#22d37e}
+.ac-tag.orange{color:#ff8c42}
+.ac-tag.purple{color:#a855f7}
+.article-card h3{font-size:1rem;font-weight:700;line-height:1.35;color:var(--text)}
+.article-card p{font-size:.83rem;color:var(--muted);line-height:1.6;flex:1}
+.ac-footer{display:flex;justify-content:space-between;align-items:center;font-size:.75rem;color:var(--muted)}
+.ac-footer .read-time{background:rgba(255,255,255,.05);border-radius:20px;padding:2px 8px}
+
+.site-footer{text-align:center;padding:20px;font-size:.78rem;color:var(--muted);border-top:1px solid var(--border);margin-top:20px;line-height:1.8}
+.site-footer a{color:var(--muted);text-decoration:none}
+.site-footer a:hover{color:var(--accent)}
+
+@media(max-width:700px){
+  .featured{grid-template-columns:1fr}
+  .featured-visual{display:none}
+  main{padding:32px 14px 100px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="../index.html">Insta<span>Scope</span></a>
+  <a class="header-cta" href="../index.html">📦 Analyze my Instagram</a>
+</header>
+
+<main>
+
+  <div class="blog-hero">
+    <h1>InstaScope <span class="grad">Blog</span></h1>
+    <p>Guides, tips and strategies to understand your Instagram audience and grow your account.</p>
+  </div>
+
+  <div class="ad-wrap">
+    <div class="ad-label">Advertisement</div>
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9665914988223658" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  </div>
+
+  <!-- Featured -->
+  <a class="featured" href="how-to-see-who-doesnt-follow-you-back-on-instagram.html">
+    <div>
+      <div class="featured-tag">⭐ Featured Guide</div>
+      <h2>How to See Who Doesn't Follow You Back on Instagram (2026)</h2>
+      <p>The only safe, privacy-respecting method to find unfollowers — using Instagram's official data export and your browser. No password sharing, no app permissions.</p>
+      <span class="read-more">Read the full guide →</span>
+    </div>
+    <div class="featured-visual">🔍</div>
+  </a>
+
+  <div class="section-title">All Articles</div>
+
+  <div class="articles-grid">
+
+    <a class="article-card" href="why-you-lose-instagram-followers.html">
+      <div class="ac-tag">Analysis</div>
+      <h3>Why You Lose Instagram Followers (And What to Do About It)</h3>
+      <p>The real reasons behind follower drops — algorithm changes, posting gaps, content shifts — and concrete steps to stabilize your count.</p>
+      <div class="ac-footer"><span>May 2026</span><span class="read-time">⏱ 7 min</span></div>
+    </a>
+
+    <a class="article-card" href="how-to-request-instagram-data-export.html">
+      <div class="ac-tag green">Tutorial</div>
+      <h3>How to Request Your Instagram Data Export in 2026</h3>
+      <p>Step-by-step walkthrough with screenshots of every screen — how to get your ZIP file from Instagram in JSON format.</p>
+      <div class="ac-footer"><span>May 2026</span><span class="read-time">⏱ 4 min</span></div>
+    </a>
+
+    <a class="article-card" href="instagram-growth-strategies-2026.html">
+      <div class="ac-tag orange">Strategy</div>
+      <h3>Instagram Growth Strategies That Actually Work in 2026</h3>
+      <p>Forget the tired advice. Here's what the algorithm actually rewards in 2026 — and how to use it to grow a real, engaged audience.</p>
+      <div class="ac-footer"><span>May 2026</span><span class="read-time">⏱ 8 min</span></div>
+    </a>
+
+    <a class="article-card" href="how-to-protect-your-instagram-account.html">
+      <div class="ac-tag purple">Security</div>
+      <h3>How to Protect Your Instagram Account from Hackers in 2026</h3>
+      <p>Two-factor auth, login activity, suspicious apps — everything you need to lock down your account before something goes wrong.</p>
+      <div class="ac-footer"><span>May 2026</span><span class="read-time">⏱ 6 min</span></div>
+    </a>
+
+    <a class="article-card" href="instagram-shadowban-what-it-is.html">
+      <div class="ac-tag">Analysis</div>
+      <h3>Instagram Shadowban: What It Is, How to Detect It and How to Fix It</h3>
+      <p>Is your reach suddenly tanking? You might be shadowbanned. Here's how to find out and what steps to take to recover.</p>
+      <div class="ac-footer"><span>May 2026</span><span class="read-time">⏱ 6 min</span></div>
+    </a>
+
+    <a class="article-card" href="best-time-to-post-on-instagram.html">
+      <div class="ac-tag orange">Strategy</div>
+      <h3>The Best Time to Post on Instagram in 2026 (By Niche)</h3>
+      <p>Timing still matters. We break down the optimal posting windows by content category and audience geography.</p>
+      <div class="ac-footer"><span>May 2026</span><span class="read-time">⏱ 5 min</span></div>
+    </a>
+
+    <a class="article-card" href="instagram-algorithm-explained.html">
+      <div class="ac-tag green">Guide</div>
+      <h3>The Instagram Algorithm Explained: How It Decides Who Sees Your Posts</h3>
+      <p>Ranking signals, engagement windows, content types — a clear breakdown of how the feed, Reels and Explore algorithm actually works.</p>
+      <div class="ac-footer"><span>May 2026</span><span class="read-time">⏱ 9 min</span></div>
+    </a>
+
+    <a class="article-card" href="instagram-follower-quality-vs-quantity.html">
+      <div class="ac-tag">Analysis</div>
+      <h3>Instagram Follower Quality vs Quantity: Which Matters More?</h3>
+      <p>10k passive followers or 1k engaged ones? The honest answer about what follower count actually means for reach and monetization.</p>
+      <div class="ac-footer"><span>May 2026</span><span class="read-time">⏱ 6 min</span></div>
+    </a>
+
+    <a class="article-card" href="how-to-clean-up-instagram-following-list.html">
+      <div class="ac-tag green">Tutorial</div>
+      <h3>How to Clean Up Your Instagram Following List Without Getting Banned</h3>
+      <p>Safe limits, manual unfollowing strategy, and how to use InstaScope to prioritize who to remove first.</p>
+      <div class="ac-footer"><span>May 2026</span><span class="read-time">⏱ 5 min</span></div>
+    </a>
+
+    <a class="article-card" href="instagram-private-vs-public-account.html">
+      <div class="ac-tag purple">Strategy</div>
+      <h3>Private vs Public Instagram Account: Which Is Better for Growth?</h3>
+      <p>The pros and cons of each setting, and how switching between them affects your follower count, reach and Explore visibility.</p>
+      <div class="ac-footer"><span>May 2026</span><span class="read-time">⏱ 5 min</span></div>
+    </a>
+
+  </div>
+
+  <div class="ad-wrap">
+    <div class="ad-label">Advertisement</div>
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9665914988223658" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>© 2025 InstaScope · <a href="../index.html">Back to the tool</a></p>
+  <p style="margin-top:8px;font-size:.7rem;color:rgba(255,255,255,.15)">
+    InstaScope is not affiliated with, endorsed by, or connected to Meta Platforms, Inc. or Instagram. Instagram™ is a trademark of Meta Platforms, Inc.
+  </p>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.adsbygoogle').forEach(function(ins) {
+    try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
+  });
+});
+</script>
+</body>
+</html>
