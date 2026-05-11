@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+C<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -84,11 +84,30 @@ header {
   padding: 0 24px;
   height: 62px;
   display: flex; align-items: center; justify-content: space-between;
-  gap: 16px;
+  gap: 12px;
 }
 .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.25rem; letter-spacing: -.5px; flex-shrink: 0; }
 .logo span { font-weight: 300; opacity: .5; }
 .header-ad { flex: 1; display: flex; justify-content: center; align-items: center; max-width: 400px; margin: 0 auto; overflow: hidden; }
+
+/* ─── Language switcher ─────────────────────────────────────── */
+.lang-switcher { display: flex; gap: 5px; flex-shrink: 0; }
+.lang-btn {
+  background: rgba(255,255,255,.06);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: .78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; gap: 4px;
+  letter-spacing: .02em;
+}
+.lang-btn:hover { border-color: rgba(225,48,108,.4); color: var(--text); }
+.lang-btn.active { background: linear-gradient(135deg, var(--grad1), var(--grad2)); color: #fff; border-color: transparent; }
 
 /* ─── Main layout ───────────────────────────────────────────── */
 main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
@@ -116,11 +135,22 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
 .drop-warn { margin-top: 8px; font-size: .75rem; color: #e1306c; }
 
 /* ─── How-to steps ──────────────────────────────────────────── */
-.howto { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 40px auto; max-width: 700px; }
+.howto { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 40px auto; max-width: 820px; }
 .howto-step { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 16px; text-align: center; }
 .howto-step .num { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--grad1), var(--grad2)); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: .85rem; }
 .howto-step h4 { font-size: .9rem; margin-bottom: 6px; }
-.howto-step p { font-size: .8rem; color: var(--muted); line-height: 1.5; }
+.howto-step p { font-size: .8rem; color: var(--muted); line-height: 1.55; text-align: left; }
+
+/* ─── Export path steps ─────────────────────────────────────── */
+.export-steps { list-style: none; margin: 8px 0 0; padding: 0; text-align: left; }
+.export-steps li {
+  font-size: .78rem; color: var(--muted); line-height: 1.4;
+  padding: 4px 0 4px 20px; position: relative;
+  border-left: 2px solid rgba(225,48,108,.2);
+  margin-left: 6px; padding-left: 12px; margin-bottom: 2px;
+}
+.export-steps li:last-child { border-left-color: transparent; }
+.export-steps li strong { color: var(--text); }
 
 /* ─── Features section ──────────────────────────────────────── */
 .features-section { margin: 20px auto 40px; max-width: 860px; }
@@ -140,14 +170,18 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
 .faq-section { margin: 0 auto 48px; max-width: 700px; }
 .faq-section h2 { font-size: 1.4rem; font-weight: 800; margin-bottom: 20px; text-align: center; }
 .faq-item { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; overflow: hidden; }
-.faq-question { padding: 16px 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: .92rem; user-select: none; transition: background .2s; }
+.faq-question { padding: 16px 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: .92rem; user-select: none; transition: background .2s; gap: 12px; }
 .faq-question:hover { background: rgba(255,255,255,.03); }
-.faq-question .faq-arrow { font-size: .75rem; color: var(--muted); transition: transform .2s; flex-shrink: 0; margin-left: 12px; }
+.faq-question .faq-q-text { flex: 1; }
+.faq-question .faq-arrow { font-size: .75rem; color: var(--muted); transition: transform .2s; flex-shrink: 0; }
 .faq-question.open .faq-arrow { transform: rotate(180deg); }
 .faq-answer { display: none; padding: 0 20px 16px; font-size: .86rem; color: var(--muted); line-height: 1.65; }
 .faq-answer.show { display: block; }
 .faq-answer a { color: var(--accent); text-decoration: none; }
 .faq-answer a:hover { text-decoration: underline; }
+.faq-export-steps { list-style: none; margin: 10px 0 0; padding: 0; }
+.faq-export-steps li { font-size: .84rem; color: var(--muted); padding: 3px 0 3px 14px; border-left: 2px solid rgba(225,48,108,.25); margin-left: 4px; margin-bottom: 3px; line-height: 1.4; }
+.faq-export-steps li strong { color: var(--text); }
 
 /* ─── Troubleshooting section ───────────────────────────────── */
 .trouble-section { margin: 0 auto 48px; max-width: 700px; }
@@ -214,6 +248,13 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
 .search-row input:focus { border-color: rgba(225,48,108,.5); }
 .sort-btn { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; color: var(--muted); cursor: pointer; font-size: .85rem; white-space: nowrap; transition: all .2s; }
 .sort-btn:hover { border-color: var(--accent); color: var(--text); }
+
+/* ─── List disclaimer ───────────────────────────────────────── */
+.list-disclaimer {
+  font-size: .74rem; color: var(--muted); opacity: .65;
+  text-align: center; padding: 2px 0 10px;
+  display: flex; align-items: center; justify-content: center; gap: 5px;
+}
 
 /* ─── User list ─────────────────────────────────────────────── */
 .user-list { display: flex; flex-direction: column; gap: 8px; }
@@ -329,6 +370,7 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
   .tab-btn .badge { font-size: .65rem; padding: 1px 5px; }
   .legal-tabs { gap: 6px; }
   .legal-tab { font-size: .78rem; padding: 7px 12px; }
+  .lang-btn { padding: 5px 8px; font-size: .72rem; }
 }
 @media (max-width: 480px) {
   main { padding: 16px 12px 100px; }
@@ -357,7 +399,7 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
 <!-- ─── Loading overlay ──────────────────────────────────────── -->
 <div id="loading-overlay">
   <div class="spinner"></div>
-  <p>Analyzing file…</p>
+  <p id="loadingText">Analyzing file…</p>
 </div>
 
 <!-- ─── Toast ────────────────────────────────────────────────── -->
@@ -367,7 +409,11 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
 <header>
   <div class="logo">Insta<span>Scope</span></div>
   <div class="header-ad" id="headerAdWrap"></div>
-  <button class="btn-reset" id="resetBtn" style="display:none" onclick="resetApp()">↩ Reset</button>
+  <div class="lang-switcher">
+    <button class="lang-btn active" data-lang="en" onclick="setLanguage('en')">🇬🇧 EN</button>
+    <button class="lang-btn" data-lang="it" onclick="setLanguage('it')">🇮🇹 IT</button>
+  </div>
+  <button class="btn-reset" id="resetBtn" style="display:none" onclick="resetApp()" data-i18n="reset_btn">↩ Reset</button>
 </header>
 
 <!-- ─── Main ─────────────────────────────────────────────────── -->
@@ -375,160 +421,158 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
 
   <!-- ── Hero / Upload ──────────────────────────────────────── -->
   <section id="hero">
-    <h1>Find out who truly <span class="grad">follows you back</span></h1>
-    <p>Upload the ZIP file exported from Instagram and instantly analyze your followers, following and more — 100% private, everything runs in your browser.</p>
+    <h1 data-i18n="hero_h1">Find out who truly <span class="grad">follows you back</span></h1>
+    <p data-i18n="hero_p">Upload the ZIP file exported from Instagram and instantly analyze your followers, following and more — 100% private, everything runs in your browser.</p>
 
     <div class="drop-zone" id="dropZone">
       <input type="file" accept=".zip" id="fileInput" onchange="handleFile(this.files[0])">
       <div class="drop-icon">📦</div>
-      <h3>Drag your <u>.zip</u> file here</h3>
-      <p>or click to select it</p>
-      <p class="drop-warn">⚠️ Upload the entire .zip file — not the extracted folder</p>
+      <h3 data-i18n="dropzone_h3">Drag your <u>.zip</u> file here</h3>
+      <p data-i18n="dropzone_p">or click to select it</p>
+      <p class="drop-warn" data-i18n="dropzone_warn">⚠️ Upload the entire .zip file — not the extracted folder</p>
     </div>
 
     <!-- How-to steps -->
     <div class="howto">
       <div class="howto-step">
         <div class="num">1</div>
-        <h4>Export from Instagram</h4>
-        <p>Go to Settings → Privacy → Download your data → Select "Followers and Following" → choose <strong>JSON format</strong> → set date range to <strong>"All time"</strong></p>
+        <h4 data-i18n="howto1_title">Export from Instagram</h4>
+        <ul class="export-steps" id="exportStepsList"></ul>
       </div>
       <div class="howto-step">
         <div class="num">2</div>
-        <h4>Upload the ZIP file</h4>
-        <p>Instagram will send you an email with a download link. Download the .zip file and upload it above — without extracting it.</p>
+        <h4 data-i18n="howto2_title">Upload the ZIP file</h4>
+        <p data-i18n="howto2_p">Instagram will send you an email with a download link. Download the .zip file and upload it above — without extracting it.</p>
       </div>
       <div class="howto-step">
         <div class="num">3</div>
-        <h4>Analyze the results</h4>
-        <p>See your followers, who doesn't follow you back, who you're not following back and changes over time — in seconds.</p>
+        <h4 data-i18n="howto3_title">Analyze the results</h4>
+        <p data-i18n="howto3_p">See your followers, who doesn't follow you back, who you're not following back and changes over time — in seconds.</p>
       </div>
     </div>
 
     <!-- Trust badges -->
     <div class="trust-bar">
-      <div class="trust-badge"><span class="tb-icon">🔒</span> 100% Private</div>
-      <div class="trust-badge"><span class="tb-icon">⚡</span> Instant Analysis</div>
-      <div class="trust-badge"><span class="tb-icon">🌐</span> Runs in your browser</div>
-      <div class="trust-badge"><span class="tb-icon">🆓</span> Completely Free</div>
-      <div class="trust-badge"><span class="tb-icon">📁</span> No data sent to servers</div>
+      <div class="trust-badge"><span class="tb-icon">🔒</span> <span data-i18n="trust1">100% Private</span></div>
+      <div class="trust-badge"><span class="tb-icon">⚡</span> <span data-i18n="trust2">Instant Analysis</span></div>
+      <div class="trust-badge"><span class="tb-icon">🌐</span> <span data-i18n="trust3">Runs in your browser</span></div>
+      <div class="trust-badge"><span class="tb-icon">🆓</span> <span data-i18n="trust4">Completely Free</span></div>
+      <div class="trust-badge"><span class="tb-icon">📁</span> <span data-i18n="trust5">No data sent to servers</span></div>
     </div>
 
     <!-- Features -->
     <div class="features-section">
-      <h2>What you can do with <span class="grad">InstaScope</span></h2>
+      <h2 data-i18n="features_h2">What you can do with <span class="grad">InstaScope</span></h2>
       <div class="features-grid">
         <div class="feature-card">
           <div class="f-icon">👥</div>
-          <h4>Full Followers List</h4>
-          <p>Browse all your followers with names, dates and direct links to their profiles.</p>
+          <h4 data-i18n="feat1_h4">Full Followers List</h4>
+          <p data-i18n="feat1_p">Browse all your followers with names, dates and direct links to their profiles.</p>
         </div>
         <div class="feature-card">
           <div class="f-icon">➡️</div>
-          <h4>Full Following List</h4>
-          <p>See everyone you follow in a clean, searchable and sortable list.</p>
+          <h4 data-i18n="feat2_h4">Full Following List</h4>
+          <p data-i18n="feat2_p">See everyone you follow in a clean, searchable and sortable list.</p>
         </div>
         <div class="feature-card">
           <div class="f-icon">❌</div>
-          <h4>Who Doesn't Follow Back</h4>
-          <p>Find all the accounts you follow that are not following you back.</p>
+          <h4 data-i18n="feat3_h4">Who Doesn't Follow Back</h4>
+          <p data-i18n="feat3_p">Find all the accounts you follow that are not following you back.</p>
         </div>
         <div class="feature-card">
           <div class="f-icon">🔔</div>
-          <h4>Who You Don't Follow Back</h4>
-          <p>Discover accounts that follow you but you haven't followed back yet.</p>
+          <h4 data-i18n="feat4_h4">Who You Don't Follow Back</h4>
+          <p data-i18n="feat4_p">Discover accounts that follow you but you haven't followed back yet.</p>
         </div>
         <div class="feature-card">
           <div class="f-icon">📊</div>
-          <h4>History Comparison</h4>
-          <p>Compare two exports taken at different times and see exactly who followed or unfollowed you.</p>
+          <h4 data-i18n="feat5_h4">History Comparison</h4>
+          <p data-i18n="feat5_p">Compare two exports taken at different times and see exactly who followed or unfollowed you.</p>
         </div>
         <div class="feature-card">
           <div class="f-icon">🔍</div>
-          <h4>Search & Sort</h4>
-          <p>Quickly find any user and sort results alphabetically or by follow date.</p>
+          <h4 data-i18n="feat6_h4">Search &amp; Sort</h4>
+          <p data-i18n="feat6_p">Quickly find any user and sort results alphabetically or by follow date.</p>
         </div>
       </div>
     </div>
 
     <!-- FAQ -->
     <div class="faq-section">
-      <h2>Frequently Asked Questions</h2>
+      <h2 data-i18n="faq_h2">Frequently Asked Questions</h2>
 
       <div class="faq-item">
         <div class="faq-question" onclick="toggleFaq(this)">
-          How do I export my data from Instagram?
+          <span class="faq-q-text" data-i18n="faq1_q">How do I export my data from Instagram?</span>
+          <span class="faq-arrow">▼</span>
+        </div>
+        <div class="faq-answer" id="faq1-answer"></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-q-text" data-i18n="faq2_q">Is my data safe? Do you store it?</span>
           <span class="faq-arrow">▼</span>
         </div>
         <div class="faq-answer">
-          Open Instagram → go to your profile → tap the three lines (☰) → Settings and Privacy → Account → Your activity → Download your information. Select <strong>"Followers and following"</strong>, choose <strong>JSON</strong> as the format and set the date range to <strong>"All time"</strong>. Instagram will send you an email with a download link within a few hours.
+          <span data-i18n="faq2_a">Absolutely. InstaScope runs entirely in your browser — <strong>no data is ever sent to any server</strong>. Your ZIP file is read locally on your device. When you close the page, everything is gone. We never see, collect or store any of your Instagram data.</span>
         </div>
       </div>
 
       <div class="faq-item">
         <div class="faq-question" onclick="toggleFaq(this)">
-          Is my data safe? Do you store it?
+          <span class="faq-q-text" data-i18n="faq3_q">Why does InstaScope show different numbers than Instagram?</span>
           <span class="faq-arrow">▼</span>
         </div>
         <div class="faq-answer">
-          Absolutely. InstaScope runs entirely in your browser — <strong>no data is ever sent to any server</strong>. Your ZIP file is read locally on your device. When you close the page, everything is gone. We never see, collect or store any of your Instagram data.
+          <span data-i18n="faq3_a">There are a few common reasons for discrepancies. See the <strong>Troubleshooting</strong> section below for a detailed explanation of each possible cause and how to fix it.</span>
         </div>
       </div>
 
       <div class="faq-item">
         <div class="faq-question" onclick="toggleFaq(this)">
-          Why does InstaScope show different numbers than Instagram?
+          <span class="faq-q-text" data-i18n="faq4_q">Can I use InstaScope on mobile?</span>
           <span class="faq-arrow">▼</span>
         </div>
         <div class="faq-answer">
-          There are a few common reasons for discrepancies. See the <strong>Troubleshooting</strong> section below for a detailed explanation of each possible cause and how to fix it.
+          <span data-i18n="faq4_a">Yes! InstaScope is fully responsive and works on any device — phone, tablet or desktop. Just download your Instagram export on your phone and upload the ZIP file directly from there.</span>
         </div>
       </div>
 
       <div class="faq-item">
         <div class="faq-question" onclick="toggleFaq(this)">
-          Can I use InstaScope on mobile?
+          <span class="faq-q-text" data-i18n="faq5_q">How do I use the History comparison feature?</span>
           <span class="faq-arrow">▼</span>
         </div>
         <div class="faq-answer">
-          Yes! InstaScope is fully responsive and works on any device — phone, tablet or desktop. Just download your Instagram export on your phone and upload the ZIP file directly from there.
+          <span data-i18n="faq5_a">Request two data exports from Instagram at different times (e.g. today and in a month). Then go to the <strong>History</strong> tab, upload the older ZIP as "Old File" and the newer one as "Current File", and click Compare. InstaScope will show you exactly who followed or unfollowed you in that period.</span>
         </div>
       </div>
 
       <div class="faq-item">
         <div class="faq-question" onclick="toggleFaq(this)">
-          How do I use the History comparison feature?
+          <span class="faq-q-text" data-i18n="faq6_q">Why does it say "0 following" after I upload?</span>
           <span class="faq-arrow">▼</span>
         </div>
         <div class="faq-answer">
-          Request two data exports from Instagram at different times (e.g. today and in a month). Then go to the <strong>History</strong> tab, upload the older ZIP as "Old File" and the newer one as "Current File", and click Compare. InstaScope will show you exactly who followed or unfollowed you in that period.
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">
-          Why does it say "0 following" after I upload?
-          <span class="faq-arrow">▼</span>
-        </div>
-        <div class="faq-answer">
-          This usually happens when you export data in <strong>HTML format instead of JSON</strong>. Make sure to select <strong>JSON</strong> when requesting your export from Instagram. Also ensure the date range is set to <strong>"All time"</strong>, otherwise older following data may be missing.
+          <span data-i18n="faq6_a">This usually happens when you export data in <strong>HTML format instead of JSON</strong>. Make sure to select <strong>JSON</strong> when requesting your export from Instagram. Also ensure the date range is set to <strong>"All time"</strong>, otherwise older following data may be missing.</span>
         </div>
       </div>
     </div>
 
     <!-- Troubleshooting -->
     <div class="trouble-section">
-      <h2>⚠️ Troubleshooting — Why numbers may not match</h2>
-      <p class="trouble-intro">If the counts shown by InstaScope differ from what you see on Instagram, here are all the possible reasons and what to do about each one.</p>
+      <h2 data-i18n="trouble_h2">⚠️ Troubleshooting — Why numbers may not match</h2>
+      <p class="trouble-intro" data-i18n="trouble_intro">If the counts shown by InstaScope differ from what you see on Instagram, here are all the possible reasons and what to do about each one.</p>
 
       <div class="trouble-card">
         <div class="tc-header">
           <div class="tc-icon">📄</div>
-          <h4>Wrong export format (HTML instead of JSON)</h4>
+          <h4 data-i18n="tc1_h4">Wrong export format (HTML instead of JSON)</h4>
         </div>
-        <div class="tc-tag">Most common cause</div>
-        <p>Instagram lets you export in HTML or JSON. InstaScope only reads <strong>JSON format</strong>. If you see 0 users or very few results, you likely exported in the wrong format.</p>
-        <ul>
+        <div class="tc-tag" data-i18n="tc1_tag">Most common cause</div>
+        <p data-i18n="tc1_p">Instagram lets you export in HTML or JSON. InstaScope only reads <strong>JSON format</strong>. If you see 0 users or very few results, you likely exported in the wrong format.</p>
+        <ul data-i18n="tc1_ul">
           <li>Go back to Instagram and request a new export</li>
           <li>When selecting format, choose <strong>JSON</strong> (not HTML)</li>
           <li>Set the date range to <strong>"All time"</strong></li>
@@ -538,21 +582,19 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
       <div class="trouble-card">
         <div class="tc-header">
           <div class="tc-icon">📅</div>
-          <h4>Date range not set to "All time"</h4>
+          <h4 data-i18n="tc2_h4">Date range not set to "All time"</h4>
         </div>
-        <p>If you set a limited date range during export (e.g. "Last 30 days"), Instagram will only include accounts you started following or who started following you within that period — not your full list.</p>
-        <ul>
-          <li>Request a new export and set the date range to <strong>"All time"</strong></li>
-        </ul>
+        <p data-i18n="tc2_p">If you set a limited date range during export (e.g. "Last 30 days"), Instagram will only include accounts you started following or who started following you within that period — not your full list.</p>
+        <ul data-i18n="tc2_ul"><li>Request a new export and set the date range to <strong>"All time"</strong></li></ul>
       </div>
 
       <div class="trouble-card">
         <div class="tc-header">
           <div class="tc-icon">⏳</div>
-          <h4>Export data is not up to date</h4>
+          <h4 data-i18n="tc3_h4">Export data is not up to date</h4>
         </div>
-        <p>Instagram exports are a <strong>snapshot in time</strong>. If someone followed or unfollowed you after you requested the export, those changes won't be reflected. The export can also take several hours to be generated.</p>
-        <ul>
+        <p data-i18n="tc3_p">Instagram exports are a <strong>snapshot in time</strong>. If someone followed or unfollowed you after you requested the export, those changes won't be reflected. The export can also take several hours to be generated.</p>
+        <ul data-i18n="tc3_ul">
           <li>Request a fresh export if you need current data</li>
           <li>Use the History tab to compare two exports and see changes</li>
         </ul>
@@ -561,18 +603,18 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
       <div class="trouble-card">
         <div class="tc-header">
           <div class="tc-icon">👻</div>
-          <h4>Ghost or deactivated accounts</h4>
+          <h4 data-i18n="tc4_h4">Ghost or deactivated accounts</h4>
         </div>
-        <p>Instagram's in-app follower count includes <strong>deactivated, deleted and suspended accounts</strong>. These accounts still appear in your follower count on Instagram but may not always appear in the JSON export, causing a small discrepancy.</p>
+        <p data-i18n="tc4_p">Instagram's in-app follower count includes <strong>deactivated, deleted and suspended accounts</strong>. These accounts still appear in your follower count on Instagram but may not always appear in the JSON export, causing a small discrepancy.</p>
       </div>
 
       <div class="trouble-card">
         <div class="tc-header">
           <div class="tc-icon">📦</div>
-          <h4>Uploaded the extracted folder instead of the ZIP file</h4>
+          <h4 data-i18n="tc5_h4">Uploaded the extracted folder instead of the ZIP file</h4>
         </div>
-        <p>InstaScope needs the <strong>original .zip file</strong>, not the folder you get after extracting it. If you unzipped the file first, you uploaded the wrong thing.</p>
-        <ul>
+        <p data-i18n="tc5_p">InstaScope needs the <strong>original .zip file</strong>, not the folder you get after extracting it. If you unzipped the file first, you uploaded the wrong thing.</p>
+        <ul data-i18n="tc5_ul">
           <li>Find the original .zip file (usually in your Downloads folder)</li>
           <li>Upload that file directly — do not unzip it first</li>
         </ul>
@@ -581,18 +623,18 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
       <div class="trouble-card">
         <div class="tc-header">
           <div class="tc-icon">🔢</div>
-          <h4>Instagram export split across multiple files</h4>
+          <h4 data-i18n="tc6_h4">Instagram export split across multiple files</h4>
         </div>
-        <p>If you follow or are followed by a large number of accounts, Instagram may split your follower data across multiple files (followers_1.json, followers_2.json, etc.). InstaScope automatically reads all of them from the ZIP, so this should not cause issues — but make sure you uploaded the <strong>complete ZIP</strong> and not a partial one.</p>
+        <p data-i18n="tc6_p">If you follow or are followed by a large number of accounts, Instagram may split your follower data across multiple files (followers_1.json, followers_2.json, etc.). InstaScope automatically reads all of them from the ZIP, so this should not cause issues — but make sure you uploaded the <strong>complete ZIP</strong> and not a partial one.</p>
       </div>
 
       <div class="trouble-card">
         <div class="tc-header">
           <div class="tc-icon">🔄</div>
-          <h4>Still seeing wrong numbers?</h4>
+          <h4 data-i18n="tc7_h4">Still seeing wrong numbers?</h4>
         </div>
-        <p>Try this checklist:</p>
-        <ul>
+        <p data-i18n="tc7_p">Try this checklist:</p>
+        <ul data-i18n="tc7_ul">
           <li>Request a <strong>brand new export</strong> from Instagram</li>
           <li>Select format: <strong>JSON</strong></li>
           <li>Date range: <strong>All time</strong></li>
@@ -605,38 +647,38 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
 
     <!-- About -->
     <div class="about-section">
-      <h2>About InstaScope</h2>
+      <h2 data-i18n="about_h2">About InstaScope</h2>
       <div class="about-card">
-        <p>InstaScope is a <strong>free, open-source tool</strong> that helps you understand your Instagram audience better. No login required, no Instagram API access, no data collection of any kind.</p>
-        <p>The tool works by reading the ZIP file that Instagram provides when you request a copy of your data — a standard feature available to all users. Everything happens locally in your browser using JavaScript, so <strong>your data never leaves your device</strong>.</p>
-        <p>InstaScope was built to give people a clear, simple and private way to manage their Instagram presence — whether you want to clean up who you follow, track follower changes over time, or simply get a better overview of your account.</p>
-        <p>If InstaScope has been useful to you, consider <a href="https://ko-fi.com/instascope" target="_blank" rel="noopener">buying me a coffee ☕</a> — it helps keep the tool free and maintained.</p>
+        <p data-i18n="about_p1">InstaScope is a <strong>free, open-source tool</strong> that helps you understand your Instagram audience better. No login required, no Instagram API access, no data collection of any kind.</p>
+        <p data-i18n="about_p2">The tool works by reading the ZIP file that Instagram provides when you request a copy of your data — a standard feature available to all users. Everything happens locally in your browser using JavaScript, so <strong>your data never leaves your device</strong>.</p>
+        <p data-i18n="about_p3">InstaScope was built to give people a clear, simple and private way to manage their Instagram presence — whether you want to clean up who you follow, track follower changes over time, or simply get a better overview of your account.</p>
+        <p data-i18n="about_p4">If InstaScope has been useful to you, consider <a href="https://ko-fi.com/instascope" target="_blank" rel="noopener">buying me a coffee ☕</a> — it helps keep the tool free and maintained.</p>
       </div>
     </div>
 
     <!-- Legal (Privacy + Terms) -->
     <div class="legal-section">
       <div class="legal-tabs">
-        <div class="legal-tab active" onclick="switchLegal('privacy', this)">Privacy Policy</div>
-        <div class="legal-tab" onclick="switchLegal('terms', this)">Terms of Service</div>
+        <div class="legal-tab active" onclick="switchLegal('privacy', this)" data-i18n="legal_privacy_tab">Privacy Policy</div>
+        <div class="legal-tab" onclick="switchLegal('terms', this)" data-i18n="legal_terms_tab">Terms of Service</div>
       </div>
 
       <div class="legal-panel active" id="legal-privacy">
-        <h3>Privacy Policy</h3>
-        <p><strong>Last updated:</strong> May 2025</p>
-        <p>InstaScope is committed to protecting your privacy. This policy explains how InstaScope handles your data.</p>
-        <p><strong>No data collection.</strong> InstaScope does not collect, store, transmit or process any personal data on any server. All file processing happens entirely within your browser on your device.</p>
-        <p><strong>ZIP file processing.</strong> When you upload your Instagram ZIP file, it is read locally by your browser using JavaScript. The file and its contents are never sent to any external server or third party.</p>
-        <p><strong>Cookies and advertising.</strong> InstaScope uses Google AdSense to display advertisements, which may use cookies to show relevant ads. You can manage ad preferences via Google's ad settings. We also use anonymous analytics to understand how the tool is used, without collecting any personally identifiable information.</p>
-        <p><strong>Third-party links.</strong> InstaScope contains links to Instagram profiles and Ko-fi. We are not responsible for the privacy practices of third-party websites.</p>
-        <p>For any privacy-related questions, you can reach us via <a href="https://ko-fi.com/instascope" target="_blank" rel="noopener">Ko-fi</a>.</p>
+        <h3 data-i18n="privacy_h3">Privacy Policy</h3>
+        <p data-i18n="privacy_updated"><strong>Last updated:</strong> May 2025</p>
+        <p data-i18n="privacy_p1">InstaScope is committed to protecting your privacy. This policy explains how InstaScope handles your data.</p>
+        <p data-i18n="privacy_p2"><strong>No data collection.</strong> InstaScope does not collect, store, transmit or process any personal data on any server. All file processing happens entirely within your browser on your device.</p>
+        <p data-i18n="privacy_p3"><strong>ZIP file processing.</strong> When you upload your Instagram ZIP file, it is read locally by your browser using JavaScript. The file and its contents are never sent to any external server or third party.</p>
+        <p data-i18n="privacy_p4"><strong>Cookies and advertising.</strong> InstaScope uses Google AdSense to display advertisements, which may use cookies to show relevant ads. You can manage ad preferences via Google's ad settings. We also use anonymous analytics to understand how the tool is used, without collecting any personally identifiable information.</p>
+        <p data-i18n="privacy_p5"><strong>Third-party links.</strong> InstaScope contains links to Instagram profiles and Ko-fi. We are not responsible for the privacy practices of third-party websites.</p>
+        <p data-i18n="privacy_p6">For any privacy-related questions, you can reach us via <a href="https://ko-fi.com/instascope" target="_blank" rel="noopener">Ko-fi</a>.</p>
       </div>
 
       <div class="legal-panel" id="legal-terms">
-        <h3>Terms of Service</h3>
-        <p><strong>Last updated:</strong> May 2025</p>
-        <p>By using InstaScope, you agree to the following terms:</p>
-        <ul>
+        <h3 data-i18n="terms_h3">Terms of Service</h3>
+        <p data-i18n="terms_updated"><strong>Last updated:</strong> May 2025</p>
+        <p data-i18n="terms_p1">By using InstaScope, you agree to the following terms:</p>
+        <ul data-i18n="terms_ul">
           <li><strong>Personal use only.</strong> InstaScope is provided for personal, non-commercial use only.</li>
           <li><strong>No warranty.</strong> InstaScope is provided "as is" without any warranties. We do not guarantee the accuracy, completeness or availability of the tool at any time.</li>
           <li><strong>Instagram compliance.</strong> You are responsible for ensuring your use of your Instagram data complies with Instagram's Terms of Service. InstaScope does not interact with Instagram's API and does not require your Instagram credentials.</li>
@@ -644,7 +686,7 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
           <li><strong>Advertising.</strong> InstaScope displays ads via Google AdSense to support free access to the tool. By using InstaScope you acknowledge that ads may be displayed.</li>
           <li><strong>Changes.</strong> We reserve the right to modify or discontinue InstaScope at any time without notice.</li>
         </ul>
-        <p>Continued use of InstaScope constitutes acceptance of these terms.</p>
+        <p data-i18n="terms_p2">Continued use of InstaScope constitutes acceptance of these terms.</p>
       </div>
     </div>
 
@@ -656,49 +698,59 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
     <div class="stats-bar">
       <div class="stat-card">
         <div class="val grad" id="statFollowers">0</div>
-        <div class="lbl">Followers</div>
+        <div class="lbl" data-i18n="stat_lbl_followers">Followers</div>
       </div>
       <div class="stat-card">
         <div class="val grad" id="statFollowing">0</div>
-        <div class="lbl">Following</div>
+        <div class="lbl" data-i18n="stat_lbl_following">Following</div>
       </div>
       <div class="stat-card">
         <div class="val" style="color:var(--accent)" id="statNotBack">0</div>
-        <div class="lbl">Don't Follow Back</div>
+        <div class="lbl" data-i18n="stat_lbl_notback">Don't Follow Back</div>
       </div>
       <div class="stat-card">
         <div class="val" style="color:var(--orange)" id="statNotFollow">0</div>
-        <div class="lbl">You Don't Follow</div>
+        <div class="lbl" data-i18n="stat_lbl_notfollow">You Don't Follow</div>
       </div>
     </div>
 
     <div class="tabs">
       <button class="tab-btn active" onclick="switchTab('followers', event)">
-        <span class="t-icon">👥</span><span class="t-full">Followers</span><span class="t-short">Followers</span>
+        <span class="t-icon">👥</span>
+        <span class="t-full" data-i18n="tab_followers_full">Followers</span>
+        <span class="t-short" data-i18n="tab_followers_short">Followers</span>
         <span class="badge" id="bFollowers">0</span>
       </button>
       <button class="tab-btn" onclick="switchTab('following', event)">
-        <span class="t-icon">➡️</span><span class="t-full">Following</span><span class="t-short">Following</span>
+        <span class="t-icon">➡️</span>
+        <span class="t-full" data-i18n="tab_following_full">Following</span>
+        <span class="t-short" data-i18n="tab_following_short">Following</span>
         <span class="badge" id="bFollowing">0</span>
       </button>
       <button class="tab-btn" onclick="switchTab('notback', event)">
-        <span class="t-icon">❌</span><span class="t-full">Don't Follow Back</span><span class="t-short">Don't Follow</span>
+        <span class="t-icon">❌</span>
+        <span class="t-full" data-i18n="tab_notback_full">Don't Follow Back</span>
+        <span class="t-short" data-i18n="tab_notback_short">Don't Follow</span>
         <span class="badge" id="bNotBack">0</span>
       </button>
       <button class="tab-btn" onclick="switchTab('notfollow', event)">
-        <span class="t-icon">🔔</span><span class="t-full">You Don't Follow</span><span class="t-short">Don't Follow</span>
+        <span class="t-icon">🔔</span>
+        <span class="t-full" data-i18n="tab_notfollow_full">You Don't Follow</span>
+        <span class="t-short" data-i18n="tab_notfollow_short">Don't Follow</span>
         <span class="badge" id="bNotFollow">0</span>
       </button>
       <button class="tab-btn" onclick="switchTab('history', event)">
-        <span class="t-icon">📊</span><span class="t-full">History</span><span class="t-short">History</span>
+        <span class="t-icon">📊</span>
+        <span class="t-full" data-i18n="tab_history_full">History</span>
+        <span class="t-short" data-i18n="tab_history_short">History</span>
       </button>
     </div>
 
     <!-- TAB: Followers -->
     <div class="tab-panel active" id="tab-followers">
       <div class="search-row">
-        <input type="text" placeholder="🔍 Search followers…" oninput="filterList('followers-list', this.value)">
-        <button class="sort-btn" onclick="sortList('followers-list')">⇅ Sort</button>
+        <input type="text" id="search-followers" data-i18n-placeholder="search_followers" placeholder="🔍 Search followers…" oninput="filterList('followers-list', this.value)">
+        <button class="sort-btn" onclick="sortList('followers-list')" data-i18n="sort_btn">⇅ Sort</button>
       </div>
       <div class="ad-banner-wrap">
         <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9665914988223658" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
@@ -709,8 +761,8 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
     <!-- TAB: Following -->
     <div class="tab-panel" id="tab-following">
       <div class="search-row">
-        <input type="text" placeholder="🔍 Search following…" oninput="filterList('following-list', this.value)">
-        <button class="sort-btn" onclick="sortList('following-list')">⇅ Sort</button>
+        <input type="text" id="search-following" data-i18n-placeholder="search_following" placeholder="🔍 Search following…" oninput="filterList('following-list', this.value)">
+        <button class="sort-btn" onclick="sortList('following-list')" data-i18n="sort_btn">⇅ Sort</button>
       </div>
       <div class="ad-banner-wrap">
         <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9665914988223658" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
@@ -722,14 +774,14 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
     <div class="tab-panel" id="tab-notback">
       <div id="gate-notback" class="lock-gate">
         <div class="lock-icon">🔒</div>
-        <h3>Premium Content</h3>
-        <p>Find out who among the people you follow <strong>doesn't follow you back</strong>. Watch a short ad to unlock.</p>
-        <button class="btn-watch" onclick="startAdGate('notback')">▶ Watch Ad &amp; Unlock</button>
+        <h3 data-i18n="gate_title">Premium Content</h3>
+        <p data-i18n="gate_notback_p">Find out who among the people you follow <strong>doesn't follow you back</strong>. Watch a short ad to unlock.</p>
+        <button class="btn-watch" onclick="startAdGate('notback')" data-i18n="gate_btn">▶ Watch Ad &amp; Unlock</button>
       </div>
       <div id="content-notback" style="display:none">
         <div class="search-row">
-          <input type="text" placeholder="🔍 Search…" oninput="filterList('notback-list', this.value)">
-          <button class="sort-btn" onclick="sortList('notback-list')">⇅ Sort</button>
+          <input type="text" id="search-notback" data-i18n-placeholder="search_generic" placeholder="🔍 Search…" oninput="filterList('notback-list', this.value)">
+          <button class="sort-btn" onclick="sortList('notback-list')" data-i18n="sort_btn">⇅ Sort</button>
         </div>
         <div class="user-list" id="notback-list"></div>
       </div>
@@ -739,14 +791,14 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
     <div class="tab-panel" id="tab-notfollow">
       <div id="gate-notfollow" class="lock-gate">
         <div class="lock-icon">🔒</div>
-        <h3>Premium Content</h3>
-        <p>Find out who follows you but <strong>you're not following back</strong>. Watch a short ad to unlock.</p>
-        <button class="btn-watch" onclick="startAdGate('notfollow')">▶ Watch Ad &amp; Unlock</button>
+        <h3 data-i18n="gate_title">Premium Content</h3>
+        <p data-i18n="gate_notfollow_p">Find out who follows you but <strong>you're not following back</strong>. Watch a short ad to unlock.</p>
+        <button class="btn-watch" onclick="startAdGate('notfollow')" data-i18n="gate_btn">▶ Watch Ad &amp; Unlock</button>
       </div>
       <div id="content-notfollow" style="display:none">
         <div class="search-row">
-          <input type="text" placeholder="🔍 Search…" oninput="filterList('notfollow-list', this.value)">
-          <button class="sort-btn" onclick="sortList('notfollow-list')">⇅ Sort</button>
+          <input type="text" id="search-notfollow" data-i18n-placeholder="search_generic" placeholder="🔍 Search…" oninput="filterList('notfollow-list', this.value)">
+          <button class="sort-btn" onclick="sortList('notfollow-list')" data-i18n="sort_btn">⇅ Sort</button>
         </div>
         <div class="user-list" id="notfollow-list"></div>
       </div>
@@ -754,26 +806,26 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
 
     <!-- TAB: History -->
     <div class="tab-panel" id="tab-history">
-      <p style="color:var(--muted);font-size:.9rem;margin:16px 0 20px">
+      <p style="color:var(--muted);font-size:.9rem;margin:16px 0 20px" data-i18n="history_intro">
         Upload two ZIP files exported at different times to compare and see what changed — new followers, lost followers, new following and unfollowed accounts.
       </p>
       <div class="upload-duo">
         <div class="mini-drop" id="oldDrop">
           <input type="file" accept=".zip" onchange="loadHistory('old', this.files[0])">
           <div class="icon">🗂️</div>
-          <h4>Old File</h4>
-          <p>Previous export</p>
+          <h4 data-i18n="old_file_h4">Old File</h4>
+          <p data-i18n="old_file_p">Previous export</p>
           <div class="loaded-name" id="old-name" style="display:none"></div>
         </div>
         <div class="mini-drop" id="newDrop">
           <input type="file" accept=".zip" onchange="loadHistory('new', this.files[0])">
           <div class="icon">📁</div>
-          <h4>Current File</h4>
-          <p>Recent export</p>
+          <h4 data-i18n="new_file_h4">Current File</h4>
+          <p data-i18n="new_file_p">Recent export</p>
           <div class="loaded-name" id="new-name" style="display:none"></div>
         </div>
       </div>
-      <button class="btn-watch" id="compareBtn" onclick="runComparison()" style="display:none;margin-bottom:24px">🔍 Compare</button>
+      <button class="btn-watch" id="compareBtn" onclick="runComparison()" style="display:none;margin-bottom:24px" data-i18n="compare_btn">🔍 Compare</button>
       <div id="history-ad-banner" class="ad-banner-wrap" style="display:none">
         <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9665914988223658" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
       </div>
@@ -786,25 +838,25 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
   <div class="kofi-wrap" id="kofiSection" style="display:none">
     <div class="kofi-card">
       <div class="kofi-emoji">☕</div>
-      <p class="kofi-title">Was InstaScope helpful?</p>
-      <p class="kofi-sub">It's completely free. If it saved you time, consider buying me a coffee — it costs less than an espresso!</p>
-      <a class="kofi-btn" href="https://ko-fi.com/instascope" target="_blank" rel="noopener">☕ Buy me a coffee</a>
-      <span class="kofi-hearts">Every bit of support keeps this tool free ❤️</span>
+      <p class="kofi-title" data-i18n="kofi_title">Was InstaScope helpful?</p>
+      <p class="kofi-sub" data-i18n="kofi_sub">It's completely free. If it saved you time, consider buying me a coffee — it costs less than an espresso!</p>
+      <a class="kofi-btn" href="https://ko-fi.com/instascope" target="_blank" rel="noopener" data-i18n="kofi_btn">☕ Buy me a coffee</a>
+      <span class="kofi-hearts" data-i18n="kofi_hearts">Every bit of support keeps this tool free ❤️</span>
     </div>
   </div>
 
   <!-- Footer -->
   <footer class="site-footer">
-    <p>© 2025 InstaScope · Free Instagram Follower Analyzer · Runs 100% in your browser</p>
+    <p data-i18n="footer_p1">© 2025 InstaScope · Free Instagram Follower Analyzer · Runs 100% in your browser</p>
     <p style="margin-top:6px">
-      <a href="#legal-privacy" onclick="scrollToLegal('privacy')">Privacy Policy</a> ·
-      <a href="#legal-terms" onclick="scrollToLegal('terms')">Terms of Service</a> ·
+      <a href="#legal-privacy" onclick="scrollToLegal('privacy')" data-i18n="legal_privacy_tab">Privacy Policy</a> ·
+      <a href="#legal-terms" onclick="scrollToLegal('terms')" data-i18n="legal_terms_tab">Terms of Service</a> ·
       <a href="https://ko-fi.com/instascope" target="_blank" rel="noopener">Support ☕</a> ·
-      <a href="mailto:1onlytopp@gmail.com">Contact</a> ·
+      <a href="mailto:1onlytopp@gmail.com" data-i18n="footer_contact">Contact</a> ·
       <a href="blog/">📝 Blog</a>
     </p>
     <p style="margin-top:6px;font-size:.72rem">📧 <a href="mailto:1onlytopp@gmail.com">1onlytopp@gmail.com</a></p>
-    <p style="margin-top:10px;font-size:.70rem;color:rgba(255,255,255,.18);max-width:620px;margin-left:auto;margin-right:auto;line-height:1.6">
+    <p style="margin-top:10px;font-size:.70rem;color:rgba(255,255,255,.18);max-width:620px;margin-left:auto;margin-right:auto;line-height:1.6" data-i18n="footer_disclaimer">
       InstaScope is not affiliated with, endorsed by, or connected to Meta Platforms, Inc. or Instagram.
       Instagram&#8482; is a trademark of Meta Platforms, Inc. InstaScope is an independent tool that uses only data exported by the user from their own account.
     </p>
@@ -844,6 +896,352 @@ main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 120px; }
 
 <script>
 // ═══════════════════════════════════════════════════════════════
+//  TRANSLATIONS
+// ═══════════════════════════════════════════════════════════════
+const translations = {
+  en: {
+    reset_btn: '↩ Reset',
+    hero_h1: 'Find out who truly <span class="grad">follows you back</span>',
+    hero_p: 'Upload the ZIP file exported from Instagram and instantly analyze your followers, following and more — 100% private, everything runs in your browser.',
+    dropzone_h3: 'Drag your <u>.zip</u> file here',
+    dropzone_p: 'or click to select it',
+    dropzone_warn: '⚠️ Upload the entire .zip file — not the extracted folder',
+    howto1_title: 'Export from Instagram',
+    howto2_title: 'Upload the ZIP file',
+    howto2_p: 'Instagram will send you an email with a download link. Download the .zip file and upload it above — without extracting it.',
+    howto3_title: 'Analyze the results',
+    howto3_p: "See your followers, who doesn't follow you back, who you're not following back and changes over time — in seconds.",
+    trust1: '100% Private', trust2: 'Instant Analysis', trust3: 'Runs in your browser',
+    trust4: 'Completely Free', trust5: 'No data sent to servers',
+    features_h2: 'What you can do with <span class="grad">InstaScope</span>',
+    feat1_h4: 'Full Followers List',
+    feat1_p: 'Browse all your followers with names, dates and direct links to their profiles.',
+    feat2_h4: 'Full Following List',
+    feat2_p: 'See everyone you follow in a clean, searchable and sortable list.',
+    feat3_h4: "Who Doesn't Follow Back",
+    feat3_p: 'Find all the accounts you follow that are not following you back.',
+    feat4_h4: "Who You Don't Follow Back",
+    feat4_p: "Discover accounts that follow you but you haven't followed back yet.",
+    feat5_h4: 'History Comparison',
+    feat5_p: 'Compare two exports taken at different times and see exactly who followed or unfollowed you.',
+    feat6_h4: 'Search & Sort',
+    feat6_p: 'Quickly find any user and sort results alphabetically or by follow date.',
+    faq_h2: 'Frequently Asked Questions',
+    faq1_q: 'How do I export my data from Instagram?',
+    faq2_q: 'Is my data safe? Do you store it?',
+    faq2_a: 'Absolutely. InstaScope runs entirely in your browser — <strong>no data is ever sent to any server</strong>. Your ZIP file is read locally on your device. When you close the page, everything is gone. We never see, collect or store any of your Instagram data.',
+    faq3_q: 'Why does InstaScope show different numbers than Instagram?',
+    faq3_a: 'There are a few common reasons for discrepancies. See the <strong>Troubleshooting</strong> section below for a detailed explanation of each possible cause and how to fix it.',
+    faq4_q: 'Can I use InstaScope on mobile?',
+    faq4_a: 'Yes! InstaScope is fully responsive and works on any device — phone, tablet or desktop. Just download your Instagram export on your phone and upload the ZIP file directly from there.',
+    faq5_q: 'How do I use the History comparison feature?',
+    faq5_a: 'Request two data exports from Instagram at different times (e.g. today and in a month). Then go to the <strong>History</strong> tab, upload the older ZIP as "Old File" and the newer one as "Current File", and click Compare. InstaScope will show you exactly who followed or unfollowed you in that period.',
+    faq6_q: 'Why does it say "0 following" after I upload?',
+    faq6_a: 'This usually happens when you export data in <strong>HTML format instead of JSON</strong>. Make sure to select <strong>JSON</strong> when requesting your export from Instagram. Also ensure the date range is set to <strong>"All time"</strong>, otherwise older following data may be missing.',
+    trouble_h2: '⚠️ Troubleshooting — Why numbers may not match',
+    trouble_intro: 'If the counts shown by InstaScope differ from what you see on Instagram, here are all the possible reasons and what to do about each one.',
+    tc1_h4: 'Wrong export format (HTML instead of JSON)',
+    tc1_tag: 'Most common cause',
+    tc1_p: 'Instagram lets you export in HTML or JSON. InstaScope only reads <strong>JSON format</strong>. If you see 0 users or very few results, you likely exported in the wrong format.',
+    tc1_ul: '<li>Go back to Instagram and request a new export</li><li>When selecting format, choose <strong>JSON</strong> (not HTML)</li><li>Set the date range to <strong>"All time"</strong></li>',
+    tc2_h4: 'Date range not set to "All time"',
+    tc2_p: 'If you set a limited date range during export (e.g. "Last 30 days"), Instagram will only include accounts you started following or who started following you within that period — not your full list.',
+    tc2_ul: '<li>Request a new export and set the date range to <strong>"All time"</strong></li>',
+    tc3_h4: 'Export data is not up to date',
+    tc3_p: 'Instagram exports are a <strong>snapshot in time</strong>. If someone followed or unfollowed you after you requested the export, those changes won\'t be reflected. The export can also take several hours to be generated.',
+    tc3_ul: '<li>Request a fresh export if you need current data</li><li>Use the History tab to compare two exports and see changes</li>',
+    tc4_h4: 'Ghost or deactivated accounts',
+    tc4_p: "Instagram's in-app follower count includes <strong>deactivated, deleted and suspended accounts</strong>. These accounts still appear in your follower count on Instagram but may not always appear in the JSON export, causing a small discrepancy.",
+    tc5_h4: 'Uploaded the extracted folder instead of the ZIP file',
+    tc5_p: 'InstaScope needs the <strong>original .zip file</strong>, not the folder you get after extracting it. If you unzipped the file first, you uploaded the wrong thing.',
+    tc5_ul: '<li>Find the original .zip file (usually in your Downloads folder)</li><li>Upload that file directly — do not unzip it first</li>',
+    tc6_h4: 'Instagram export split across multiple files',
+    tc6_p: 'If you follow or are followed by a large number of accounts, Instagram may split your follower data across multiple files (followers_1.json, followers_2.json, etc.). InstaScope automatically reads all of them from the ZIP, so this should not cause issues — but make sure you uploaded the <strong>complete ZIP</strong> and not a partial one.',
+    tc7_h4: 'Still seeing wrong numbers?',
+    tc7_p: 'Try this checklist:',
+    tc7_ul: '<li>Request a <strong>brand new export</strong> from Instagram</li><li>Select format: <strong>JSON</strong></li><li>Date range: <strong>All time</strong></li><li>Wait for the email from Instagram (can take up to a few hours)</li><li>Download and upload the <strong>original .zip file</strong></li><li>Open browser DevTools (F12) → Console tab → check for any errors</li>',
+    about_h2: 'About InstaScope',
+    about_p1: 'InstaScope is a <strong>free, open-source tool</strong> that helps you understand your Instagram audience better. No login required, no Instagram API access, no data collection of any kind.',
+    about_p2: 'The tool works by reading the ZIP file that Instagram provides when you request a copy of your data — a standard feature available to all users. Everything happens locally in your browser using JavaScript, so <strong>your data never leaves your device</strong>.',
+    about_p3: 'InstaScope was built to give people a clear, simple and private way to manage their Instagram presence — whether you want to clean up who you follow, track follower changes over time, or simply get a better overview of your account.',
+    about_p4: 'If InstaScope has been useful to you, consider <a href="https://ko-fi.com/instascope" target="_blank" rel="noopener">buying me a coffee ☕</a> — it helps keep the tool free and maintained.',
+    legal_privacy_tab: 'Privacy Policy', legal_terms_tab: 'Terms of Service',
+    privacy_h3: 'Privacy Policy',
+    privacy_updated: '<strong>Last updated:</strong> May 2025',
+    privacy_p1: 'InstaScope is committed to protecting your privacy. This policy explains how InstaScope handles your data.',
+    privacy_p2: '<strong>No data collection.</strong> InstaScope does not collect, store, transmit or process any personal data on any server. All file processing happens entirely within your browser on your device.',
+    privacy_p3: '<strong>ZIP file processing.</strong> When you upload your Instagram ZIP file, it is read locally by your browser using JavaScript. The file and its contents are never sent to any external server or third party.',
+    privacy_p4: '<strong>Cookies and advertising.</strong> InstaScope uses Google AdSense to display advertisements, which may use cookies to show relevant ads. You can manage ad preferences via Google\'s ad settings. We also use anonymous analytics to understand how the tool is used, without collecting any personally identifiable information.',
+    privacy_p5: '<strong>Third-party links.</strong> InstaScope contains links to Instagram profiles and Ko-fi. We are not responsible for the privacy practices of third-party websites.',
+    privacy_p6: 'For any privacy-related questions, you can reach us via <a href="https://ko-fi.com/instascope" target="_blank" rel="noopener">Ko-fi</a>.',
+    terms_h3: 'Terms of Service',
+    terms_updated: '<strong>Last updated:</strong> May 2025',
+    terms_p1: 'By using InstaScope, you agree to the following terms:',
+    terms_ul: '<li><strong>Personal use only.</strong> InstaScope is provided for personal, non-commercial use only.</li><li><strong>No warranty.</strong> InstaScope is provided "as is" without any warranties. We do not guarantee the accuracy, completeness or availability of the tool at any time.</li><li><strong>Instagram compliance.</strong> You are responsible for ensuring your use of your Instagram data complies with Instagram\'s Terms of Service. InstaScope does not interact with Instagram\'s API and does not require your Instagram credentials.</li><li><strong>No liability.</strong> InstaScope and its creator are not liable for any damages or losses resulting from the use or inability to use this tool.</li><li><strong>Advertising.</strong> InstaScope displays ads via Google AdSense to support free access to the tool. By using InstaScope you acknowledge that ads may be displayed.</li><li><strong>Changes.</strong> We reserve the right to modify or discontinue InstaScope at any time without notice.</li>',
+    terms_p2: 'Continued use of InstaScope constitutes acceptance of these terms.',
+    stat_lbl_followers: 'Followers', stat_lbl_following: 'Following',
+    stat_lbl_notback: "Don't Follow Back", stat_lbl_notfollow: "You Don't Follow",
+    tab_followers_full: 'Followers', tab_followers_short: 'Followers',
+    tab_following_full: 'Following', tab_following_short: 'Following',
+    tab_notback_full: "Don't Follow Back", tab_notback_short: "Don't Follow",
+    tab_notfollow_full: "You Don't Follow", tab_notfollow_short: "Don't Follow",
+    tab_history_full: 'History', tab_history_short: 'History',
+    search_followers: '🔍 Search followers…', search_following: '🔍 Search following…', search_generic: '🔍 Search…',
+    sort_btn: '⇅ Sort',
+    gate_title: 'Premium Content',
+    gate_notback_p: "Find out who among the people you follow <strong>doesn't follow you back</strong>. Watch a short ad to unlock.",
+    gate_notfollow_p: "Find out who follows you but <strong>you're not following back</strong>. Watch a short ad to unlock.",
+    gate_btn: '▶ Watch Ad & Unlock',
+    history_intro: 'Upload two ZIP files exported at different times to compare and see what changed — new followers, lost followers, new following and unfollowed accounts.',
+    old_file_h4: 'Old File', old_file_p: 'Previous export',
+    new_file_h4: 'Current File', new_file_p: 'Recent export',
+    compare_btn: '🔍 Compare',
+    kofi_title: 'Was InstaScope helpful?',
+    kofi_sub: "It's completely free. If it saved you time, consider buying me a coffee — it costs less than an espresso!",
+    kofi_btn: '☕ Buy me a coffee',
+    kofi_hearts: 'Every bit of support keeps this tool free ❤️',
+    footer_p1: '© 2025 InstaScope · Free Instagram Follower Analyzer · Runs 100% in your browser',
+    footer_contact: 'Contact',
+    footer_disclaimer: 'InstaScope is not affiliated with, endorsed by, or connected to Meta Platforms, Inc. or Instagram. Instagram™ is a trademark of Meta Platforms, Inc. InstaScope is an independent tool that uses only data exported by the user from their own account.',
+    toast_loaded: '✅ File loaded successfully!',
+    toast_old_loaded: '✅ Old file loaded',
+    toast_new_loaded: '✅ Current file loaded',
+    toast_unlocked: '🔓 Content unlocked!',
+    toast_zip_only: '⚠️ Please upload a .zip file',
+    loading_text: 'Analyzing file…',
+    ad_msg_unlock: 'Watch the ad to unlock this content',
+    ad_msg_wait: 'Just a moment…',
+    ad_msg_close: 'You can close the ad ✕',
+    empty_no_users: 'No users in this category.',
+    empty_no_changes: 'No changes detected between the two files.',
+    diff_new_followers: '🟢 New followers',
+    diff_lost_followers: '🔴 Lost followers',
+    diff_new_following: '🟠 New following',
+    diff_lost_following: '🟣 Removed following',
+    user_since: 'Since',
+    user_open: 'Open ↗',
+    list_disclaimer: 'Some accounts may be inactive or have changed username since this export was created.',
+    error_prefix: '❌ Error: ',
+    error_unrecognized: 'Unrecognized file structure. Files found in ZIP: ',
+    error_ensure_json: 'Make sure you exported from Instagram in JSON format (not HTML).',
+    export_steps: [
+      'On Instagram, tap your <strong>profile</strong> icon (bottom right)',
+      'Tap the <strong>three lines</strong> (☰) in the top right corner',
+      'Go to <strong>Accounts Centre</strong>',
+      'Tap <strong>Your information and permissions</strong>',
+      'Tap <strong>Export your information</strong> → <strong>Create export</strong>',
+      'Select <strong>Export to device</strong>',
+      'Enter your email address in the <strong>Notify</strong> field',
+      'In <strong>Customize Information</strong>, uncheck everything except <strong>Followers and Following</strong>',
+      'Set date range to <strong>All time</strong>',
+      'Select format: <strong>JSON</strong> and quality: <strong>Medium</strong>',
+      'Confirm — Instagram will email you a download link'
+    ]
+  },
+
+  it: {
+    reset_btn: '↩ Ricomincia',
+    hero_h1: 'Scopri chi ti segue <span class="grad">davvero</span>',
+    hero_p: "Carica il file ZIP esportato da Instagram e analizza all'istante i tuoi follower, i seguiti e molto altro — 100% privato, tutto gira nel tuo browser.",
+    dropzone_h3: 'Trascina il tuo file <u>.zip</u> qui',
+    dropzone_p: 'o clicca per selezionarlo',
+    dropzone_warn: "⚠️ Carica l'intero file .zip — non la cartella estratta",
+    howto1_title: 'Esporta da Instagram',
+    howto2_title: 'Carica il file ZIP',
+    howto2_p: "Instagram ti invierà un'email con un link per il download. Scarica il file .zip e caricalo qui sopra — senza estrarlo.",
+    howto3_title: 'Analizza i risultati',
+    howto3_p: 'Scopri i tuoi follower, chi non ti segue, chi non segui ancora e le variazioni nel tempo — in pochi secondi.',
+    trust1: '100% Privato', trust2: 'Analisi Istantanea', trust3: 'Gira nel tuo browser',
+    trust4: 'Completamente Gratuito', trust5: 'Nessun dato inviato ai server',
+    features_h2: 'Cosa puoi fare con <span class="grad">InstaScope</span>',
+    feat1_h4: 'Lista Completa dei Follower',
+    feat1_p: 'Sfoglia tutti i tuoi follower con nomi, date e link diretti ai loro profili.',
+    feat2_h4: 'Lista Completa dei Seguiti',
+    feat2_p: 'Vedi tutti gli account che segui in un elenco pulito, ricercabile e ordinabile.',
+    feat3_h4: 'Chi Non Ti Segue',
+    feat3_p: 'Trova tutti gli account che segui ma che non ti seguono a loro volta.',
+    feat4_h4: 'Chi Non Segui Ancora',
+    feat4_p: 'Scopri gli account che ti seguono ma che tu non hai ancora seguito.',
+    feat5_h4: 'Confronto Cronologico',
+    feat5_p: 'Confronta due esportazioni effettuate in momenti diversi e scopri chi ti ha seguito o ha smesso di seguirti.',
+    feat6_h4: 'Cerca e Ordina',
+    feat6_p: 'Trova rapidamente qualsiasi utente e ordina i risultati in ordine alfabetico o per data di follow.',
+    faq_h2: 'Domande Frequenti',
+    faq1_q: 'Come esporto i miei dati da Instagram?',
+    faq2_q: 'I miei dati sono al sicuro? Li archiviate?',
+    faq2_a: 'Assolutamente sì. InstaScope funziona interamente nel tuo browser — <strong>nessun dato viene mai inviato a nessun server</strong>. Il file ZIP viene letto localmente sul tuo dispositivo. Quando chiudi la pagina, tutto scompare. Non vediamo, raccogliamo né conserviamo alcun dato del tuo account Instagram.',
+    faq3_q: 'Perché InstaScope mostra numeri diversi da Instagram?',
+    faq3_a: 'Ci sono alcune ragioni comuni per le discrepanze. Consulta la sezione <strong>Risoluzione problemi</strong> qui sotto per una spiegazione dettagliata di ogni possibile causa e come risolverla.',
+    faq4_q: 'Posso usare InstaScope da cellulare?',
+    faq4_a: "Sì! InstaScope è completamente responsive e funziona su qualsiasi dispositivo — telefono, tablet o desktop. Basta scaricare l'esportazione di Instagram sul telefono e caricare direttamente il file ZIP.",
+    faq5_q: 'Come uso la funzione di confronto cronologico?',
+    faq5_a: 'Richiedi due esportazioni di dati da Instagram in momenti diversi (ad esempio oggi e tra un mese). Poi vai alla scheda <strong>Cronologia</strong>, carica il file ZIP più vecchio come "File Vecchio" e quello più recente come "File Attuale", quindi clicca su Confronta. InstaScope ti mostrerà esattamente chi ti ha seguito o ha smesso di seguirti in quel periodo.',
+    faq6_q: 'Perché mostra "0 seguiti" dopo il caricamento?',
+    faq6_a: 'Di solito accade quando i dati vengono esportati in <strong>formato HTML invece di JSON</strong>. Assicurati di selezionare <strong>JSON</strong> quando richiedi l\'esportazione da Instagram. Verifica anche che l\'intervallo di date sia impostato su <strong>"Tutto il periodo"</strong>, altrimenti i dati più vecchi potrebbero mancare.',
+    trouble_h2: '⚠️ Risoluzione problemi — Perché i numeri potrebbero non corrispondere',
+    trouble_intro: 'Se i conteggi mostrati da InstaScope differiscono da quelli che vedi su Instagram, ecco tutte le possibili cause e cosa fare per ciascuna.',
+    tc1_h4: 'Formato di esportazione errato (HTML invece di JSON)',
+    tc1_tag: 'Causa più comune',
+    tc1_p: 'Instagram consente di esportare in HTML o JSON. InstaScope legge solo il <strong>formato JSON</strong>. Se vedi 0 utenti o pochissimi risultati, probabilmente hai esportato nel formato sbagliato.',
+    tc1_ul: '<li>Torna su Instagram e richiedi una nuova esportazione</li><li>Quando selezioni il formato, scegli <strong>JSON</strong> (non HTML)</li><li>Imposta l\'intervallo di date su <strong>"Tutto il periodo"</strong></li>',
+    tc2_h4: 'Intervallo di date non impostato su "Tutto il periodo"',
+    tc2_p: "Se hai impostato un intervallo di date limitato durante l'esportazione (es. \"Ultimi 30 giorni\"), Instagram includerà solo gli account che hai iniziato a seguire o che hanno iniziato a seguirti in quel periodo — non l'elenco completo.",
+    tc2_ul: '<li>Richiedi una nuova esportazione e imposta l\'intervallo di date su <strong>"Tutto il periodo"</strong></li>',
+    tc3_h4: 'I dati esportati non sono aggiornati',
+    tc3_p: "Le esportazioni di Instagram sono una <strong>fotografia in un momento preciso</strong>. Se qualcuno ti ha seguito o ha smesso di seguirti dopo la richiesta di esportazione, tali modifiche non saranno riflesse. La generazione dell'esportazione può inoltre richiedere diverse ore.",
+    tc3_ul: '<li>Richiedi una nuova esportazione se hai bisogno di dati aggiornati</li><li>Usa la scheda Cronologia per confrontare due esportazioni e vedere le variazioni</li>',
+    tc4_h4: 'Account fantasma o disattivati',
+    tc4_p: "Il conteggio dei follower di Instagram include gli <strong>account disattivati, eliminati e sospesi</strong>. Questi account compaiono ancora nel contatore su Instagram ma potrebbero non apparire nell'esportazione JSON, causando una piccola discrepanza.",
+    tc5_h4: 'Caricata la cartella estratta invece del file ZIP',
+    tc5_p: "InstaScope ha bisogno del <strong>file .zip originale</strong>, non della cartella che ottieni dopo l'estrazione. Se hai prima decompresso il file, hai caricato la cosa sbagliata.",
+    tc5_ul: '<li>Trova il file .zip originale (di solito nella cartella Download)</li><li>Caricalo direttamente — senza decomprimerlo prima</li>',
+    tc6_h4: 'Esportazione Instagram suddivisa in più file',
+    tc6_p: 'Se segui o sei seguito da un grande numero di account, Instagram potrebbe suddividere i dati dei follower in più file (followers_1.json, followers_2.json, ecc.). InstaScope li legge tutti automaticamente dallo ZIP, quindi non dovrebbe causare problemi — ma assicurati di aver caricato lo <strong>ZIP completo</strong> e non uno parziale.',
+    tc7_h4: 'Numeri ancora sbagliati?',
+    tc7_p: 'Prova questa lista di controllo:',
+    tc7_ul: '<li>Richiedi una <strong>nuova esportazione</strong> da Instagram</li><li>Seleziona il formato: <strong>JSON</strong></li><li>Intervallo di date: <strong>Tutto il periodo</strong></li><li>Attendi l\'email di Instagram (può richiedere fino a qualche ora)</li><li>Scarica e carica il <strong>file .zip originale</strong></li><li>Apri gli strumenti per sviluppatori del browser (F12) → scheda Console → controlla eventuali errori</li>',
+    about_h2: 'Chi siamo',
+    about_p1: 'InstaScope è uno <strong>strumento gratuito e open source</strong> che ti aiuta a capire meglio il tuo pubblico su Instagram. Nessun accesso richiesto, nessun uso delle API di Instagram, nessuna raccolta dati di alcun tipo.',
+    about_p2: 'Lo strumento funziona leggendo il file ZIP che Instagram fornisce quando richiedi una copia dei tuoi dati — una funzione standard disponibile per tutti gli utenti. Tutto avviene localmente nel tuo browser tramite JavaScript, quindi <strong>i tuoi dati non lasciano mai il tuo dispositivo</strong>.',
+    about_p3: 'InstaScope è stato creato per offrire alle persone un modo chiaro, semplice e privato di gestire la propria presenza su Instagram — che tu voglia ripulire la lista dei seguiti, monitorare le variazioni dei follower nel tempo, o semplicemente avere una migliore panoramica del tuo account.',
+    about_p4: 'Se InstaScope ti è stato utile, considera di <a href="https://ko-fi.com/instascope" target="_blank" rel="noopener">offrirmi un caffè ☕</a> — aiuta a mantenere lo strumento gratuito e aggiornato.',
+    legal_privacy_tab: 'Informativa sulla Privacy', legal_terms_tab: 'Termini di Servizio',
+    privacy_h3: 'Informativa sulla Privacy',
+    privacy_updated: '<strong>Ultimo aggiornamento:</strong> Maggio 2025',
+    privacy_p1: 'InstaScope si impegna a proteggere la tua privacy. Questa informativa spiega come InstaScope gestisce i tuoi dati.',
+    privacy_p2: '<strong>Nessuna raccolta dati.</strong> InstaScope non raccoglie, archivia, trasmette né elabora alcun dato personale su nessun server. Tutta l\'elaborazione dei file avviene interamente nel tuo browser sul tuo dispositivo.',
+    privacy_p3: '<strong>Elaborazione del file ZIP.</strong> Quando carichi il tuo file ZIP di Instagram, viene letto localmente dal tuo browser tramite JavaScript. Il file e il suo contenuto non vengono mai inviati a nessun server esterno o a terze parti.',
+    privacy_p4: '<strong>Cookie e pubblicità.</strong> InstaScope utilizza Google AdSense per mostrare annunci pubblicitari, che possono usare cookie per mostrare annunci pertinenti. Puoi gestire le preferenze sugli annunci tramite le impostazioni degli annunci di Google. Utilizziamo anche analisi anonime per capire come viene utilizzato lo strumento, senza raccogliere informazioni personali identificabili.',
+    privacy_p5: '<strong>Link di terze parti.</strong> InstaScope contiene link a profili Instagram e Ko-fi. Non siamo responsabili delle pratiche sulla privacy dei siti web di terze parti.',
+    privacy_p6: 'Per qualsiasi domanda sulla privacy, puoi contattarci tramite <a href="https://ko-fi.com/instascope" target="_blank" rel="noopener">Ko-fi</a>.',
+    terms_h3: 'Termini di Servizio',
+    terms_updated: '<strong>Ultimo aggiornamento:</strong> Maggio 2025',
+    terms_p1: 'Utilizzando InstaScope, accetti i seguenti termini:',
+    terms_ul: '<li><strong>Solo uso personale.</strong> InstaScope è fornito esclusivamente per uso personale e non commerciale.</li><li><strong>Nessuna garanzia.</strong> InstaScope è fornito "così com\'è" senza alcuna garanzia. Non garantiamo l\'accuratezza, la completezza o la disponibilità dello strumento in qualsiasi momento.</li><li><strong>Conformità con Instagram.</strong> Sei responsabile di garantire che l\'uso dei tuoi dati Instagram sia conforme ai Termini di Servizio di Instagram. InstaScope non interagisce con le API di Instagram e non richiede le tue credenziali Instagram.</li><li><strong>Nessuna responsabilità.</strong> InstaScope e il suo creatore non sono responsabili per danni o perdite derivanti dall\'uso o dall\'impossibilità di utilizzare questo strumento.</li><li><strong>Pubblicità.</strong> InstaScope mostra annunci tramite Google AdSense per supportare l\'accesso gratuito allo strumento. Utilizzando InstaScope, riconosci che potrebbero essere visualizzati annunci.</li><li><strong>Modifiche.</strong> Ci riserviamo il diritto di modificare o interrompere InstaScope in qualsiasi momento senza preavviso.</li>',
+    terms_p2: 'Il continuo utilizzo di InstaScope costituisce accettazione di questi termini.',
+    stat_lbl_followers: 'Follower', stat_lbl_following: 'Seguiti',
+    stat_lbl_notback: 'Non ti seguono', stat_lbl_notfollow: 'Non segui',
+    tab_followers_full: 'Follower', tab_followers_short: 'Follower',
+    tab_following_full: 'Seguiti', tab_following_short: 'Seguiti',
+    tab_notback_full: 'Non ti seguono', tab_notback_short: 'Non seguono',
+    tab_notfollow_full: 'Non segui', tab_notfollow_short: 'Non segui',
+    tab_history_full: 'Cronologia', tab_history_short: 'Cronologia',
+    search_followers: '🔍 Cerca follower…', search_following: '🔍 Cerca seguiti…', search_generic: '🔍 Cerca…',
+    sort_btn: '⇅ Ordina',
+    gate_title: 'Contenuto Premium',
+    gate_notback_p: 'Scopri chi tra le persone che segui <strong>non ti segue a sua volta</strong>. Guarda un breve annuncio per sbloccare.',
+    gate_notfollow_p: 'Scopri chi ti segue ma <strong>non stai ancora seguendo</strong>. Guarda un breve annuncio per sbloccare.',
+    gate_btn: "▶ Guarda l'annuncio e sblocca",
+    history_intro: 'Carica due file ZIP esportati in momenti diversi per confrontarli e vedere cosa è cambiato — nuovi follower, follower persi, nuovi seguiti e account rimossi dai seguiti.',
+    old_file_h4: 'File Vecchio', old_file_p: 'Esportazione precedente',
+    new_file_h4: 'File Attuale', new_file_p: 'Esportazione recente',
+    compare_btn: '🔍 Confronta',
+    kofi_title: 'InstaScope ti è stato utile?',
+    kofi_sub: "È completamente gratuito. Se ti ha fatto risparmiare tempo, considera di offrirmi un caffè — costa meno di un espresso!",
+    kofi_btn: '☕ Offrimi un caffè',
+    kofi_hearts: 'Ogni supporto aiuta a mantenere questo strumento gratuito ❤️',
+    footer_p1: '© 2025 InstaScope · Analizzatore gratuito di follower Instagram · Gira 100% nel tuo browser',
+    footer_contact: 'Contatti',
+    footer_disclaimer: 'InstaScope non è affiliato, approvato o collegato a Meta Platforms, Inc. o Instagram. Instagram™ è un marchio di Meta Platforms, Inc. InstaScope è uno strumento indipendente che utilizza solo i dati esportati dall\'utente dal proprio account.',
+    toast_loaded: '✅ File caricato con successo!',
+    toast_old_loaded: '✅ File vecchio caricato',
+    toast_new_loaded: '✅ File attuale caricato',
+    toast_unlocked: '🔓 Contenuto sbloccato!',
+    toast_zip_only: '⚠️ Carica un file .zip',
+    loading_text: 'Analisi in corso…',
+    ad_msg_unlock: "Guarda l'annuncio per sbloccare il contenuto",
+    ad_msg_wait: 'Un momento…',
+    ad_msg_close: "Puoi chiudere l'annuncio ✕",
+    empty_no_users: 'Nessun utente in questa categoria.',
+    empty_no_changes: 'Nessuna modifica rilevata tra i due file.',
+    diff_new_followers: '🟢 Nuovi follower',
+    diff_lost_followers: '🔴 Follower persi',
+    diff_new_following: '🟠 Nuovi seguiti',
+    diff_lost_following: '🟣 Seguiti rimossi',
+    user_since: 'Dal',
+    user_open: 'Apri ↗',
+    list_disclaimer: "Alcuni account potrebbero essere inattivi o aver cambiato nome utente da quando è stata creata questa esportazione.",
+    error_prefix: '❌ Errore: ',
+    error_unrecognized: 'Struttura file non riconosciuta. File trovati nello ZIP: ',
+    error_ensure_json: 'Assicurati di aver esportato da Instagram in formato JSON (non HTML).',
+    export_steps: [
+      'Su Instagram, tocca l\'icona del tuo <strong>profilo</strong> (in basso a destra)',
+      'Tocca le <strong>tre righe</strong> (☰) in alto a destra',
+      'Vai su <strong>Centro account</strong>',
+      'Tocca <strong>Le tue informazioni e autorizzazioni</strong>',
+      'Tocca <strong>Esporta le tue informazioni</strong> → <strong>Crea esportazione</strong>',
+      'Seleziona <strong>Esporta sul dispositivo</strong>',
+      'Inserisci la tua email nel campo <strong>Notifica</strong>',
+      'In <strong>Personalizza informazioni</strong>, deseleziona tutto tranne <strong>Follower e seguiti</strong>',
+      'Imposta l\'intervallo di date su <strong>Tutto il periodo</strong>',
+      'Seleziona formato: <strong>JSON</strong> e qualità: <strong>Media</strong>',
+      'Conferma — Instagram ti invierà un link di download via email'
+    ]
+  }
+};
+
+// ═══════════════════════════════════════════════════════════════
+//  Language System
+// ═══════════════════════════════════════════════════════════════
+let currentLang = 'en';
+
+function t(key) {
+  return (translations[currentLang] || translations['en'])[key] || key;
+}
+
+function setLanguage(lang) {
+  if (!translations[lang]) lang = 'en';
+  currentLang = lang;
+  try { localStorage.setItem('instascope_lang', lang); } catch(e) {}
+  document.documentElement.lang = lang;
+
+  // Update all data-i18n elements
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    var val = (translations[lang] || translations['en'])[key];
+    if (val !== undefined) el.innerHTML = val;
+  });
+
+  // Update placeholders
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n-placeholder');
+    var val = (translations[lang] || translations['en'])[key];
+    if (val !== undefined) el.placeholder = val;
+  });
+
+  // Update lang buttons
+  document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.remove('active'); });
+  var activeBtn = document.querySelector('.lang-btn[data-lang="' + lang + '"]');
+  if (activeBtn) activeBtn.classList.add('active');
+
+  // Update loading text
+  var lp = document.getElementById('loadingText');
+  if (lp) lp.textContent = t('loading_text');
+
+  // Render export steps
+  renderExportSteps();
+
+  // Render FAQ1 answer (step list)
+  renderFaq1Answer();
+}
+
+function renderExportSteps() {
+  var el = document.getElementById('exportStepsList');
+  if (!el) return;
+  var steps = (translations[currentLang] || translations['en']).export_steps || [];
+  el.innerHTML = steps.map(function(s) { return '<li>' + s + '</li>'; }).join('');
+}
+
+function renderFaq1Answer() {
+  var el = document.getElementById('faq1-answer');
+  if (!el) return;
+  var steps = (translations[currentLang] || translations['en']).export_steps || [];
+  el.innerHTML = '<ul class="faq-export-steps">' +
+    steps.map(function(s) { return '<li>' + s + '</li>'; }).join('') +
+    '</ul>';
+}
+
+// ═══════════════════════════════════════════════════════════════
 //  State
 // ═══════════════════════════════════════════════════════════════
 let appData = { followers: [], following: [] };
@@ -858,6 +1256,11 @@ let _pendingFile = null;
 //  AdSense push (run once after DOM ready)
 // ═══════════════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', function() {
+  // Init language
+  var savedLang = 'en';
+  try { savedLang = localStorage.getItem('instascope_lang') || (navigator.language.startsWith('it') ? 'it' : 'en'); } catch(e) {}
+  setLanguage(savedLang);
+
   document.querySelectorAll('.adsbygoogle:not(#bottomAdBar ins)').forEach(function(ins) {
     try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
   });
@@ -878,6 +1281,20 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ═══════════════════════════════════════════════════════════════
+//  Username Validation
+// ═══════════════════════════════════════════════════════════════
+function isValidUsername(u) {
+  if (!u || typeof u !== 'string') return false;
+  u = u.trim();
+  if (u.length < 1 || u.length > 30) return false;
+  if (!/^[a-zA-Z0-9._]+$/.test(u)) return false;
+  if (u.startsWith('.') || u.endsWith('.')) return false;
+  if (u.includes('..')) return false;
+  if (/^\d+$/.test(u)) return false;
+  return true;
+}
+
+// ═══════════════════════════════════════════════════════════════
 //  ZIP Parsing
 // ═══════════════════════════════════════════════════════════════
 async function handleFile(file) {
@@ -896,9 +1313,9 @@ async function processFile(file) {
     const zip = await JSZip.loadAsync(file);
     appData = await parseInstagramZip(zip);
     renderDashboard();
-    showToast('✅ File loaded successfully!');
+    showToast(t('toast_loaded'));
   } catch (e) {
-    showToast('❌ Error: ' + e.message);
+    showToast(t('error_prefix') + e.message);
     console.error(e);
   }
   showLoading(false);
@@ -997,8 +1414,7 @@ async function parseInstagramZip(zip) {
   if (!followers.length && !following.length) {
     const fileList = allFiles.slice(0,10).join(', ');
     throw new Error(
-      'Unrecognized file structure. Files found in ZIP: ' + (fileList || 'none') + '. ' +
-      'Make sure you exported from Instagram in JSON format (not HTML).'
+      t('error_unrecognized') + (fileList || 'none') + '. ' + t('error_ensure_json')
     );
   }
 
@@ -1021,7 +1437,7 @@ function extractUser(item) {
   }
   if (!username && item.title && item.title.trim()) username = item.title.trim();
   if (!username && href) username = usernameFromHref(href);
-  if (!username || /^\d{6,}$/.test(username)) return null;
+  if (!username || !isValidUsername(username)) return null;
 
   return { username, href: 'https://www.instagram.com/' + username, ts };
 }
@@ -1073,20 +1489,21 @@ function renderDashboard() {
 function renderList(listId, users, c1, c2) {
   const el = document.getElementById(listId);
   if (!users.length) {
-    el.innerHTML = '<div class="empty"><div class="e-icon">🎉</div><p>No users in this category.</p></div>';
+    el.innerHTML = '<div class="empty"><div class="e-icon">🎉</div><p>' + escHtml(t('empty_no_users')) + '</p></div>';
     return;
   }
-  el.innerHTML = users.map(u => {
+  const disclaimer = '<p class="list-disclaimer">ℹ️ ' + escHtml(t('list_disclaimer')) + '</p>';
+  el.innerHTML = disclaimer + users.map(u => {
     const letter = (u.username[0] || '?').toUpperCase();
-    const date = u.ts ? new Date(u.ts * 1000).toLocaleDateString('en-GB') : '';
+    const date = u.ts ? new Date(u.ts * 1000).toLocaleDateString(currentLang === 'it' ? 'it-IT' : 'en-GB') : '';
     const href = u.href || 'https://instagram.com/' + u.username;
     return '<div class="user-item" data-name="' + u.username.toLowerCase() + '">' +
       '<div class="avatar" style="background:linear-gradient(135deg,' + c1 + ',' + c2 + ')">' + letter + '</div>' +
       '<div class="user-info">' +
         '<div class="uname">@' + escHtml(u.username) + '</div>' +
-        (date ? '<div class="udate">Since ' + date + '</div>' : '') +
+        (date ? '<div class="udate">' + escHtml(t('user_since')) + ' ' + date + '</div>' : '') +
       '</div>' +
-      '<a href="' + escHtml(href) + '" target="_blank" rel="noopener" class="user-link">Open ↗</a>' +
+      '<a href="' + escHtml(href) + '" target="_blank" rel="noopener" class="user-link">' + escHtml(t('user_open')) + '</a>' +
     '</div>';
   }).join('');
 }
@@ -1134,8 +1551,7 @@ function openAdOverlay(duration, section, pendingFile) {
   _pendingFile = pendingFile;
   currentAdTarget = section;
 
-  document.getElementById('adOverlayMsg').textContent =
-    section ? 'Watch the ad to unlock this content' : 'Just a moment…';
+  document.getElementById('adOverlayMsg').textContent = section ? t('ad_msg_unlock') : t('ad_msg_wait');
   document.getElementById('adOverlaySecs').textContent = duration + 's';
 
   const btn = document.getElementById('adCloseBtn');
@@ -1157,7 +1573,7 @@ function openAdOverlay(duration, section, pendingFile) {
     if (secs <= 0) {
       clearInterval(adModalTimer);
       btn.classList.add('ready');
-      document.getElementById('adOverlayMsg').textContent = section ? 'You can close the ad ✕' : '';
+      document.getElementById('adOverlayMsg').textContent = section ? t('ad_msg_close') : '';
       if (!section) setTimeout(() => closeAdOverlay(), 500);
     }
   }, 1000);
@@ -1181,7 +1597,7 @@ function closeAdOverlay() {
 function unlockSection(section) {
   document.getElementById('gate-' + section).style.display = 'none';
   document.getElementById('content-' + section).style.display = 'block';
-  showToast('🔓 Content unlocked!');
+  showToast(t('toast_unlocked'));
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1200,8 +1616,8 @@ async function loadHistory(type, file) {
     if (historyData.old && historyData['new']) {
       document.getElementById('compareBtn').style.display = 'inline-flex';
     }
-    showToast('✅ ' + (type === 'old' ? 'Old file' : 'Current file') + ' loaded');
-  } catch(e) { showToast('❌ ' + e.message); }
+    showToast(type === 'old' ? t('toast_old_loaded') : t('toast_new_loaded'));
+  } catch(e) { showToast(t('error_prefix') + e.message); }
   showLoading(false);
 }
 
@@ -1221,13 +1637,13 @@ function runComparison() {
   document.getElementById('history-ad-banner').style.display = 'block';
   try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
 
-  renderDiffSection(container, 'new-followers',  '🟢 New followers',     newFollowers,  'var(--green)');
-  renderDiffSection(container, 'lost-followers', '🔴 Lost followers',    lostFollowers, 'var(--accent)');
-  renderDiffSection(container, 'new-following',  '🟠 New following',     newFollowing,  'var(--orange)');
-  renderDiffSection(container, 'lost-following', '🟣 Removed following', lostFollowing, '#a855f7');
+  renderDiffSection(container, 'new-followers',  t('diff_new_followers'),  newFollowers,  'var(--green)');
+  renderDiffSection(container, 'lost-followers', t('diff_lost_followers'), lostFollowers, 'var(--accent)');
+  renderDiffSection(container, 'new-following',  t('diff_new_following'),  newFollowing,  'var(--orange)');
+  renderDiffSection(container, 'lost-following', t('diff_lost_following'), lostFollowing, '#a855f7');
 
   if (!newFollowers.length && !lostFollowers.length && !newFollowing.length && !lostFollowing.length) {
-    container.innerHTML = '<div class="empty"><div class="e-icon">📊</div><p>No changes detected between the two files.</p></div>';
+    container.innerHTML = '<div class="empty"><div class="e-icon">📊</div><p>' + escHtml(t('empty_no_changes')) + '</p></div>';
   }
 }
 
@@ -1235,7 +1651,7 @@ function renderDiffSection(container, cls, title, users, dotColor) {
   if (!users.length) return;
   const sec = document.createElement('div');
   sec.className = 'diff-section ' + cls;
-  sec.innerHTML = '<h3>' + title + ' (' + users.length + ')</h3>' +
+  sec.innerHTML = '<h3>' + escHtml(title) + ' (' + users.length + ')</h3>' +
     users.map(u =>
       '<div class="diff-item">' +
         '<div class="diff-dot" style="background:' + dotColor + '"></div>' +
@@ -1306,10 +1722,10 @@ function scrollToLegal(panel) {
   const section = document.querySelector('.legal-section');
   if (!section) return;
   document.querySelectorAll('.legal-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.legal-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.legal-tab').forEach(tb => tb.classList.remove('active'));
   document.getElementById('legal-' + panel).classList.add('active');
-  document.querySelectorAll('.legal-tab').forEach(t => {
-    if (t.getAttribute('onclick').includes(panel)) t.classList.add('active');
+  document.querySelectorAll('.legal-tab').forEach(tb => {
+    if (tb.getAttribute('onclick') && tb.getAttribute('onclick').includes(panel)) tb.classList.add('active');
   });
   section.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -1319,15 +1735,17 @@ function scrollToLegal(panel) {
 // ═══════════════════════════════════════════════════════════════
 function showLoading(show) {
   document.getElementById('loading-overlay').classList.toggle('show', show);
+  var lp = document.getElementById('loadingText');
+  if (lp) lp.textContent = t('loading_text');
 }
 
 let toastTimer;
 function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 3200);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 3200);
 }
 
 function escHtml(str) {
@@ -1342,7 +1760,7 @@ dz.addEventListener('drop', e => {
   e.preventDefault(); dz.classList.remove('drag-over');
   const f = e.dataTransfer.files[0];
   if (f?.name.endsWith('.zip')) handleFile(f);
-  else showToast('⚠️ Please upload a .zip file');
+  else showToast(t('toast_zip_only'));
 });
 </script>
 </body>
