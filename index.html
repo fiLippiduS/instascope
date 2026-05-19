@@ -1575,58 +1575,130 @@ function usernameFromHref(url) {
 // ═══════════════════════════════════════════════════════════════
 //  Render Dashboard
 // ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════
+//  RENDER DASHBOARD (FIXED VERSION)
+// ═══════════════════════════════════════════════════════════════
 function renderDashboard() {
-  const { followers, following } = appData;
-  const follSet  = new Set(followers.map(u => u.username.toLowerCase()));
-  const follgSet = new Set(following.map(u => u.username.toLowerCase()));
-  const notBack   = following.filter(u => !follSet.has(u.username.toLowerCase()));
-  const notFollow = followers.filter(u => !follgSet.has(u.username.toLowerCase()));
+  let { followers, following } = appData;
+  
+  // STEP 1: Deduplica entries in ingresso
+  followers = deduplicateUsers(followers);
+  following = deduplicateUsers(following);
+  
+  // STEP 2: Normalizza per comparazione (case-insensitive)
+  const follSet = new Set(
+    followers
+      .map(u => normalizeUsername(u.username))
+      .filter(Boolean) // Rimuovi null
+  );
+  
+  const follgSet = new Set(
+    following
+      .map(u => normalizeUsername(u.username))
+      .filter(Boolean)
+  );
+  
+  // STEP 3: Calcola differenze usando normalized comparison
+  const notBack = following.filter(u => {
+    const normalized = normalizeUsername(u.username);
+    const isFollower = normalized && follSet.has(normalized);
+    
+    // Debug logging per mismatch
+    if (!isFollower && normalized) {
+      console.log('[InstaScope] User not following back:', u.username, '(normalized:', normalized + ')');
+    }
+    
+    return !isFollower; // Include solo se NON nel set follower
+  });
+  
+  const notFollow = followers.filter(u => {
+    const normalized = normalizeUsername(u.username);
+    const isFollowing = normalized && follgSet.has(normalized);
+    
+    if (!isFollowing && normalized) {
+      console.log('[InstaScope] Not following user:', u.username);
+    }
+    
+    return !isFollowing; // Include solo se NON nel set following
+  });
 
+  // STEP 4: Update stats
   document.getElementById('statFollowers').textContent = followers.length;
   document.getElementById('statFollowing').textContent = following.length;
-  document.getElementById('statNotBack').textContent   = notBack.length;
+  document.getElementById('statNotBack').textContent = notBack.length;
   document.getElementById('statNotFollow').textContent = notFollow.length;
   document.getElementById('bFollowers').textContent = followers.length;
   document.getElementById('bFollowing').textContent = following.length;
-  document.getElementById('bNotBack').textContent   = notBack.length;
+  document.getElementById('bNotBack').textContent = notBack.length;
   document.getElementById('bNotFollow').textContent = notFollow.length;
 
+  // STEP 5: Render UI
   renderList('followers-list', followers, 'var(--grad1)', 'var(--grad2)');
   renderList('following-list', following, '#833ab4', '#e1306c');
-  renderList('notback-list',   notBack,   '#e1306c', '#fd1d1d');
+  renderList('notback-list', notBack, '#e1306c', '#fd1d1d');
   renderList('notfollow-list', notFollow, '#ff8c42', '#e1306c');
 
   document.getElementById('hero').style.display = 'none';
   document.getElementById('kofiSection').style.display = 'none';
   document.getElementById('dashboard').classList.add('visible');
+  
   setTimeout(() => {
     const ks = document.getElementById('kofiSection');
     if (ks) ks.style.display = 'block';
   }, 8000);
+  
   document.getElementById('resetBtn').style.display = 'inline-flex';
+  
+  console.log('[InstaScope] Dashboard rendered:', {
+    followers: followers.length,
+    following: following.length,
+    notBack: notBack.length,
+    notFollow: notFollow.length
+  });
 }
-
 // ═══════════════════════════════════════════════════════════════
 //  PATCH 1 — renderList with possibly-deleted badge
 // ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════
+//  RENDER LIST (FIXED VERSION - Safe URL Building)
+// ═══════════════════════════════════════════════════════════════
 function renderList(listId, users, c1, c2) {
   const el = document.getElementById(listId);
-  if (!users.length) {
-    el.innerHTML = '<div class="empty"><div class="e-icon">🎉</div><p>' + escHtml(t('empty_no_users')) + '</p></div>';
+  if (!users || !users.length) {
+    el.innerHTML = '<div class="empty"><div class="e-icon">🎉</div><p>' + 
+      escHtml(t('empty_no_users')) + '</p></div>';
     return;
   }
-  const disclaimer = '<p class="list-disclaimer">ℹ️ ' + escHtml(t('list_disclaimer')) + '</p>';
+
+  const disclaimer = '<p class="list-disclaimer">ℹ️ ' + 
+    escHtml(t('list_disclaimer')) + '</p>';
+  
   el.innerHTML = disclaimer + users.map(u => {
+    if (!u || !u.username) return '';
+    
     const letter = (u.username[0] || '?').toUpperCase();
-    const date = u.ts ? new Date(u.ts * 1000).toLocaleDateString(currentLang === 'it' ? 'it-IT' : 'en-GB') : '';
-    const href = u.href || 'https://instagram.com/' + u.username;
+    const date = u.ts 
+      ? new Date(u.ts * 1000).toLocaleDateString(currentLang === 'it' ? 'it-IT' : 'en-GB') 
+      : '';
+    
+    // FIX: Usa buildInstagramUrl() per URL safe
+    const href = buildInstagramUrl(u.username);
+    const isValidUrl = href !== '#';
+    
     const deleted = isPossiblyDeleted(u.username);
     const deletedClass = deleted ? ' possibly-deleted' : '';
+    
     const deletedBadge = deleted
       ? '<span class="badge-deleted">' + escHtml(t('user_possibly_deleted')) + '</span>'
-      : '<a href="' + escHtml(href) + '" target="_blank" rel="noopener" class="user-link">' + escHtml(t('user_open')) + '</a>';
-    return '<div class="user-item' + deletedClass + '" data-name="' + u.username.toLowerCase() + '">' +
-      '<div class="avatar" style="background:linear-gradient(135deg,' + c1 + ',' + c2 + ')">' + letter + '</div>' +
+      : (isValidUrl
+          ? '<a href="' + escHtml(href) + '" target="_blank" rel="noopener" class="user-link">' + 
+            escHtml(t('user_open')) + '</a>'
+          : '<span style="color:var(--muted);font-size:.75rem">⚠️ Invalid URL</span>');
+    
+    return '<div class="user-item' + deletedClass + '" data-name="' + 
+      normalizeUsername(u.username) + '">' +
+      '<div class="avatar" style="background:linear-gradient(135deg,' + c1 + ',' + c2 + ')">' + 
+      letter + '</div>' +
       '<div class="user-info">' +
         '<div class="uname">@' + escHtml(u.username) + '</div>' +
         (date ? '<div class="udate">' + escHtml(t('user_since')) + ' ' + date + '</div>' : '') +
@@ -1639,10 +1711,26 @@ function renderList(listId, users, c1, c2) {
 // ═══════════════════════════════════════════════════════════════
 //  Search & Sort
 // ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════
+//  FILTER LIST (FIXED - Normalized comparison)
+// ═══════════════════════════════════════════════════════════════
 function filterList(listId, query) {
   const items = document.querySelectorAll('#' + listId + ' .user-item');
-  const q = query.toLowerCase();
-  items.forEach(item => { item.style.display = item.dataset.name?.includes(q) ? '' : 'none'; });
+  const q = normalizeUsername(query); // Normalizza query input
+  
+  items.forEach(item => {
+    const itemName = item.dataset.name; // Already normalized in renderList
+    
+    if (!q) {
+      // Se query vuota, mostra tutto
+      item.style.display = '';
+    } else if (itemName && itemName.includes(q)) {
+      // Comparazione normalized
+      item.style.display = '';
+    } else {
+      item.style.display = 'none';
+    }
+  });
 }
 
 function sortList(listId) {
@@ -1750,46 +1838,87 @@ async function loadHistory(type, file) {
 }
 
 function runComparison() {
-  const oldF  = new Set(historyData.old.followers.map(u => u.username.toLowerCase()));
-  const newF  = new Set(historyData['new'].followers.map(u => u.username.toLowerCase()));
-  const oldFg = new Set(historyData.old.following.map(u => u.username.toLowerCase()));
-  const newFg = new Set(historyData['new'].following.map(u => u.username.toLowerCase()));
+  // Normalizza tutti gli username per comparazione
+  const oldF = new Set(
+    historyData.old.followers
+      .map(u => normalizeUsername(u.username))
+      .filter(Boolean)
+  );
+  const newF = new Set(
+    historyData['new'].followers
+      .map(u => normalizeUsername(u.username))
+      .filter(Boolean)
+  );
+  const oldFg = new Set(
+    historyData.old.following
+      .map(u => normalizeUsername(u.username))
+      .filter(Boolean)
+  );
+  const newFg = new Set(
+    historyData['new'].following
+      .map(u => normalizeUsername(u.username))
+      .filter(Boolean)
+  );
 
-  const newFollowers  = historyData['new'].followers.filter(u => !oldF.has(u.username.toLowerCase()));
-  const lostFollowers = historyData.old.followers.filter(u => !newF.has(u.username.toLowerCase()));
-  const newFollowing  = historyData['new'].following.filter(u => !oldFg.has(u.username.toLowerCase()));
-  const lostFollowing = historyData.old.following.filter(u => !newFg.has(u.username.toLowerCase()));
+  // Filtra usando normalized comparison
+  const newFollowers = historyData['new'].followers.filter(u => {
+    const norm = normalizeUsername(u.username);
+    return norm && !oldF.has(norm);
+  });
+  
+  const lostFollowers = historyData.old.followers.filter(u => {
+    const norm = normalizeUsername(u.username);
+    return norm && !newF.has(norm);
+  });
+  
+  const newFollowing = historyData['new'].following.filter(u => {
+    const norm = normalizeUsername(u.username);
+    return norm && !oldFg.has(norm);
+  });
+  
+  const lostFollowing = historyData.old.following.filter(u => {
+    const norm = normalizeUsername(u.username);
+    return norm && !newFg.has(norm);
+  });
 
   const container = document.getElementById('history-results');
   container.innerHTML = '';
   document.getElementById('history-ad-banner').style.display = 'block';
+  
   try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
 
-  renderDiffSection(container, 'new-followers',  t('diff_new_followers'),  newFollowers,  'var(--green)');
+  renderDiffSection(container, 'new-followers', t('diff_new_followers'), newFollowers, 'var(--green)');
   renderDiffSection(container, 'lost-followers', t('diff_lost_followers'), lostFollowers, 'var(--accent)');
-  renderDiffSection(container, 'new-following',  t('diff_new_following'),  newFollowing,  'var(--orange)');
+  renderDiffSection(container, 'new-following', t('diff_new_following'), newFollowing, 'var(--orange)');
   renderDiffSection(container, 'lost-following', t('diff_lost_following'), lostFollowing, '#a855f7');
 
   if (!newFollowers.length && !lostFollowers.length && !newFollowing.length && !lostFollowing.length) {
-    container.innerHTML = '<div class="empty"><div class="e-icon">📊</div><p>' + escHtml(t('empty_no_changes')) + '</p></div>';
+    container.innerHTML = '<div class="empty"><div class="e-icon">📊</div><p>' + 
+      escHtml(t('empty_no_changes')) + '</p></div>';
   }
 }
-
 function renderDiffSection(container, cls, title, users, dotColor) {
-  if (!users.length) return;
+  if (!users || !users.length) return;
+  
   const sec = document.createElement('div');
   sec.className = 'diff-section ' + cls;
   sec.innerHTML = '<h3>' + escHtml(title) + ' (' + users.length + ')</h3>' +
-    users.map(u =>
-      '<div class="diff-item">' +
+    users.map(u => {
+      if (!u || !u.username) return '';
+      const href = buildInstagramUrl(u.username);
+      const isValidUrl = href !== '#';
+      
+      return '<div class="diff-item">' +
         '<div class="diff-dot" style="background:' + dotColor + '"></div>' +
         '<div style="flex:1;font-size:.88rem">@' + escHtml(u.username) + '</div>' +
-        '<a href="' + escHtml(u.href || 'https://instagram.com/' + u.username) + '" target="_blank" rel="noopener" class="user-link" style="font-size:.75rem">↗</a>' +
-      '</div>'
-    ).join('');
+        (isValidUrl
+          ? '<a href="' + escHtml(href) + '" target="_blank" rel="noopener" class="user-link" style="font-size:.75rem">↗</a>'
+          : '<span style="color:var(--muted);font-size:.7rem">⚠️</span>') +
+      '</div>';
+    }).join('');
+  
   container.appendChild(sec);
 }
-
 // ═══════════════════════════════════════════════════════════════
 //  Reset
 // ═══════════════════════════════════════════════════════════════
