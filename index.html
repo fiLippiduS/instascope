@@ -1990,6 +1990,76 @@ function scrollToLegal(panel) {
 // ═══════════════════════════════════════════════════════════════
 //  Utilities
 // ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════
+//  USERNAME NORMALIZATION & URL SAFETY
+// ═══════════════════════════════════════════════════════════════
+
+/**
+ * Normalizza username per comparazione consistente
+ * - Lowercase
+ * - Trim spazi
+ * - Validazione pattern Instagram
+ * - Null if invalid
+ */
+function normalizeUsername(u) {
+  if (!u || typeof u !== 'string') return null;
+  u = u.trim().toLowerCase();
+  // Instagram: 1-30 chars, a-z 0-9 . _
+  if (u.length < 1 || u.length > 30) return null;
+  if (!/^[a-z0-9._]+$/.test(u)) return null;
+  // Non può iniziare/finire con . o avere ..
+  if (u.startsWith('.') || u.endsWith('.')) return null;
+  if (u.includes('..')) return null;
+  return u;
+}
+
+/**
+ * Costruisce URL Instagram safe per qualsiasi username
+ * Usa encodeURIComponent per caratteri speciali
+ * Ritorna # se username invalido (fallback)
+ */
+function buildInstagramUrl(username) {
+  if (!username || typeof username !== 'string') return '#';
+  const normalized = normalizeUsername(username);
+  if (!normalized) {
+    console.warn('[InstaScope] Invalid username for URL:', username);
+    return '#';
+  }
+  // encodeURIComponent gestisce _, ., ecc correttamente
+  return 'https://www.instagram.com/' + encodeURIComponent(normalized) + '/';
+}
+
+/**
+ * Verifica se due username sono uguali (normalized comparison)
+ * Usato per comparazioni affidabili
+ */
+function usernamesEqual(u1, u2) {
+  const n1 = normalizeUsername(u1);
+  const n2 = normalizeUsername(u2);
+  if (!n1 || !n2) return false;
+  return n1 === n2;
+}
+
+/**
+ * Deduplica array di users basato su username normalizzato
+ * Mantiene primo occurrence, scarta duplicati
+ */
+function deduplicateUsers(users) {
+  if (!Array.isArray(users)) return [];
+  const seen = new Set();
+  return users.filter(u => {
+    const normalized = normalizeUsername(u.username);
+    if (!normalized) return false; // Scarta invalid
+    if (seen.has(normalized)) {
+      console.log('[InstaScope] Duplicate found, skipping:', u.username);
+      return false;
+    }
+    seen.add(normalized);
+    return true;
+  });
+}
+
+  
 function showLoading(show) {
   document.getElementById('loading-overlay').classList.toggle('show', show);
   var lp = document.getElementById('loadingText');
