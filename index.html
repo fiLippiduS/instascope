@@ -1122,6 +1122,15 @@ const translations = {
     error_unrecognized: 'Unrecognized file structure. Files found in ZIP: ',
     error_ensure_json: 'Make sure you exported from Instagram in JSON format (not HTML).',
     /* PATCH 2 — Updated export steps with download tip */
+    // ── URL Error Disclaimer ──
+    url_error_title: '⚠️ If a link doesn\'t work, it could be due to:',
+    url_error_1: 'Account deleted: The user deleted their Instagram profile after the export',
+    url_error_2: 'Username changed: The user changed their username after the export',
+    url_error_3: 'Account suspended: Instagram temporarily suspended the account',
+    url_error_4: 'Private profile blocked: You\'re blocked and can\'t access the profile',
+    url_error_5: 'Outdated export data: The export is old, the account may no longer exist',
+    url_error_6: 'Special characters: In rare cases, usernames with special characters may have issues',
+    url_error_tip: '💡 Try searching for the user manually on Instagram to check if the profile still exists.',
     export_steps: [
       'On Instagram, tap your <strong>profile</strong> icon (bottom right)',
       'Tap the <strong>three lines</strong> (☰) in the top right corner',
@@ -1279,6 +1288,15 @@ const translations = {
     error_unrecognized: 'Struttura file non riconosciuta. File trovati nello ZIP: ',
     error_ensure_json: 'Assicurati di aver esportato da Instagram in formato JSON (non HTML).',
     /* PATCH 2 IT — Updated export steps */
+    // ── URL Error Disclaimer ──
+    url_error_title: '⚠️ Se il link non funziona, potrebbe dipendere da:',
+    url_error_1: 'Account eliminato: L\'utente ha eliminato il profilo Instagram dopo l\'esportazione',
+    url_error_2: 'Username cambiato: L\'utente ha modificato il proprio username dopo l\'export',
+    url_error_3: 'Account sospeso: Instagram ha sospeso temporaneamente l\'account',
+    url_error_4: 'Profilo privato bloccato: Sei bloccato e non puoi accedere al profilo',
+    url_error_5: 'Dati export obsoleti: L\'export è datato, l\'account potrebbe non esistere più',
+    url_error_6: 'Caratteri speciali: In rari casi, username con caratteri particolari potrebbero avere problemi',
+    url_error_tip: '💡 Prova a cercare l\'utente manualmente su Instagram per verificare se il profilo esiste ancora.',
     export_steps: [
       'Su Instagram, tocca l\'icona del tuo <strong>profilo</strong> (in basso a destra)',
       'Tocca le <strong>tre righe</strong> (☰) in alto a destra',
@@ -1662,6 +1680,9 @@ function renderDashboard() {
 // ═══════════════════════════════════════════════════════════════
 //  RENDER LIST (FIXED VERSION - Safe URL Building)
 // ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════
+//  RENDER LIST (UPDATED - With new disclaimer)
+// ═══════════════════════════════════════════════════════════════
 function renderList(listId, users, c1, c2) {
   const el = document.getElementById(listId);
   if (!users || !users.length) {
@@ -1670,8 +1691,8 @@ function renderList(listId, users, c1, c2) {
     return;
   }
 
-  const disclaimer = '<p class="list-disclaimer">ℹ️ ' + 
-    escHtml(t('list_disclaimer')) + '</p>';
+  // FIX: Sostituisci il vecchio disclaimer con il nuovo
+  const disclaimer = getUrlErrorDisclaimer();
   
   el.innerHTML = disclaimer + users.map(u => {
     if (!u || !u.username) return '';
@@ -1693,7 +1714,7 @@ function renderList(listId, users, c1, c2) {
       : (isValidUrl
           ? '<a href="' + escHtml(href) + '" target="_blank" rel="noopener" class="user-link">' + 
             escHtml(t('user_open')) + '</a>'
-          : '<span style="color:var(--muted);font-size:.75rem">⚠️ Invalid URL</span>');
+          : '<span style="color:var(--muted);font-size:.75rem">⚠️ Link Error</span>');
     
     return '<div class="user-item' + deletedClass + '" data-name="' + 
       normalizeUsername(u.username) + '">' +
@@ -1707,7 +1728,6 @@ function renderList(listId, users, c1, c2) {
     '</div>';
   }).join('');
 }
-
 // ═══════════════════════════════════════════════════════════════
 //  Search & Sort
 // ═══════════════════════════════════════════════════════════════
@@ -1902,7 +1922,11 @@ function renderDiffSection(container, cls, title, users, dotColor) {
   
   const sec = document.createElement('div');
   sec.className = 'diff-section ' + cls;
-  sec.innerHTML = '<h3>' + escHtml(title) + ' (' + users.length + ')</h3>' +
+  
+  // Aggiungi disclaimer solo alla prima sezione
+  const disclaimerHtml = cls === 'new-followers' ? getUrlErrorDisclaimer() : '';
+  
+  sec.innerHTML = disclaimerHtml + '<h3>' + escHtml(title) + ' (' + users.length + ')</h3>' +
     users.map(u => {
       if (!u || !u.username) return '';
       const href = buildInstagramUrl(u.username);
@@ -2029,6 +2053,77 @@ function buildInstagramUrl(username) {
   return 'https://www.instagram.com/' + encodeURIComponent(normalized) + '/';
 }
 
+// ═══════════════════════════════════════════════════════════════
+//  URL ERROR DISCLAIMER
+// ═══════════════════════════════════════════════════════════════
+
+/**
+ * Genera HTML disclaimer per errori URL Instagram
+ * Mostra quando un link non funziona
+ */
+function getUrlErrorDisclaimer() {
+  const lang = currentLang;
+  
+  if (lang === 'it') {
+    return `
+      <div style="
+        background: rgba(255,140,66,.08);
+        border: 1px solid rgba(255,140,66,.2);
+        border-radius: 10px;
+        padding: 14px 16px;
+        margin: 8px 0;
+        font-size: .80rem;
+        color: var(--muted);
+        line-height: 1.6;
+      ">
+        <div style="margin-bottom: 8px; color: var(--orange); font-weight: 600; display: flex; align-items: center; gap: 6px;">
+          <span>⚠️</span> Se il link non funziona, potrebbe dipendere da:
+        </div>
+        <ul style="margin: 0; padding-left: 20px; margin-bottom: 6px;">
+          <li><strong>Account eliminato:</strong> L'utente ha eliminato il profilo Instagram dopo l'esportazione</li>
+          <li><strong>Username cambiato:</strong> L'utente ha modificato il proprio username dopo l'export</li>
+          <li><strong>Account sospeso:</strong> Instagram ha sospeso temporaneamente l'account</li>
+          <li><strong>Profilo privato bloccato:</strong> Sei bloccato e non puoi accedere al profilo</li>
+          <li><strong>Dati export obsoleti:</strong> L'export è datato, l'account potrebbe non esistere più</li>
+          <li><strong>Caratteri speciali non supportati:</strong> In rari casi, username con caratteri particolari potrebbero avere problemi</li>
+        </ul>
+        <div style="font-size: .75rem; color: rgba(255,255,255,.2); margin-top: 6px;">
+          💡 Prova a cercare l'utente manualmente su Instagram per verificare se il profilo esiste ancora.
+        </div>
+      </div>
+    `;
+  } else {
+    // English version
+    return `
+      <div style="
+        background: rgba(255,140,66,.08);
+        border: 1px solid rgba(255,140,66,.2);
+        border-radius: 10px;
+        padding: 14px 16px;
+        margin: 8px 0;
+        font-size: .80rem;
+        color: var(--muted);
+        line-height: 1.6;
+      ">
+        <div style="margin-bottom: 8px; color: var(--orange); font-weight: 600; display: flex; align-items: center; gap: 6px;">
+          <span>⚠️</span> If a link doesn't work, it could be due to:
+        </div>
+        <ul style="margin: 0; padding-left: 20px; margin-bottom: 6px;">
+          <li><strong>Account deleted:</strong> The user deleted their Instagram profile after the export</li>
+          <li><strong>Username changed:</strong> The user changed their username after the export</li>
+          <li><strong>Account suspended:</strong> Instagram temporarily suspended the account</li>
+          <li><strong>Private profile blocked:</strong> You're blocked and can't access the profile</li>
+          <li><strong>Outdated export data:</strong> The export is old, the account may no longer exist</li>
+          <li><strong>Special characters:</strong> In rare cases, usernames with special characters may have issues</li>
+        </ul>
+        <div style="font-size: .75rem; color: rgba(255,255,255,.2); margin-top: 6px;">
+          💡 Try searching for the user manually on Instagram to check if the profile still exists.
+        </div>
+      </div>
+    `;
+  }
+}
+  
 /**
  * Verifica se due username sono uguali (normalized comparison)
  * Usato per comparazioni affidabili
